@@ -33,6 +33,20 @@ class AppWidget {
       fontFamily: 'Poppins',
     );
   }
-
-
+  static TextStyle verylightTextFeildStyle() {
+    return const TextStyle(
+      color: Colors.black38,
+      fontSize: 15,
+      fontWeight: FontWeight.w400,
+      fontFamily: 'Poppins',
+    );
+  }
+  static TextStyle optionTextFeildStyle() {
+    return const TextStyle(
+      color: Colors.black,
+      fontSize: 12,
+      fontWeight: FontWeight.w400,
+      fontFamily: 'Poppins',
+    );
+  }
 }
