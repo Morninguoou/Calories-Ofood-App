@@ -1,4 +1,4 @@
-# projectapp
+# Calories Calculator App
 
 A new Flutter project.
 
