@@ -13,7 +13,6 @@ class _SearchbarState extends State<Searchbar> {
   Widget build(BuildContext context) {
     return Container(
       height: 40,
-      margin: EdgeInsets.only(top: 10, bottom: 15),
       padding: EdgeInsets.only(left: 25, right: 2),
       decoration: BoxDecoration(
         color: Colors.white,

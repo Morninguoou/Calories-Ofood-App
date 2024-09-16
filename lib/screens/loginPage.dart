@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:projectapp/screens/login.dart';
 import 'package:projectapp/widget/widget_support.dart';
 
-class Signup extends StatefulWidget {
-  const Signup({super.key});
+import 'package:projectapp/screens/signuppage.dart';
+
+class Login extends StatefulWidget {
+  const Login({super.key});
 
   @override
-  State<Signup> createState() => _SignupState();
+  State<Login> createState() => _LoginState();
 }
 
-class _SignupState extends State<Signup> {
+class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +34,7 @@ class _SignupState extends State<Signup> {
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
             decoration: const BoxDecoration(
-              color: Color.fromARGB(255, 252, 245, 236),
+              color: Color.fromARGB(255, 252, 245, 236), 
               borderRadius: BorderRadius.only(topLeft: Radius.circular(70), topRight: Radius.circular(70))
               ),
             child:
@@ -50,21 +51,13 @@ class _SignupState extends State<Signup> {
                 child: Container(
                   padding: const EdgeInsets.only(left: 20,right: 20),
                   width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height/1.8,
+                  height: MediaQuery.of(context).size.height/2,
                   decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(20)),
                   child:
                     Column(children: [
                       const SizedBox(height: 40,),
-                      Text("Sign up", style: AppWidget.headlineTextFeildStyle(),),
-                      const SizedBox(height: 20,),
-                      TextField(
-                        decoration: InputDecoration(
-                          hintText: "Name",
-                          hintStyle: AppWidget.semiBoldTextFeildStyle(),
-                          prefixIcon: const Icon(Icons.person_outline) 
-                        ),
-                      ),
-                      const SizedBox(height: 20,),
+                      Text("Login", style: AppWidget.headlineTextFeildStyle(),),
+                      const SizedBox(height: 30,),
                       TextField(
                         decoration: InputDecoration(
                           hintText: "Email",
@@ -72,25 +65,21 @@ class _SignupState extends State<Signup> {
                           prefixIcon: const Icon(Icons.email_outlined) 
                         ),
                       ),
-                      const SizedBox(height: 20,),
+                      const SizedBox(height: 30,),
                       TextField(
                         obscureText: true,
                         decoration: InputDecoration(
                           hintText: "Password",
                           hintStyle: AppWidget.semiBoldTextFeildStyle(),
-                          prefixIcon: Icon(Icons.password_outlined) 
+                          prefixIcon: const Icon(Icons.password_outlined) 
                         ),
                       ),
                       const SizedBox(height: 20,),
-                      TextField(
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          hintText: "Confirm Password",
-                          hintStyle: AppWidget.semiBoldTextFeildStyle(),
-                          prefixIcon: Icon(Icons.password_outlined) 
-                        ),
+                      Container(
+                        alignment: Alignment.topRight,
+                        child: Text("Forgot Password?",style: AppWidget.lightTextFeildStyle(),)
                       ),
-                      const SizedBox(height: 50,),
+                      const SizedBox(height: 70,),
                       Material(
                         elevation: 5,
                         borderRadius: BorderRadius.circular(20),
@@ -100,7 +89,7 @@ class _SignupState extends State<Signup> {
                           decoration: BoxDecoration(color: const Color.fromARGB(255, 245, 185, 92),borderRadius: BorderRadius.circular(20)),
                           child: const Center(
                             child: Text(
-                              "SIGN UP",
+                              "LOGIN",
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 18,
@@ -116,14 +105,14 @@ class _SignupState extends State<Signup> {
               const SizedBox(height: 70,),
               GestureDetector(
                 onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const Signup()));
                 },
-                child: Text("Already have an account? Login",style: AppWidget.semiBoldTextFeildStyle(),)
+                child: Text("Don't have an account? Join now.",style: AppWidget.semiBoldTextFeildStyle(),)
               )
             ],),
           ),
         ],)
       ,),
     );
-  }
+}
 }
