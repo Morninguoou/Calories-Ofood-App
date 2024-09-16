@@ -35,9 +35,9 @@ class AppWidget {
   }
   static TextStyle verylightTextFeildStyle() {
     return const TextStyle(
-      color: Colors.black38,
+      color: Colors.black,
       fontSize: 15,
-      fontWeight: FontWeight.w400,
+      fontWeight: FontWeight.w200,
       fontFamily: 'Poppins',
     );
   }
@@ -46,6 +46,15 @@ class AppWidget {
       color: Colors.black,
       fontSize: 12,
       fontWeight: FontWeight.w400,
+      fontFamily: 'Poppins',
+    );
+  }
+  static TextStyle topicTextFeildStyle(){
+    return const TextStyle(
+      color: Colors.black,
+      fontSize: 24,
+      fontWeight: FontWeight.w800,
+      letterSpacing: 0.7,
       fontFamily: 'Poppins',
     );
   }
