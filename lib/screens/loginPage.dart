@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:projectapp/screens/signupPage.dart';
 import 'package:projectapp/widget/widget_support.dart';
 
-import 'package:projectapp/screens/signuppage.dart';
+import 'package:projectapp/screens/signupPage.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -105,7 +106,7 @@ class _LoginState extends State<Login> {
               const SizedBox(height: 70,),
               GestureDetector(
                 onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const Signup()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const Signuppage()));
                 },
                 child: Text("Don't have an account? Join now.",style: AppWidget.semiBoldTextFeildStyle(),)
               )
