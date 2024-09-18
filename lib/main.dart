@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:projectapp/screens/foodlistPage.dart';
-import 'package:projectapp/screens/mainpage.dart';
-import 'package:projectapp/widget/bottomnav.dart';
+// import 'package:projectapp/screens/detailfoodPage.dart';
+// import 'package:projectapp/screens/loginPage.dart';
 // import 'package:projectapp/screens/mainPage.dart';
+// import 'package:projectapp/screens/loginPage.dart';
+// import 'package:projectapp/screens/mainpage.dart';
+import 'package:projectapp/widget/bottomnav.dart';
+import 'package:projectapp/screens/mainPage.dart';
 // import 'package:projectapp/screens/login.dart';
 // import 'package:projectapp/screens/signup.dart';
 
