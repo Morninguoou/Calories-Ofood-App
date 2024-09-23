@@ -22,10 +22,10 @@ class _FoodlistState extends State<Foodlist> {
                 context,
                 MaterialPageRoute(
                     builder: (context) =>
-                        Bottomnav(initialPage: Detailfoodpage())));
+                        const Bottomnav(initialPage: Detailfoodpage())));
           },
           child: Container(
-            margin: EdgeInsets.only(top: 10),
+            margin: const EdgeInsets.only(top: 10),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(10),
@@ -34,7 +34,7 @@ class _FoodlistState extends State<Foodlist> {
                   color: Colors.black.withOpacity(0.3),
                   spreadRadius: 1,
                   blurRadius: 3,
-                  offset: Offset(0, 2),
+                  offset: const Offset(0, 2),
                 ),
               ],
             ),
@@ -50,7 +50,7 @@ class _FoodlistState extends State<Foodlist> {
                         width: 78,
                         fit: BoxFit.cover,
                       )),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
                   Column(

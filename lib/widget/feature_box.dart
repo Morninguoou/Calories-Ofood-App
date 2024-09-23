@@ -12,8 +12,8 @@ class _FeatureBoxState extends State<FeatureBox> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 20),
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      margin: const EdgeInsets.only(top: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
@@ -22,15 +22,15 @@ class _FeatureBoxState extends State<FeatureBox> {
             color: Colors.black.withOpacity(0.3),
             spreadRadius: 1,
             blurRadius: 3,
-            offset: Offset(0, 2),
+            offset: const Offset(0, 2),
           ),
         ],
       ),
       child: Column( children: [
         Row(children: [
           Text("Looking to manage your weught?", style: AppWidget.verylightTextFeildStyle(),),
-          SizedBox(width: 5,),
-          Text("Try using",
+          const SizedBox(width: 5,),
+          const Text("Try using",
             style: TextStyle(
               color: Colors.black,
               fontSize: 18,
@@ -47,23 +47,23 @@ class _FeatureBoxState extends State<FeatureBox> {
                 style: AppWidget.topicTextFeildStyle()
               ),
               Container(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 241, 199, 55),
+                  color: const Color.fromARGB(255, 241, 199, 55),
                   borderRadius: BorderRadius.circular(10),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withOpacity(0.3),
                       spreadRadius: 1,
                       blurRadius: 3,
-                      offset: Offset(0, 2),
+                      offset: const Offset(0, 2),
                     ),
                   ],
                 ),
                 child: 
                   Column(children: [
                     Image.asset("asset/images/mainleftfeature.png",width: 60, height: 60,),
-                    SizedBox(height: 6,),
+                    const SizedBox(height: 6,),
                     Text("Calorie Calculation", 
                       style:  TextStyle(
                         color: Colors.black,
@@ -73,7 +73,7 @@ class _FeatureBoxState extends State<FeatureBox> {
                         //! letterSpacing: 0.5,
                         shadows: [
                           Shadow(
-                            offset: Offset(2.0, 2.0), // ระยะทางของเงาจากข้อความ
+                            offset: const Offset(2.0, 2.0), // ระยะทางของเงาจากข้อความ
                             blurRadius: 3.0,           // ระดับความเบลอของเงา
                             color: Colors.grey.withOpacity(0.5), // สีของเงา
                           ),
@@ -83,18 +83,18 @@ class _FeatureBoxState extends State<FeatureBox> {
                   ],)
               ,)
           ],),
-          SizedBox(width: 10,),
+          const SizedBox(width: 10,),
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 10,vertical: 15),
+            padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 15),
             decoration: BoxDecoration(
-              color: Color.fromARGB(255, 241, 199, 55),
+              color: const Color.fromARGB(255, 241, 199, 55),
               borderRadius: BorderRadius.circular(10),
               boxShadow: [
                 BoxShadow(
                   color: Colors.black.withOpacity(0.3),
                   spreadRadius: 1,
                   blurRadius: 3,
-                  offset: Offset(0, 2),
+                  offset: const Offset(0, 2),
                 ),
               ],
             ),
@@ -102,7 +102,7 @@ class _FeatureBoxState extends State<FeatureBox> {
               Column(
                 children: [
                   Image.asset("asset/images/mainrightfeature.png", width: 60, height: 60,),
-                  SizedBox(height: 6,),
+                  const SizedBox(height: 6,),
                   Text("Food",
                     style: TextStyle(
                       color: Colors.black,
@@ -112,7 +112,7 @@ class _FeatureBoxState extends State<FeatureBox> {
                       //! letterSpacing: 0.5,
                       shadows: [
                         Shadow(
-                          offset: Offset(2.0, 2.0), // ระยะทางของเงาจากข้อความ
+                          offset: const Offset(2.0, 2.0), // ระยะทางของเงาจากข้อความ
                           blurRadius: 3.0,           // ระดับความเบลอของเงา
                           color: Colors.grey.withOpacity(0.5), // สีของเงา
                         ),
@@ -128,7 +128,7 @@ class _FeatureBoxState extends State<FeatureBox> {
                       //! letterSpacing: 0.5,
                       shadows: [
                         Shadow(
-                          offset: Offset(2.0, 2.0), // ระยะทางของเงาจากข้อความ
+                          offset: const Offset(2.0, 2.0), // ระยะทางของเงาจากข้อความ
                           blurRadius: 3.0,           // ระดับความเบลอของเงา
                           color: Colors.grey.withOpacity(0.5), // สีของเงา
                         ),

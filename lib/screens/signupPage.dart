@@ -78,7 +78,7 @@ class _SignuppageState extends State<Signuppage> {
                         decoration: InputDecoration(
                           hintText: "Password",
                           hintStyle: AppWidget.semiBoldTextFeildStyle(),
-                          prefixIcon: Icon(Icons.password_outlined) 
+                          prefixIcon: const Icon(Icons.password_outlined) 
                         ),
                       ),
                       const SizedBox(height: 20,),
@@ -87,7 +87,7 @@ class _SignuppageState extends State<Signuppage> {
                         decoration: InputDecoration(
                           hintText: "Confirm Password",
                           hintStyle: AppWidget.semiBoldTextFeildStyle(),
-                          prefixIcon: Icon(Icons.password_outlined) 
+                          prefixIcon: const Icon(Icons.password_outlined) 
                         ),
                       ),
                       const SizedBox(height: 50,),
@@ -116,7 +116,7 @@ class _SignuppageState extends State<Signuppage> {
               const SizedBox(height: 70,),
               GestureDetector(
                 onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const Login()));
                 },
                 child: Text("Already have an account? Login",style: AppWidget.semiBoldTextFeildStyle(),)
               )

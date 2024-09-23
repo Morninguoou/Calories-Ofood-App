@@ -26,19 +26,19 @@ class _FoodListState extends State<FoodList> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  IconBack(),
-                  SizedBox(height: 10,),
-                  Searchbar(),
-                  SizedBox(height: 10,),
+                  const IconBack(),
+                  const SizedBox(height: 10,),
+                  const Searchbar(),
+                  const SizedBox(height: 10,),
                   Text("Foods",style: AppWidget.topicTextFeildStyle(),),
                   //* all list
                   Column(
                     children: [
                       //* a list
                       GestureDetector(
-                        onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context) => Bottomnav(initialPage:Detailfoodpage())));},
+                        onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context) => const Bottomnav(initialPage:Detailfoodpage())));},
                         child: Container(
-                          margin: EdgeInsets.only(top: 10),
+                          margin: const EdgeInsets.only(top: 10),
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(10),
@@ -47,7 +47,7 @@ class _FoodListState extends State<FoodList> {
                                 color: Colors.black.withOpacity(0.3),
                                 spreadRadius: 1,
                                 blurRadius: 3,
-                                offset: Offset(0, 2),
+                                offset: const Offset(0, 2),
                               ),
                             ],
                           ),
@@ -59,7 +59,7 @@ class _FoodListState extends State<FoodList> {
                                   borderRadius: BorderRadius.circular(10),
                                   child: Image.asset("asset/images/bonchon_wing.png",height: 67, width: 78,fit: BoxFit.cover,)
                                 ),
-                                SizedBox(width: 10,),
+                                const SizedBox(width: 10,),
                                 Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.start,

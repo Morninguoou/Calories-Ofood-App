@@ -27,11 +27,11 @@ class _BottomnavState extends State<Bottomnav> {
   void initState() {
     super.initState();
     pages = [
-      Mainpage(),
-      PlannerMain(),
-      Dailycalories(),
-      Noti(),
-      Myprofile(),
+      const Mainpage(),
+      const PlannerMain(),
+      const Dailycalories(),
+      const Noti(),
+      const Myprofile(),
       widget.initialPage,
     ];
     currentTabIndex = pages.indexOf(widget.initialPage);
