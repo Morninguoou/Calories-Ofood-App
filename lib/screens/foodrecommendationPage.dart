@@ -37,7 +37,7 @@ class _FoodRecommendationState extends State<FoodRecommendation> {
             ),
           ),
           Positioned(
-            top: MediaQuery.of(context).size.height / 7.7,
+            top: MediaQuery.of(context).size.height / 7.6,
             left: 0,
             right: 0,
             bottom: 0,
