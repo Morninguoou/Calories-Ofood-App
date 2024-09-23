@@ -19,9 +19,9 @@ class _DetailfoodpageState extends State<Detailfoodpage> {
   int _selectedIndex = 0;
 
   final List<Widget> _pages = [
-    Detail(),
-    IngredientsPage(),
-    ExercisePage(),
+    const Detail(),
+    const IngredientsPage(),
+    const ExercisePage(),
   ];
 
   void _onItemTapped(int index) {

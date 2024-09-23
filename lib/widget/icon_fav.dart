@@ -15,13 +15,13 @@ class _IconFavState extends State<IconFav> {
        
       },
       child: Container(
-        margin: EdgeInsets.only(top: 5),
-        padding: EdgeInsets.all(8),
+        margin: const EdgeInsets.only(top: 5),
+        padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
-          color: Color.fromARGB(255, 241, 199, 55),
+          color: const Color.fromARGB(255, 241, 199, 55),
           borderRadius: BorderRadius.circular(30),
         ),
-        child: Icon(Icons.favorite, color: Colors.black,),
+        child: const Icon(Icons.favorite, color: Colors.black,),
       ),
     );
   }

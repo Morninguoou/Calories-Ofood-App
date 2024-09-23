@@ -15,13 +15,13 @@ class _IconShareState extends State<IconShare> {
        
       },
       child: Container(
-        margin: EdgeInsets.only(top: 5),
-        padding: EdgeInsets.all(8),
+        margin: const EdgeInsets.only(top: 5),
+        padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
-          color: Color.fromARGB(255, 255, 255, 255).withOpacity(0.4),
+          color: const Color.fromARGB(255, 255, 255, 255).withOpacity(0.4),
           borderRadius: BorderRadius.circular(30),
         ),
-        child: Icon(Icons.share_outlined, color: Colors.black,),
+        child: const Icon(Icons.share_outlined, color: Colors.black,),
       ),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:projectapp/screens/detailfoodPage.dart';
 import 'package:projectapp/screens/foodlistPage.dart';
 import 'package:projectapp/widget/bottomnav.dart';
 import 'package:projectapp/widget/feature_box.dart';
@@ -23,35 +24,36 @@ class _MainpageState extends State<Mainpage> {
       body: SingleChildScrollView(
         child: Container(
           decoration: const BoxDecoration(color: Color.fromARGB(255, 252, 245, 236)),
+          height: MediaQuery.of(context).size.height,
           child: Container(
             margin: const EdgeInsets.only(top: 50, left: 20,right: 20),
             child: 
               Column(children: [
-                Row(
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text("Hi, Thursday",style: TextStyle(fontSize: 32,fontWeight: FontWeight.bold),),
+                    Text("Hi, Thursday",style: TextStyle(fontSize: 32,fontWeight: FontWeight.bold),),
                     IconChat(),
                 ],),
-                SizedBox(height: 10,),
-                Searchbar(),
-                SizedBox(height: 15,),
+                const SizedBox(height: 10,),
+                const Searchbar(),
+                const SizedBox(height: 15,),
                 Container(
                   decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 240, 214, 181),
+                    color: const Color.fromARGB(255, 240, 214, 181),
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: [
                       BoxShadow(
                         color: Colors.black.withOpacity(0.3),
                         spreadRadius: 1,
                         blurRadius: 3,
-                        offset: Offset(0, 2),
+                        offset: const Offset(0, 2),
                       ),
                     ],
                   ),
                   child: 
                     Container(
-                      margin: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children:[
@@ -60,7 +62,7 @@ class _MainpageState extends State<Mainpage> {
                               Container(
                                 decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),color: Colors.white,),
                                 child: Container(
-                                  margin: EdgeInsets.all(5),
+                                  margin: const EdgeInsets.all(5),
                                   child: Transform(
                                     transform: Matrix4.identity()..scale(-1.0, 1.0),
                                     alignment: Alignment.center,
@@ -68,7 +70,7 @@ class _MainpageState extends State<Mainpage> {
                                   )
                                 ),
                               ),
-                              SizedBox(width: 10,),
+                              const SizedBox(width: 10,),
                               const Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -93,20 +95,20 @@ class _MainpageState extends State<Mainpage> {
                             ],
                           ),
                           const SizedBox(height: 8,),
-                          Optionblock(),
+                          const Optionblock(),
                           GestureDetector(
                             // TODOTap to ranmdom food
                             onTap: (){
         
                             },
                             child: Container(
-                              margin: EdgeInsets.symmetric(vertical: 8),
-                              padding: EdgeInsets.symmetric(vertical: 5),
+                              margin: const EdgeInsets.symmetric(vertical: 8),
+                              padding: const EdgeInsets.symmetric(vertical: 5),
                               decoration: BoxDecoration(
-                                color: Color.fromARGB(255, 79, 108, 78),
+                                color: const Color.fromARGB(255, 79, 108, 78),
                                 borderRadius: BorderRadius.circular(10),
                                 boxShadow: [
-                                  BoxShadow( color: Colors.black.withOpacity(0.3), spreadRadius: 1, blurRadius: 3, offset: Offset(0, 3),),
+                                  BoxShadow( color: Colors.black.withOpacity(0.3), spreadRadius: 1, blurRadius: 3, offset: const Offset(0, 3),),
                                 ],
                               ),
                                 child: const Row(
@@ -128,8 +130,8 @@ class _MainpageState extends State<Mainpage> {
                       ),
                     ),
                 ),
-                FeatureBox(),
-                SizedBox(height: 15,),
+                const FeatureBox(),
+                const SizedBox(height: 15,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -139,9 +141,9 @@ class _MainpageState extends State<Mainpage> {
                     GestureDetector(
                       //TODOTap to food page
                       onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => Bottomnav(initialPage:FoodList())));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const Bottomnav(initialPage:FoodList())));
                       },
-                      child: Text("See All",
+                      child: const Text("See All",
                       style: TextStyle(
                         color: Color.fromARGB(255, 79, 108, 78),
                         fontSize: 15,
@@ -154,44 +156,47 @@ class _MainpageState extends State<Mainpage> {
                 Column(
                   children: [
                     //* a list
-                    Container(
-                      margin: EdgeInsets.only(top: 10),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.3),
-                            spreadRadius: 1,
-                            blurRadius: 3,
-                            offset: Offset(0, 2),
-                          ),
-                        ],
-                      ),
+                    GestureDetector(
+                       onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context) => const Bottomnav(initialPage:Detailfoodpage())));},
                       child: Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 10,vertical: 8),
-                        child: Row(
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child: Image.asset("asset/images/bonchon_wing.png",height: 67, width: 78,fit: BoxFit.cover,)
+                        margin: const EdgeInsets.only(top: 10),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.3),
+                              spreadRadius: 1,
+                              blurRadius: 3,
+                              offset: const Offset(0, 2),
                             ),
-                            SizedBox(width: 10,),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text("Calorie : 850 cal • 10 pieces/set", style: AppWidget.verylightTextFeildStyle().copyWith(height: 1.3,fontSize: 13),),
-                                Text("Bonchon Wings", style: AppWidget.semiBoldTextFeildStyle().copyWith(height: 1.3,fontWeight: FontWeight.bold),),
-                                Text("Fried Food | Korean Food", style: AppWidget.verylightTextFeildStyle().copyWith(height: 1.3,fontSize: 13),),
-                              ],
-                            )
                           ],
+                        ),
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 10,vertical: 8),
+                          child: Row(
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: Image.asset("asset/images/bonchon_wing.png",height: 67, width: 78,fit: BoxFit.cover,)
+                              ),
+                              const SizedBox(width: 10,),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text("Calorie : 850 cal • 10 pieces/set", style: AppWidget.verylightTextFeildStyle().copyWith(height: 1.3,fontSize: 13),),
+                                  Text("Bonchon Wings", style: AppWidget.semiBoldTextFeildStyle().copyWith(height: 1.3,fontWeight: FontWeight.bold),),
+                                  Text("Fried Food | Korean Food", style: AppWidget.verylightTextFeildStyle().copyWith(height: 1.3,fontSize: 13),),
+                                ],
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(top: 10),
+                      margin: const EdgeInsets.only(top: 10),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(10),
@@ -200,7 +205,7 @@ class _MainpageState extends State<Mainpage> {
                             color: Colors.black.withOpacity(0.3),
                             spreadRadius: 1,
                             blurRadius: 3,
-                            offset: Offset(0, 2),
+                            offset: const Offset(0, 2),
                           ),
                         ],
                       ),
@@ -212,7 +217,7 @@ class _MainpageState extends State<Mainpage> {
                               borderRadius: BorderRadius.circular(10),
                               child: Image.asset("asset/images/bonchon_wing.png",height: 67, width: 78,fit: BoxFit.cover,)
                             ),
-                            SizedBox(width: 10,),
+                            const SizedBox(width: 10,),
                             Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
