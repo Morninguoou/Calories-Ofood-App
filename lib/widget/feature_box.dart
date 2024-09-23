@@ -73,9 +73,9 @@ class _FeatureBoxState extends State<FeatureBox> {
                         //! letterSpacing: 0.5,
                         shadows: [
                           Shadow(
-                            offset: const Offset(2.0, 2.0), // ระยะทางของเงาจากข้อความ
-                            blurRadius: 3.0,           // ระดับความเบลอของเงา
-                            color: Colors.grey.withOpacity(0.5), // สีของเงา
+                            offset: const Offset(2.0, 2.0),
+                            blurRadius: 3.0,
+                            color: Colors.grey.withOpacity(0.5),
                           ),
                         ],
                       ),
@@ -112,9 +112,9 @@ class _FeatureBoxState extends State<FeatureBox> {
                       //! letterSpacing: 0.5,
                       shadows: [
                         Shadow(
-                          offset: const Offset(2.0, 2.0), // ระยะทางของเงาจากข้อความ
-                          blurRadius: 3.0,           // ระดับความเบลอของเงา
-                          color: Colors.grey.withOpacity(0.5), // สีของเงา
+                          offset: const Offset(2.0, 2.0),
+                          blurRadius: 3.0,
+                          color: Colors.grey.withOpacity(0.5),
                         ),
                       ],
                     ),  
@@ -128,9 +128,9 @@ class _FeatureBoxState extends State<FeatureBox> {
                       //! letterSpacing: 0.5,
                       shadows: [
                         Shadow(
-                          offset: const Offset(2.0, 2.0), // ระยะทางของเงาจากข้อความ
-                          blurRadius: 3.0,           // ระดับความเบลอของเงา
-                          color: Colors.grey.withOpacity(0.5), // สีของเงา
+                          offset: const Offset(2.0, 2.0),
+                          blurRadius: 3.0, 
+                          color: Colors.grey.withOpacity(0.5),
                         ),
                       ],
                     ),  
