@@ -29,7 +29,7 @@ class _FeatureBoxState extends State<FeatureBox> {
           ),
         ],
       ),
-      child: Column(children: [
+      child: Column( children: [
           Row(children: [
               Text(
                 "Looking to manage your weught?",
