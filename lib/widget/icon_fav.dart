@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
 
-class IconBack extends StatefulWidget {
-  const IconBack({super.key});
+class IconFav extends StatefulWidget {
+  const IconFav({super.key});
 
   @override
-  State<IconBack> createState() => _IconBackState();
+  State<IconFav> createState() => _IconFavState();
 }
 
-class _IconBackState extends State<IconBack> {
+class _IconFavState extends State<IconFav> {
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return  GestureDetector(
       onTap: (){
-        Navigator.pop(context);
+       
       },
       child: Container(
         margin: const EdgeInsets.only(top: 5),
         padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
-          color: const Color.fromARGB(255, 79, 108, 78),
+          color: const Color.fromARGB(255, 241, 199, 55),
           borderRadius: BorderRadius.circular(30),
         ),
-        child: const Icon(Icons.arrow_back, color: Colors.white,),
+        child: const Icon(Icons.favorite, color: Colors.black,),
       ),
     );
   }

@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:projectapp/screens/loginPage.dart';
 import 'package:projectapp/widget/widget_support.dart';
 
-class Signup extends StatefulWidget {
-  const Signup({super.key});
+class Signuppage extends StatefulWidget {
+  const Signuppage({super.key});
 
   @override
-  State<Signup> createState() => _SignupState();
+  State<Signuppage> createState() => _SignuppageState();
 }
 
-class _SignupState extends State<Signup> {
+class _SignuppageState extends State<Signuppage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,7 +78,7 @@ class _SignupState extends State<Signup> {
                         decoration: InputDecoration(
                           hintText: "Password",
                           hintStyle: AppWidget.semiBoldTextFeildStyle(),
-                          prefixIcon: Icon(Icons.password_outlined) 
+                          prefixIcon: const Icon(Icons.password_outlined) 
                         ),
                       ),
                       const SizedBox(height: 20,),
@@ -87,7 +87,7 @@ class _SignupState extends State<Signup> {
                         decoration: InputDecoration(
                           hintText: "Confirm Password",
                           hintStyle: AppWidget.semiBoldTextFeildStyle(),
-                          prefixIcon: Icon(Icons.password_outlined) 
+                          prefixIcon: const Icon(Icons.password_outlined) 
                         ),
                       ),
                       const SizedBox(height: 50,),
@@ -116,7 +116,7 @@ class _SignupState extends State<Signup> {
               const SizedBox(height: 70,),
               GestureDetector(
                 onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const Login()));
                 },
                 child: Text("Already have an account? Login",style: AppWidget.semiBoldTextFeildStyle(),)
               )
