@@ -29,10 +29,8 @@ class _FeatureBoxState extends State<FeatureBox> {
           ),
         ],
       ),
-      child: Column(
-        children: [
-          Row(
-            children: [
+      child: Column(children: [
+          Row(children: [
               Text(
                 "Looking to manage your weught?",
                 style: AppWidget.verylightTextFeildStyle(),
