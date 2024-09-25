@@ -519,7 +519,7 @@ class _FoodRecommendationState extends State<FoodRecommendation> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 20),
+                      SizedBox(height: 30),
                       GestureDetector(
                         onTap: () {
                           // TODOTap to random food
