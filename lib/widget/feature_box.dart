@@ -87,7 +87,6 @@ class _FeatureBoxState extends State<FeatureBox> {
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
                             fontFamily: 'Poppins',
-                            //! letterSpacing: 0.5,
                             shadows: [
                               Shadow(
                                 offset: const Offset(2.0, 2.0),
