@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:projectapp/widget/detailfoodWidget.dart';
-import 'package:projectapp/widget/exerciseWidget.dart';
 import 'package:projectapp/widget/icon_back.dart';
 import 'package:projectapp/widget/icon_fav.dart';
 import 'package:projectapp/widget/icon_share.dart';
@@ -21,7 +20,6 @@ class _DetailfoodpageState extends State<Detailfoodpage> {
   final List<Widget> _pages = [
     const Detail(),
     const IngredientsPage(),
-    const ExercisePage(),
   ];
 
   void _onItemTapped(int index) {
@@ -130,13 +128,6 @@ class _CustomNavBarState extends State<CustomNavBar> {
     return Container(
       decoration: BoxDecoration(
         color: const Color.fromARGB(255, 236, 236, 236),
-        // boxShadow: [
-        //   BoxShadow(
-        //     color: Colors.black26,
-        //     blurRadius: 10,
-        //     spreadRadius: 1,
-        //   ),
-        // ],
         borderRadius: BorderRadius.circular(30),
       ),
       margin: const EdgeInsets.all(10),
@@ -146,7 +137,6 @@ class _CustomNavBarState extends State<CustomNavBar> {
         children: [
           _buildNavItem('Detail', 0),
           _buildNavItem('Ingredients', 1),
-          _buildNavItem('Exercise', 2),
         ],
       ),
     );
@@ -156,7 +146,8 @@ class _CustomNavBarState extends State<CustomNavBar> {
     return GestureDetector(
       onTap: () => _onItemTapped(index),
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 20),
+        margin: const EdgeInsets.symmetric(horizontal: 5),
+        padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 45),
         decoration: BoxDecoration(
           color: _selectedIndex == index ? const Color.fromARGB(255, 240, 214, 181) : Colors.transparent,
           borderRadius: BorderRadius.circular(20),
@@ -189,14 +180,5 @@ class IngredientsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Ingredientswidget(); 
-  }
-}
-
-class ExercisePage extends StatelessWidget {
-  const ExercisePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Exercisewidget();
   }
 }

@@ -20,7 +20,7 @@ class _PlannerMainState extends State<PlannerMain> {
         backgroundColor: Color(0xFFF0D6B5),
         elevation: 0.0,
         titleTextStyle: TextStyle(
-          fontSize: 36.0,
+          fontSize: 32.0,
           color: Colors.black,
           fontWeight: FontWeight.bold,
         ),
@@ -33,8 +33,8 @@ class _PlannerMainState extends State<PlannerMain> {
               decoration: BoxDecoration(
                 color: Color.fromARGB(255, 253, 253, 253),
                 borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(50.0),
-                  topRight: Radius.circular(50.0),
+                  topLeft: Radius.circular(60.0),
+                  topRight: Radius.circular(60.0),
                 ),
               ),
               height: 656.0,
@@ -44,9 +44,9 @@ class _PlannerMainState extends State<PlannerMain> {
                   itemCount: 7, // Number of items to display
                   itemBuilder: (context, index) {
                     return Container(
-                      margin: EdgeInsets.only(top: 20.0),
+                      margin: EdgeInsets.only(top: 20.0,left: 5,right: 5),
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(20),
                         color: Colors.white,
                         //border: Border.all(color: Colors.black), // Added border
                         boxShadow: [

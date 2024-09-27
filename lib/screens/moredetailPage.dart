@@ -36,7 +36,7 @@ class _MoreDetailPlannerState extends State<MoreDetailPlanner> {
               ),
             ),
             child: Container(
-              margin: EdgeInsets.all(20.0),
+              margin: EdgeInsets.only(left: 20,right: 10,top: 25),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -44,12 +44,13 @@ class _MoreDetailPlannerState extends State<MoreDetailPlanner> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [Icon(Icons.access_time), Text('test_time')],
                   ),
+                  SizedBox(height: 10,),
                   Text('Date List: ',style: AppWidget.dateboldTextFeildStyle()),
-                  SizedBox(height: 15.0),
+                  SizedBox(height: 20.0),
                   Container( /////////////////////////////////////Box Widget
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(20),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black.withOpacity(0.3),
@@ -63,15 +64,18 @@ class _MoreDetailPlannerState extends State<MoreDetailPlanner> {
                       margin: EdgeInsets.only(top: 10.0,left: 20.0,right: 20.0,bottom: 10.0),
                       child: Column(
                         children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Text('Date : Monday, 18 August',
-                                  style: AppWidget.dateboldTextFeildStyle()),
-                              Icon(Icons.calendar_today_outlined)
-                            ],
+                          Container(
+                            margin: EdgeInsets.only(top: 10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Text('Date : Monday, 18 August',
+                                    style: AppWidget.dateboldTextFeildStyle()),
+                                Icon(Icons.calendar_today_outlined)
+                              ],
+                            ),
                           ),
-                          SizedBox(height: 10.0,),
+                          SizedBox(height: 25.0,),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -95,8 +99,9 @@ class _MoreDetailPlannerState extends State<MoreDetailPlanner> {
                               ),
                             ],
                           ),
-                          SizedBox(height: 10.0,),
+                          SizedBox(height: 25.0,),
                           Container(
+                            padding: EdgeInsets.only(bottom: 15),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [

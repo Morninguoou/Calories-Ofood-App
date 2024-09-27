@@ -139,7 +139,6 @@ class _MainpageState extends State<Mainpage> {
                       style: AppWidget.topicTextFeildStyle(),  
                     ),
                     GestureDetector(
-                      //TODOTap to food page
                       onTap: (){
                         Navigator.push(context, MaterialPageRoute(builder: (context) => const Bottomnav(initialPage:FoodList())));
                       },
