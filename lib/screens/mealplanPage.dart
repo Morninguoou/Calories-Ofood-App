@@ -26,159 +26,241 @@ class _MealPlanState extends State<MealPlan> {
           fontWeight: FontWeight.bold,
         ),
       ),
-      body: Column(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              color: Color(0xFFF9F9F9),
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(50.0),
-                topRight: Radius.circular(50.0),
-              ),
-            ),
-            child: Container(
-              margin: EdgeInsets.all(20.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.calendar_today_outlined),
-                      Text('  Monday, 18 August  ',
-                          style: AppWidget.dateboldTextFeildStyle()),
-                      GestureDetector(
-                        child: Icon(
-                          Icons.add_circle,
-                          color: Color(0xFF4F6C4E),
+      body: SafeArea(
+        child: Column(
+          children: [
+            Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Color(0xFFF9F9F9),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(50.0),
+                    topRight: Radius.circular(50.0),
+                  ),
+                ),
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: EdgeInsets.all(20.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Column(
+                              children: [
+                                Text(
+                                  'Fats',
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    color: const Color.fromRGBO(137, 132, 132, 1),
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                Text(
+                                  '31g',
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(width: 10),
+                            Column(
+                              children: [
+                                Text(
+                                  'Carb.',
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    color: const Color.fromRGBO(137, 132, 132, 1),
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                Text(
+                                  '31g',
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(width: 10),
+                            Column(
+                              children: [
+                                Text(
+                                  'Proteins',
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    color: const Color.fromRGBO(137, 132, 132, 1),
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                Text(
+                                  '31g',
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(width: 10),
+                            Column(
+                              children: [
+                                Text(
+                                  'Calories',
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    color: Color.fromRGBO(137, 132, 132, 1),
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                Text(
+                                  '500kcal',
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
-                        onTap: () {Navigator.push(context,MaterialPageRoute(builder: (context) => Bottomnav(initialPage: FoodList())));},
-                      ),
-                      
-                    ],
-                  ),
-                  SizedBox(height: 15.0),
-                  Container(
-                    /////////////////////////////////////Box Widget
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      // boxShadow: [
-                      //   BoxShadow(
-                      //     color: Colors.black.withOpacity(0.3),
-                      //     spreadRadius: 1,
-                      //     blurRadius: 3,
-                      //     offset: Offset(0, 2),
-                      //   ),
-                      // ],
-                    ),
-                    child: Container(
-                      margin: EdgeInsets.only(
-                          top: 10.0, left: 12.0, right: 12.0, bottom: 10.0),
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        Container(
+                          margin: EdgeInsets.only(top: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text('Breakfast',
+                              Icon(Icons.calendar_today_outlined),
+                              Text('  Monday, 18 August  ',
                                   style: AppWidget.dateboldTextFeildStyle()),
-                              Text('Total Calories:850 cal',
-                                  style: AppWidget.totalcalTextFeildStyle()),
+                              GestureDetector(
+                                child: Icon(
+                                  Icons.add_circle,
+                                  color: Color(0xFF4F6C4E),
+                                ),
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              Bottomnav(initialPage: FoodList())));
+                                },
+                              ),
                             ],
                           ),
-                          SizedBox(
-                            height: 10.0,
-                          ),
-                          BonchonBox(),
-                          BonchonBox(),
-                        ],
-                      ),
+                        ),
+                        SizedBox(height: 15.0),
+                        // ทำให้เลื่อนลงได้ด้วย SingleChildScrollView
+                        Column(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Container(
+                                margin: EdgeInsets.only(
+                                    top: 10.0, left: 12.0, right: 12.0, bottom: 10.0),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text('Breakfast',
+                                            style: AppWidget.dateboldTextFeildStyle()),
+                                        Text('Total Calories:850 cal',
+                                            style: AppWidget.totalcalTextFeildStyle()),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 10.0,
+                                    ),
+                                    BonchonBox(),
+                                    BonchonBox(),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10.0,
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Container(
+                                margin: EdgeInsets.only(
+                                    top: 10.0, left: 12.0, right: 12.0, bottom: 10.0),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text('Lunch',
+                                            style: AppWidget.dateboldTextFeildStyle()),
+                                        Text('Total Calories:850 cal',
+                                            style: AppWidget.totalcalTextFeildStyle()),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 10.0,
+                                    ),
+                                    BonchonBox(),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10.0,
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Container(
+                                margin: EdgeInsets.only(
+                                    top: 10.0, left: 12.0, right: 12.0, bottom: 10.0),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text('Dinner',
+                                            style: AppWidget.dateboldTextFeildStyle()),
+                                        Text('Total Calories:850 cal',
+                                            style: AppWidget.totalcalTextFeildStyle()),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 10.0,
+                                    ),
+                                    BonchonBox(),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
-                  ), ///////////////////////////////////////////////////////
-                  SizedBox(
-                    height: 10.0,
                   ),
-                  Container(
-                    /////////////////////////////////////Box Widget
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      // boxShadow: [
-                      //   BoxShadow(
-                      //     color: Colors.black.withOpacity(0.3),
-                      //     spreadRadius: 1,
-                      //     blurRadius: 3,
-                      //     offset: Offset(0, 2),
-                      //   ),
-                      // ],
-                    ),
-                    child: Container(
-                      margin: EdgeInsets.only(
-                          top: 10.0, left: 12.0, right: 12.0, bottom: 10.0),
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text('Lunch',
-                                  style: AppWidget.dateboldTextFeildStyle()),
-                              Text('Total Calories:850 cal',
-                                  style: AppWidget.totalcalTextFeildStyle()),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 10.0,
-                          ),
-                          BonchonBox(),
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                  Container(
-                    /////////////////////////////////////Box Widget
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      // boxShadow: [
-                      //   BoxShadow(
-                      //     color: Colors.black.withOpacity(0.3),
-                      //     spreadRadius: 1,
-                      //     blurRadius: 3,
-                      //     offset: Offset(0, 2),
-                      //   ),
-                      // ],
-                    ),
-                    child: Container(
-                      margin: EdgeInsets.only(
-                          top: 10.0, left: 12.0, right: 12.0, bottom: 10.0),
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text('Dinner',
-                                  style: AppWidget.dateboldTextFeildStyle()),
-                              Text('Total Calories:850 cal',
-                                  style: AppWidget.totalcalTextFeildStyle()),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 10.0,
-                          ),
-                          BonchonBox(),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
+                ),
               ),
             ),
-            height: 656.0,
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

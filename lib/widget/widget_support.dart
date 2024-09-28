@@ -91,7 +91,7 @@ class AppWidget {
       shadows: [
         Shadow(color: Color.fromARGB(255, 92, 87, 87), blurRadius: 10.0, offset: Offset(0, 2))
       ],
-      fontSize: 12,
+      fontSize: 13,
       fontWeight: FontWeight.bold,
       letterSpacing: 0.7,
       fontFamily: 'Poppins',
@@ -101,7 +101,7 @@ class AppWidget {
   static TextStyle dateboldTextFeildStyle() {
     return const TextStyle(
       color: Colors.black,
-      fontSize: 15,
+      fontSize: 17,
       fontWeight: FontWeight.bold,
       fontFamily: 'Poppins',
     );
