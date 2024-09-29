@@ -25,47 +25,53 @@ class _BonchonBoxState extends State<BonchonBox> {
           ),
         ],
       ),
-      child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-        child: Row(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: Image.asset(
-                "asset/images/bonchon_wing.png",
-                height: 67,
-                width: 78,
-                fit: BoxFit.cover,
-              ),
-            ),
-            SizedBox(
-              width: 10,
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
+      child: Stack(
+        children: [
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+            child: Row(
               children: [
-                Text(
-                  "Calorie : 850 cal • 10 pieces/set",
-                  style: AppWidget.verylightTextFeildStyle()
-                      .copyWith(height: 1.3, fontSize: 13),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Image.asset(
+                    "asset/images/bonchon_wing.png",
+                    height: 67,
+                    width: 78,
+                    fit: BoxFit.cover,
+                  ),
                 ),
-                Text(
-                  "Bonchon Wings",
-                  style: AppWidget.semiBoldTextFeildStyle()
-                      .copyWith(height: 1.3, fontWeight: FontWeight.bold),
+                SizedBox(
+                  width: 10,
                 ),
-                Text(
-                  "Fried Food | Korean Food",
-                  style: AppWidget.verylightTextFeildStyle()
-                      .copyWith(height: 1.3, fontSize: 13),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Calorie : 850 cal • 10 pieces/set",
+                      style: AppWidget.verylightTextFeildStyle()
+                          .copyWith(height: 1.3, fontSize: 13),
+                    ),
+                    Text(
+                      "Bonchon Wings",
+                      style: AppWidget.semiBoldTextFeildStyle()
+                          .copyWith(height: 1.3, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      "Fried Food | Korean Food",
+                      style: AppWidget.verylightTextFeildStyle()
+                          .copyWith(height: 1.3, fontSize: 13),
+                    ),
+                  ],
                 ),
               ],
             ),
-            Positioned(
-                bottom: 5.0, right: 40.0, child: Icon(Icons.edit_square)),
-          ],
-        ),
+          ),
+          Positioned(
+            bottom: 10.0, right: 12.0, 
+              child: Icon(Icons.edit_square),
+            ),
+        ],
       ),
     );
   }

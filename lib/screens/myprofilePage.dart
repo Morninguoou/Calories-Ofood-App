@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:projectapp/screens/mealplanPage.dart';
+import 'package:projectapp/widget/friendreqinProfilePage.dart';
 import 'package:projectapp/widget/widget_support.dart';
 import 'package:projectapp/screens/editprofilePage.dart';
 import 'package:projectapp/widget/bottomnav.dart';
+import 'package:projectapp/widget/mealplaninProfilePage.dart';
 
 class Myprofile extends StatefulWidget {
   const Myprofile({super.key});
@@ -16,6 +19,7 @@ class _MyprofileState extends State<Myprofile> {
     return Scaffold(
       backgroundColor: Color(0xFFFCF5EC),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Stack(
             alignment: Alignment.bottomCenter,
@@ -46,9 +50,9 @@ class _MyprofileState extends State<Myprofile> {
           ),
           SizedBox(height: 5.0),
           Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
+                alignment: Alignment.center,
                 child: Column(
                   children: [
                     Text('Name', style: AppWidget.nameTextFeildStyle()),
@@ -99,10 +103,13 @@ class _MyprofileState extends State<Myprofile> {
             ],
           ),
           Container(
+            margin: EdgeInsets.only(left: 10),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   'Plans',
+                  textAlign: TextAlign.start,
                   style: TextStyle(
                     color: Color(0xFF4F6C4E),
                     fontSize: 16,
@@ -111,32 +118,69 @@ class _MyprofileState extends State<Myprofile> {
                     fontFamily: 'Poppins',
                   ),
                 ),
-                ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    Container(
-                      child: Column(
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
-                            child: Image.asset(
-                              "asset/images/bonchon_wing.png",
-                              height: 67,
-                              width: 78,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          Text(
-                            "Bonchon Wings",
-                            style: AppWidget.semiBoldTextFeildStyle().copyWith(
-                                height: 1.3, fontWeight: FontWeight.bold),
-                          ),
-                          Text('Updated today'),
-                        ],
-                      ),
-                    ),
-                  ],
+                Container(
+                  height: 165,
+                  width: 400,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      MealProfile(),
+                      MealProfile(),
+                      MealProfile(),
+                      MealProfile(),
+                    ],
+                  ),
                 ),
+                Padding(
+                  padding: EdgeInsets.only(right: 10),
+                  child : 
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Friend Request',
+                          textAlign: TextAlign.start,
+                          style: TextStyle(
+                            color: Color(0xFF4F6C4E),
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: 0.7,
+                            fontFamily: 'Poppins',
+                          ),
+                        ),
+                        Container(
+                          alignment: Alignment.center,
+                          height: 20,
+                          width: 80,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.white,
+                          ),
+                          child: Text(
+                            'See more',
+                            style: AppWidget.totalcalTextFeildStyle()
+                                .copyWith(fontWeight: FontWeight.w700),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                SizedBox(height: 10.0,),
+                Container(
+                  height: 165,
+                  width: 400,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      FriendReqProfile(),
+                      FriendReqProfile(),
+                      FriendReqProfile(),
+                      FriendReqProfile(),
+                    ],
+                  ),
+                ),
+                
+                
               ],
             ),
           ),

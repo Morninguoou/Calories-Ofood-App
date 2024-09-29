@@ -3,6 +3,8 @@ import 'package:projectapp/screens/foodlistPage.dart';
 import 'package:projectapp/widget/bottomnav.dart';
 import 'package:projectapp/widget/bonchonEdit_box.dart';
 import 'package:projectapp/widget/widget_support.dart';
+import 'package:projectapp/widget/icon_share.dart';
+
 
 class MealPlan extends StatefulWidget {
   const MealPlan({super.key});
@@ -17,7 +19,15 @@ class _MealPlanState extends State<MealPlan> {
     return Scaffold(
       backgroundColor: Color(0xFFF0D6B5), // Background color
       appBar: AppBar(
-        title: Text('Plan A Elei'),
+        title: Container(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('Plan A Elei'),
+              IconShare(),
+            ],
+            ),
+        ),
         backgroundColor: Color(0xFFF0D6B5),
         elevation: 0.0,
         titleTextStyle: TextStyle(
@@ -29,7 +39,8 @@ class _MealPlanState extends State<MealPlan> {
       body: SafeArea(
         child: Column(
           children: [
-            Expanded(
+            Container(
+              height: 656,
               child: Container(
                 decoration: BoxDecoration(
                   color: Color(0xFFF9F9F9),
@@ -53,7 +64,8 @@ class _MealPlanState extends State<MealPlan> {
                                   'Fats',
                                   style: TextStyle(
                                     fontSize: 13,
-                                    color: const Color.fromRGBO(137, 132, 132, 1),
+                                    color:
+                                        const Color.fromRGBO(137, 132, 132, 1),
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
@@ -74,7 +86,8 @@ class _MealPlanState extends State<MealPlan> {
                                   'Carb.',
                                   style: TextStyle(
                                     fontSize: 13,
-                                    color: const Color.fromRGBO(137, 132, 132, 1),
+                                    color:
+                                        const Color.fromRGBO(137, 132, 132, 1),
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
@@ -95,7 +108,8 @@ class _MealPlanState extends State<MealPlan> {
                                   'Proteins',
                                   style: TextStyle(
                                     fontSize: 13,
-                                    color: const Color.fromRGBO(137, 132, 132, 1),
+                                    color:
+                                        const Color.fromRGBO(137, 132, 132, 1),
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
@@ -149,8 +163,8 @@ class _MealPlanState extends State<MealPlan> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) =>
-                                              Bottomnav(initialPage: FoodList())));
+                                          builder: (context) => Bottomnav(
+                                              initialPage: FoodList())));
                                 },
                               ),
                             ],
@@ -167,7 +181,10 @@ class _MealPlanState extends State<MealPlan> {
                               ),
                               child: Container(
                                 margin: EdgeInsets.only(
-                                    top: 10.0, left: 12.0, right: 12.0, bottom: 10.0),
+                                    top: 10.0,
+                                    left: 12.0,
+                                    right: 12.0,
+                                    bottom: 10.0),
                                 child: Column(
                                   children: [
                                     Row(
@@ -175,9 +192,11 @@ class _MealPlanState extends State<MealPlan> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text('Breakfast',
-                                            style: AppWidget.dateboldTextFeildStyle()),
+                                            style: AppWidget
+                                                .dateboldTextFeildStyle()),
                                         Text('Total Calories:850 cal',
-                                            style: AppWidget.totalcalTextFeildStyle()),
+                                            style: AppWidget
+                                                .totalcalTextFeildStyle()),
                                       ],
                                     ),
                                     SizedBox(
@@ -199,7 +218,10 @@ class _MealPlanState extends State<MealPlan> {
                               ),
                               child: Container(
                                 margin: EdgeInsets.only(
-                                    top: 10.0, left: 12.0, right: 12.0, bottom: 10.0),
+                                    top: 10.0,
+                                    left: 12.0,
+                                    right: 12.0,
+                                    bottom: 10.0),
                                 child: Column(
                                   children: [
                                     Row(
@@ -207,9 +229,11 @@ class _MealPlanState extends State<MealPlan> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text('Lunch',
-                                            style: AppWidget.dateboldTextFeildStyle()),
+                                            style: AppWidget
+                                                .dateboldTextFeildStyle()),
                                         Text('Total Calories:850 cal',
-                                            style: AppWidget.totalcalTextFeildStyle()),
+                                            style: AppWidget
+                                                .totalcalTextFeildStyle()),
                                       ],
                                     ),
                                     SizedBox(
@@ -230,7 +254,10 @@ class _MealPlanState extends State<MealPlan> {
                               ),
                               child: Container(
                                 margin: EdgeInsets.only(
-                                    top: 10.0, left: 12.0, right: 12.0, bottom: 10.0),
+                                    top: 10.0,
+                                    left: 12.0,
+                                    right: 12.0,
+                                    bottom: 10.0),
                                 child: Column(
                                   children: [
                                     Row(
@@ -238,14 +265,17 @@ class _MealPlanState extends State<MealPlan> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text('Dinner',
-                                            style: AppWidget.dateboldTextFeildStyle()),
+                                            style: AppWidget
+                                                .dateboldTextFeildStyle()),
                                         Text('Total Calories:850 cal',
-                                            style: AppWidget.totalcalTextFeildStyle()),
+                                            style: AppWidget
+                                                .totalcalTextFeildStyle()),
                                       ],
                                     ),
                                     SizedBox(
                                       height: 10.0,
                                     ),
+                                    BonchonBox(),
                                     BonchonBox(),
                                   ],
                                 ),
