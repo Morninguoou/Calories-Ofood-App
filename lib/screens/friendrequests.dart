@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:projectapp/screens/friendprofile.dart';
 import 'package:projectapp/widget/friendlist.dart';
 import 'package:projectapp/widget/icon_back.dart';
 import 'package:projectapp/widget/widget_support.dart';
@@ -174,7 +175,14 @@ class _FriendrequestsState extends State<Friendrequests> {
                               onPressed: () {
                                 if (foundFriend != null) {
                                   // หากพบเพื่อน
-                                  Navigator.of(context).pop(); // ปิด popup
+                                  Navigator.of(context).pop();
+
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            Friendprofile()), // เปลี่ยนหน้า
+                                  ); // TODOTap to random food// ปิด popup
                                 }
                               },
                             ),

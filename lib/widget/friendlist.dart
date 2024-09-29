@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:projectapp/screens/friendrequestprofile.dart';
 import 'package:projectapp/widget/widget_support.dart';
-
 
 class FriendList extends StatefulWidget {
   const FriendList({super.key});
@@ -65,7 +65,12 @@ class _FriendListState extends State<FriendList> {
                         Spacer(),
                         TextButton(
                           onPressed: () {
-                            // ฟังก์ชันสำหรับดูโปรไฟล์
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      Friendrequestprofile()), // เปลี่ยนหน้า
+                            ); // ฟังก์ชันสำหรับดูโปรไฟล์
                           },
                           child: Text(
                             'View profile',
@@ -113,9 +118,7 @@ class _FriendListState extends State<FriendList> {
                           SizedBox(width: 10), // ระยะห่างระหว่างปุ่ม
                           Expanded(
                             child: GestureDetector(
-                              onTap: () {
-                                // TODOTap to random food
-                              },
+                              onTap: () {},
                               child: Container(
                                 margin: EdgeInsets.symmetric(vertical: 10),
                                 padding: EdgeInsets.symmetric(
