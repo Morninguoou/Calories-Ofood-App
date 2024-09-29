@@ -24,20 +24,20 @@ class _DailycaloriesState extends State<Dailycalories> {
               color: Color.fromARGB(255, 240, 214, 181),
             ),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  margin: const EdgeInsets.only(top: 60),
+                  margin: const EdgeInsets.only(top: 60,left: 20),
                   child: Text(
                     'Daily Calories',
-                    style: AppWidget.headlineTextFeildStyle(),
+                    style: AppWidget.headlineTextFeildStyle().copyWith(letterSpacing: 0.5,fontSize: 30),
                   ),
                 ),
               ],
             ),
           ),
           Positioned(
-            top: MediaQuery.of(context).size.height / 7.6,
+            top: MediaQuery.of(context).size.height / 7.7,
             left: 0,
             right: 0,
             bottom: 0,
@@ -63,6 +63,7 @@ class _DailycaloriesState extends State<Dailycalories> {
                               style: TextStyle(
                                 fontSize: 13,
                                 color: const Color.fromRGBO(137, 132, 132, 1),
+                                fontWeight: FontWeight.w500
                               ),
                             ),
                             Text(
@@ -70,6 +71,7 @@ class _DailycaloriesState extends State<Dailycalories> {
                               style: TextStyle(
                                 fontSize: 13,
                                 color: Colors.black,
+                                fontWeight: FontWeight.w500
                               ),
                             )
                           ],
@@ -82,6 +84,7 @@ class _DailycaloriesState extends State<Dailycalories> {
                               style: TextStyle(
                                 fontSize: 13,
                                 color: const Color.fromRGBO(137, 132, 132, 1),
+                                fontWeight: FontWeight.w500
                               ),
                             ),
                             Text(
@@ -89,6 +92,7 @@ class _DailycaloriesState extends State<Dailycalories> {
                               style: TextStyle(
                                 fontSize: 13,
                                 color: Colors.black,
+                                fontWeight: FontWeight.w500
                               ),
                             ),
                           ],
@@ -101,6 +105,7 @@ class _DailycaloriesState extends State<Dailycalories> {
                               style: TextStyle(
                                 fontSize: 13,
                                 color: const Color.fromRGBO(137, 132, 132, 1),
+                                fontWeight: FontWeight.w500
                               ),
                             ),
                             Text(
@@ -108,6 +113,7 @@ class _DailycaloriesState extends State<Dailycalories> {
                               style: TextStyle(
                                 fontSize: 13,
                                 color: Colors.black,
+                                fontWeight: FontWeight.w500
                               ),
                             ),
                           ],
@@ -120,6 +126,7 @@ class _DailycaloriesState extends State<Dailycalories> {
                               style: TextStyle(
                                 fontSize: 13,
                                 color: Color.fromRGBO(137, 132, 132, 1),
+                                fontWeight: FontWeight.w500
                               ),
                             ),
                             Text(
@@ -127,6 +134,7 @@ class _DailycaloriesState extends State<Dailycalories> {
                               style: TextStyle(
                                 fontSize: 13,
                                 color: Colors.black,
+                                fontWeight: FontWeight.w500
                               ),
                             ),
                           ],
@@ -458,11 +466,6 @@ class _DailycaloriesState extends State<Dailycalories> {
                 ),
               ),
             ),
-          ),
-          Positioned(
-            top: 50,
-            left: 30,
-            child: const IconBack(),
           ),
         ],
       ),
