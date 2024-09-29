@@ -3,14 +3,14 @@ import 'package:projectapp/screens/detailfoodPage.dart';
 import 'package:projectapp/widget/bottomnav.dart';
 import 'package:projectapp/widget/widget_support.dart';
 
-class Foodlist extends StatefulWidget {
-  const Foodlist({super.key});
+class Foodlistcard extends StatefulWidget {
+  const Foodlistcard({super.key});
 
   @override
-  State<Foodlist> createState() => _FoodlistState();
+  State<Foodlistcard> createState() => _FoodlistcardState();
 }
 
-class _FoodlistState extends State<Foodlist> {
+class _FoodlistcardState extends State<Foodlistcard> {
   @override
   Widget build(BuildContext context) {
     return Column(
