@@ -44,7 +44,7 @@ class _PlannerMainState extends State<PlannerMain> {
                   itemCount: 7, // Number of items to display
                   itemBuilder: (context, index) {
                     return Container(
-                      margin: EdgeInsets.only(top: 20.0,left: 5,right: 5),
+                      margin: EdgeInsets.only(top: 20.0, left: 5, right: 5),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
                         color: Colors.white,
@@ -81,6 +81,13 @@ class _PlannerMainState extends State<PlannerMain> {
                                   style: TextStyle(fontSize: 16),
                                 ),
                                 // Ensure text can wrap properly
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(Icons.access_time),
+                                    Text(' 1 week・18 August - 24 August'),
+                                  ],
+                                ),
                               ],
                             ),
                           ),
@@ -88,9 +95,95 @@ class _PlannerMainState extends State<PlannerMain> {
                           Positioned(
                             top: 5,
                             right: 5,
-                            child: Icon(
-                              Icons.cancel,
-                              color: Colors.red,
+                            child: GestureDetector(
+                              onTap: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext) {
+                                    return AlertDialog(
+                                      titlePadding: EdgeInsets.zero,
+                                      backgroundColor: Color(0xFFF0D6B5),
+                                      title: Container(
+                                        height: 40,
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(25),
+                                                topRight: Radius.circular(25)),
+                                            color: Colors.red),
+                                        child: Icon(
+                                          Icons.warning_rounded,
+                                          size: 40,
+                                        ),
+                                      ),
+                                      content: Text(
+                                        'Are you sure you want to delete ?',
+                                        style:
+                                            AppWidget.nutrientTextFeildStyle()
+                                                .copyWith(
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize: 16),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      actions: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            TextButton(
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: Container(
+                                                alignment: Alignment.center,
+                                                width: 90,
+                                                height: 40,
+                                                decoration: BoxDecoration(
+                                                  color: Color(0xFF4F6C4E),
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                ),
+                                                child: Text(
+                                                  'Cancel',
+                                                  style: AppWidget
+                                                          .lightTextFeildStyle()
+                                                      .copyWith(
+                                                          color: Colors.white),
+                                                ),
+                                              ),
+                                            ),
+                                            TextButton(
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: Container(
+                                                alignment: Alignment.center,
+                                                width: 90,
+                                                height: 40,
+                                                decoration: BoxDecoration(
+                                                  color: Color(0xFFFFFFFF),
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                ),
+                                                child: Text(
+                                                  'Confirm',
+                                                  style: AppWidget
+                                                          .lightTextFeildStyle()
+                                                      .copyWith(
+                                                          color: Colors.red),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              },
+                              child: Icon(
+                                Icons.cancel,
+                                color: Colors.red,
+                              ),
                             ),
                           ),
                           Positioned(
