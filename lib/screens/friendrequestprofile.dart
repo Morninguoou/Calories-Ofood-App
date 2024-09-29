@@ -7,14 +7,14 @@ import 'package:projectapp/screens/editprofilePage.dart';
 import 'package:projectapp/widget/bottomnav.dart';
 import 'package:projectapp/widget/mealplaninProfilePage.dart';
 
-class Myprofile extends StatefulWidget {
-  const Myprofile({super.key});
+class Friendrequestprofile extends StatefulWidget {
+  const Friendrequestprofile({super.key});
 
   @override
-  State<Myprofile> createState() => _MyprofileState();
+  State<Friendrequestprofile> createState() => _FriendrequestprofileState();
 }
 
-class _MyprofileState extends State<Myprofile> {
+class _FriendrequestprofileState extends State<Friendrequestprofile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,7 +32,7 @@ class _MyprofileState extends State<Myprofile> {
                     Container(
                       height: 145.0,
                       decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 10, 31, 164),
+                          color: Color.fromRGBO(240, 214, 181, 1),
                           borderRadius: BorderRadius.only(
                             bottomLeft: Radius.circular(20.0),
                             bottomRight: Radius.circular(20.0),
