@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:projectapp/screens/foodlistPage.dart';
-import 'package:projectapp/screens/mealplanPage.dart';
-import 'package:projectapp/screens/moredetailPage.dart';
 import 'package:projectapp/screens/plannermainPage.dart';
-import 'package:projectapp/widget/bonchonEdit_box.dart';
 import 'package:projectapp/widget/bottomnav.dart';
-import 'package:projectapp/widget/optionblockgrey.dart';
 import 'package:projectapp/widget/planlistforrecommen.dart';
 import 'package:projectapp/widget/widget_support.dart';
 
@@ -46,7 +41,6 @@ class _FoodRecommendationPlanState extends State<FoodRecommendationPlan> {
             left: 0,
             right: 0,
             bottom: 0,
-            child: SingleChildScrollView(
             child: Container(
               decoration: const BoxDecoration(
                 color: Colors.white,
@@ -62,14 +56,20 @@ class _FoodRecommendationPlanState extends State<FoodRecommendationPlan> {
                     Container(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: [Icon(Icons.access_time), Text('test_time')],
+                        children: [
+                          Icon(Icons.access_time),
+                          SizedBox(
+                            width: 10.0,
+                          ),
+                          Text('test_time')
+                        ],
                       ),
                     ),
-                    SizedBox(
-                      height: 10.0,
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: planlist(), // ใช้ Planlist() ที่สร้างขึ้นด้านบน
+                      ),
                     ),
-                    Planlist(),
-                    Spacer(),
                     GestureDetector(
                       onTap: () {
                         // แสดง popup สร้าง Planner
@@ -170,10 +170,27 @@ class _FoodRecommendationPlanState extends State<FoodRecommendationPlan> {
                 ),
               ),
             ),
-            ),
           )
         ],
       ),
+    );
+  }
+}
+
+class planlist extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      shrinkWrap: true, // เพื่อให้ไม่ใช้พื้นที่เกินความจำเป็น
+      physics: NeverScrollableScrollPhysics(), // ปิดการเลื่อนใน ListView นี้
+      itemCount: 7, // จำนวนรายการที่ต้องการ
+      itemBuilder: (context, index) {
+        return Container(
+          margin:
+              EdgeInsets.symmetric(vertical: 5), // ตั้งค่าระยะห่างระหว่างรายการ
+          child: Planlist(), // แสดง Planlist() ที่คุณมีอยู่แล้ว
+        );
+      },
     );
   }
 }
