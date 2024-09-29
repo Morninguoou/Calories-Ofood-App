@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:projectapp/widget/widget_support.dart';
 
 class Noti extends StatefulWidget {
   const Noti({super.key});
@@ -10,6 +11,10 @@ class Noti extends StatefulWidget {
 class _NotiState extends State<Noti> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: AppBar(
+        title:  Text('Notification', style: AppWidget.boldTextFeildStyle().copyWith(fontSize: 31),),
+      ),
+    );
   }
 }

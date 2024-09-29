@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projectapp/widget/widget_support.dart';
+import 'package:projectapp/widget/icon_back.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({super.key});
@@ -18,6 +19,7 @@ class _EditProfileState extends State<EditProfile> {
           Stack(
             alignment: Alignment.bottomCenter,
             children: [
+              IconBack(),
               Container(
                 height: 180.0,
                 child: Stack(
