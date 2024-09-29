@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:projectapp/screens/mealplanPage.dart';
+import 'package:projectapp/widget/bottomnav.dart';
 import 'package:projectapp/widget/icon_back.dart';
 import 'package:projectapp/widget/widget_support.dart';
 
@@ -133,216 +135,286 @@ class _DailycaloriesState extends State<Dailycalories> {
                     ),
                     SizedBox(height: 20),
                     Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(45),
-                        color: Color.fromRGBO(187, 207, 63, 1),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.3),
-                            spreadRadius: 2,
-                            blurRadius: 3,
-                            offset: Offset(0, 3),
-                          ),
-                        ],
-                      ),
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 3, vertical: 5),
-                      padding: const EdgeInsets.all(20),
-                      child: Stack(
-                        children: [
-                          Align(
-                            alignment: Alignment.topLeft,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Breakfast',
-                                  style: AppWidget.headlineTextFeildStyle(),
-                                ),
-                                Text(
-                                  'Oatmeal with fruits and nuts',
-                                  style: TextStyle(
-                                    fontSize: 13,
-                                    color: Colors.white,
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(45),
+                                color: Color.fromRGBO(187, 207, 63, 1),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.3),
+                                    spreadRadius: 2,
+                                    blurRadius: 3,
+                                    offset: Offset(0, 3),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          // Align เพื่อจัดวาง 450cal ไปทางขวาบน
-                          Align(
-                            alignment: Alignment.topRight,
-                            child: Text(
-                              '450cal',
-                              style: TextStyle(
-                                fontSize: 13,
-                                color: Colors.white,
+                                ],
+                              ),
+                              margin: const EdgeInsets.symmetric(
+                                  horizontal: 3, vertical: 5),
+                              padding: const EdgeInsets.all(20),
+                              child: Stack(
+                                children: [
+                                  Align(
+                                    alignment: Alignment.topLeft,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'Breakfast',
+                                          style: AppWidget
+                                              .headlineTextFeildStyle(),
+                                        ),
+                                        Text(
+                                          'Oatmeal with fruits and nuts',
+                                          style: TextStyle(
+                                            fontSize: 13,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  // Align เพื่อจัดวาง 450cal ไปทางขวาบน
+                                  Align(
+                                    alignment: Alignment.topRight,
+                                    child: Text(
+                                      '450cal',
+                                      style: TextStyle(
+                                        fontSize: 13,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(45),
-                        color: Color.fromRGBO(232, 235, 80, 1),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.3),
-                            spreadRadius: 2,
-                            blurRadius: 3,
-                            offset: Offset(0, 3),
-                          ),
-                        ],
-                      ),
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 3, vertical: 5),
-                      padding: const EdgeInsets.all(20),
-                      child: Stack(
-                        children: [
-                          Align(
-                            alignment: Alignment.topLeft,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Lunch',
-                                  style: AppWidget.headlineTextFeildStyle(),
-                                ),
-                                Text(
-                                  'Oatmeal with fruits and nuts',
-                                  style: TextStyle(
-                                    fontSize: 13,
-                                    color: Colors.white,
+                            SizedBox(height: 10),
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(45),
+                                color: Color.fromRGBO(232, 235, 80, 1),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.3),
+                                    spreadRadius: 2,
+                                    blurRadius: 3,
+                                    offset: Offset(0, 3),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          // Align เพื่อจัดวาง 450cal ไปทางขวาบน
-                          Align(
-                            alignment: Alignment.topRight,
-                            child: Text(
-                              '450cal',
-                              style: TextStyle(
-                                fontSize: 13,
-                                color: Colors.white,
+                                ],
+                              ),
+                              margin: const EdgeInsets.symmetric(
+                                  horizontal: 3, vertical: 5),
+                              padding: const EdgeInsets.all(20),
+                              child: Stack(
+                                children: [
+                                  Align(
+                                    alignment: Alignment.topLeft,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'Lunch',
+                                          style: AppWidget
+                                              .headlineTextFeildStyle(),
+                                        ),
+                                        Text(
+                                          'Oatmeal with fruits and nuts',
+                                          style: TextStyle(
+                                            fontSize: 13,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  // Align เพื่อจัดวาง 450cal ไปทางขวาบน
+                                  Align(
+                                    alignment: Alignment.topRight,
+                                    child: Text(
+                                      '450cal',
+                                      style: TextStyle(
+                                        fontSize: 13,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(45),
-                        color: Color.fromRGBO(243, 164, 12, 1),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.3),
-                            spreadRadius: 2,
-                            blurRadius: 3,
-                            offset: Offset(0, 3),
-                          ),
-                        ],
-                      ),
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 3, vertical: 5),
-                      padding: const EdgeInsets.all(20),
-                      child: Stack(
-                        children: [
-                          Align(
-                            alignment: Alignment.topLeft,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Dinner',
-                                  style: AppWidget.headlineTextFeildStyle(),
-                                ),
-                                Text(
-                                  'Oatmeal with fruits and nuts',
-                                  style: TextStyle(
-                                    fontSize: 13,
-                                    color: Colors.white,
+                            SizedBox(height: 10),
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(45),
+                                color: Color.fromRGBO(243, 164, 12, 1),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.3),
+                                    spreadRadius: 2,
+                                    blurRadius: 3,
+                                    offset: Offset(0, 3),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          // Align เพื่อจัดวาง 450cal ไปทางขวาบน
-                          Align(
-                            alignment: Alignment.topRight,
-                            child: Text(
-                              '450cal',
-                              style: TextStyle(
-                                fontSize: 13,
-                                color: Colors.white,
+                                ],
+                              ),
+                              margin: const EdgeInsets.symmetric(
+                                  horizontal: 3, vertical: 5),
+                              padding: const EdgeInsets.all(20),
+                              child: Stack(
+                                children: [
+                                  Align(
+                                    alignment: Alignment.topLeft,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'Dinner',
+                                          style: AppWidget
+                                              .headlineTextFeildStyle(),
+                                        ),
+                                        Text(
+                                          'Oatmeal with fruits and nuts',
+                                          style: TextStyle(
+                                            fontSize: 13,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  // Align เพื่อจัดวาง 450cal ไปทางขวาบน
+                                  Align(
+                                    alignment: Alignment.topRight,
+                                    child: Text(
+                                      '450cal',
+                                      style: TextStyle(
+                                        fontSize: 13,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(45),
-                        color: Color.fromRGBO(206, 134, 239, 1),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.3),
-                            spreadRadius: 2,
-                            blurRadius: 3,
-                            offset: Offset(0, 3),
-                          ),
-                        ],
-                      ),
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 3, vertical: 5),
-                      padding: const EdgeInsets.all(20),
-                      child: Stack(
-                        children: [
-                          Align(
-                            alignment: Alignment.topLeft,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'other',
-                                  style: AppWidget.headlineTextFeildStyle(),
-                                ),
-                                Text(
-                                  'Oatmeal with fruits and nuts',
-                                  style: TextStyle(
-                                    fontSize: 13,
-                                    color: Colors.white,
+                            SizedBox(height: 10),
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(45),
+                                color: Color.fromRGBO(206, 134, 239, 1),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.3),
+                                    spreadRadius: 2,
+                                    blurRadius: 3,
+                                    offset: Offset(0, 3),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          // Align เพื่อจัดวาง 450cal ไปทางขวาบน
-                          Align(
-                            alignment: Alignment.topRight,
-                            child: Text(
-                              '450cal',
-                              style: TextStyle(
-                                fontSize: 13,
-                                color: Colors.white,
+                                ],
+                              ),
+                              margin: const EdgeInsets.symmetric(
+                                  horizontal: 3, vertical: 5),
+                              padding: const EdgeInsets.all(20),
+                              child: Stack(
+                                children: [
+                                  Align(
+                                    alignment: Alignment.topLeft,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'other',
+                                          style: AppWidget
+                                              .headlineTextFeildStyle(),
+                                        ),
+                                        Text(
+                                          'Oatmeal with fruits and nuts',
+                                          style: TextStyle(
+                                            fontSize: 13,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  // Align เพื่อจัดวาง 450cal ไปทางขวาบน
+                                  Align(
+                                    alignment: Alignment.topRight,
+                                    child: Text(
+                                      '450cal',
+                                      style: TextStyle(
+                                        fontSize: 13,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                     Spacer(),
                     GestureDetector(
                       onTap: () {
-                        // TODOTap to random food
+                        // แสดง popup สร้าง Planner
+                        showDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (BuildContext context) {
+                            String plannerName =
+                                ""; // ตัวแปรเก็บชื่อ Planner ที่กรอก
+
+                            return AlertDialog(
+                              title: Text("Create Planner"),
+                              content: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text("Planner Name"),
+                                  TextField(
+                                    onChanged: (value) {
+                                      plannerName =
+                                          value; // อัพเดทค่าที่ผู้ใช้กรอก
+                                    },
+                                    decoration: InputDecoration(
+                                      hintText: "Enter planner name",
+                                      border: OutlineInputBorder(),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              actions: [
+                                TextButton(
+                                  child: Text("Cancel"),
+                                  onPressed: () {
+                                    Navigator.of(context).pop(); // ปิด popup
+                                  },
+                                ),
+                                ElevatedButton(
+                                  child: Text("Create!"),
+                                  onPressed: () {
+                                    if (plannerName.isNotEmpty) {
+                                      // ตรวจสอบว่าผู้ใช้ได้กรอกชื่อ Planner หรือไม่
+                                      Navigator.of(context).pop(); // ปิด popup
+
+                                      // ทำการนำทางไปยังหน้าถัดไป (เช่นหน้า PlannerPage)
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => Bottomnav(
+                                                  initialPage: MealPlan())));
+                                    }
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                          barrierColor: Colors.grey
+                              .withOpacity(0.5), // พื้นหลังโปร่งใสสีเทา
+                        );
                       },
                       child: Container(
                         margin: EdgeInsets.symmetric(vertical: 10),
