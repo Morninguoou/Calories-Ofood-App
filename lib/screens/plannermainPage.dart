@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projectapp/widget/bottomnav.dart';
-import 'package:projectapp/screens/moredetailPage.dart';
+import 'package:projectapp/screens/planindatelistPage.dart';
 import 'package:projectapp/widget/widget_support.dart';
 
 class PlannerMain extends StatefulWidget {
@@ -16,11 +16,12 @@ class _PlannerMainState extends State<PlannerMain> {
     return Scaffold(
       backgroundColor: Color(0xFFF0D6B5), // Background color
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text('Meal Plan'),
         backgroundColor: Color(0xFFF0D6B5),
         elevation: 0.0,
         titleTextStyle: TextStyle(
-          fontSize: 32.0,
+          fontSize: 36.0,
           color: Colors.black,
           fontWeight: FontWeight.bold,
         ),
@@ -115,15 +116,7 @@ class _PlannerMainState extends State<PlannerMain> {
                                           size: 40,
                                         ),
                                       ),
-                                      content: Text(
-                                        'Are you sure you want to delete ?',
-                                        style:
-                                            AppWidget.nutrientTextFeildStyle()
-                                                .copyWith(
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize: 16),
-                                        textAlign: TextAlign.center,
-                                      ),
+                                      content: Text('Are you sure you want to delete ?',style:AppWidget.nutrientTextFeildStyle().copyWith(fontWeight: FontWeight.w600,fontSize: 16),textAlign: TextAlign.center,),
                                       actions: [
                                         Row(
                                           mainAxisAlignment:
@@ -142,13 +135,7 @@ class _PlannerMainState extends State<PlannerMain> {
                                                   borderRadius:
                                                       BorderRadius.circular(10),
                                                 ),
-                                                child: Text(
-                                                  'Cancel',
-                                                  style: AppWidget
-                                                          .lightTextFeildStyle()
-                                                      .copyWith(
-                                                          color: Colors.white),
-                                                ),
+                                                child: Text('Cancel', style: AppWidget.lightTextFeildStyle().copyWith(color: Colors.white),),
                                               ),
                                             ),
                                             TextButton(
@@ -194,12 +181,7 @@ class _PlannerMainState extends State<PlannerMain> {
                                 'More Detail',
                                 style: AppWidget.moredetailTextFeildStyle(),
                               ),
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Bottomnav(
-                                            initialPage: MoreDetailPlanner())));
+                              onTap: () {Navigator.push(context,MaterialPageRoute(builder: (context) => Bottomnav(initialPage: MoreDetailPlanner())));
                               },
                             ),
                           ),
