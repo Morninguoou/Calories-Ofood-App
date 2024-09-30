@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projectapp/widget/bottomnav.dart';
 import 'package:projectapp/screens/mealplanPage.dart';
+import 'package:projectapp/widget/icon_back.dart';
 import 'package:projectapp/widget/widget_support.dart';
 import 'package:projectapp/widget/icon_share.dart';
 
@@ -15,9 +16,28 @@ class _MoreDetailPlannerState extends State<MoreDetailPlanner> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFF0D6B5), // Background color
+      backgroundColor: Color(0xFFF0D6B5),
       appBar: AppBar(
-        
+        automaticallyImplyLeading: false,
+        title: Padding(
+          padding: EdgeInsets.only(top: 9, left: 5),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  IconBack(),
+                  Text(' Plan 1'),
+
+                  /// plan name
+                ],
+              ),
+              IconShare(),
+            ],
+          ),
+        ),
         backgroundColor: Color(0xFFF0D6B5),
         elevation: 0.0,
         titleTextStyle: TextStyle(
@@ -26,9 +46,11 @@ class _MoreDetailPlannerState extends State<MoreDetailPlanner> {
           fontWeight: FontWeight.bold,
         ),
       ),
-      body: SingleChildScrollView( // Wrap the body in a SingleChildScrollView
+      body: SingleChildScrollView(
+        // Wrap the body in a SingleChildScrollView
         child: Column(
           children: [
+            SizedBox(height: 4,),
             Container(
               decoration: BoxDecoration(
                 color: Color(0xFFF9F9F9),
@@ -44,10 +66,14 @@ class _MoreDetailPlannerState extends State<MoreDetailPlanner> {
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: [Icon(Icons.access_time), Text(' 1 week・18 August - 24 August')],
+                      children: [
+                        Icon(Icons.access_time),
+                        Text(' 1 week・18 August - 24 August')
+                      ],
                     ),
                     SizedBox(height: 10),
-                    Text('Date List: ', style: AppWidget.dateboldTextFeildStyle()),
+                    Text('Date List: ',
+                        style: AppWidget.dateboldTextFeildStyle()),
                     SizedBox(height: 20.0),
                     Container(
                       // Box Widget
@@ -71,10 +97,12 @@ class _MoreDetailPlannerState extends State<MoreDetailPlanner> {
                             Container(
                               margin: EdgeInsets.only(top: 10),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
                                   Text('Date : Monday, 18 August',
-                                      style: AppWidget.dateboldTextFeildStyle()),
+                                      style:
+                                          AppWidget.dateboldTextFeildStyle()),
                                   Icon(Icons.calendar_today_outlined)
                                 ],
                               ),
@@ -83,23 +111,29 @@ class _MoreDetailPlannerState extends State<MoreDetailPlanner> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Container(
-                                  child: Text(
-                                    'Fats\n31g',
-                                    style: AppWidget.nutrientTextFeildStyle(),
-                                  ),
+                                Column(
+                                  children: [
+                                    Text('Fats',style: AppWidget.nutrientTextFeildStyle().copyWith(color: const Color.fromRGBO(137, 132, 132, 1),),),
+                                    Text('31g',style: AppWidget.nutrientTextFeildStyle(),)
+                                  ],
                                 ),
-                                Container(
-                                  child: Text('Carb.\n66g',
-                                      style: AppWidget.nutrientTextFeildStyle()),
+                                Column(
+                                  children: [
+                                    Text('Carb.',style: AppWidget.nutrientTextFeildStyle().copyWith(color: const Color.fromRGBO(137, 132, 132, 1),),),
+                                    Text('66g',style: AppWidget.nutrientTextFeildStyle(),)
+                                  ],
                                 ),
-                                Container(
-                                  child: Text('Proteins\n32g',
-                                      style: AppWidget.nutrientTextFeildStyle()),
+                                Column(
+                                  children: [
+                                    Text('Proteins',style: AppWidget.nutrientTextFeildStyle().copyWith(color: const Color.fromRGBO(137, 132, 132, 1),),),
+                                    Text('32g',style: AppWidget.nutrientTextFeildStyle(),)
+                                  ],
                                 ),
-                                Container(
-                                  child: Text('Calories\n1448cal',
-                                      style: AppWidget.nutrientTextFeildStyle()),
+                                Column(
+                                  children: [
+                                    Text('Calories',style: AppWidget.nutrientTextFeildStyle().copyWith(color: const Color.fromRGBO(137, 132, 132, 1),),),
+                                    Text('1448cal',style: AppWidget.nutrientTextFeildStyle(),)
+                                  ],
                                 ),
                               ],
                             ),
@@ -111,11 +145,13 @@ class _MoreDetailPlannerState extends State<MoreDetailPlanner> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text('Total Calories: 1448 cal',
-                                      style: AppWidget.totalcalTextFeildStyle()),
+                                      style:
+                                          AppWidget.totalcalTextFeildStyle()),
                                   GestureDetector(
                                     child: Text(
                                       'More Details',
-                                      style: AppWidget.moredetailTextFeildStyle(),
+                                      style:
+                                          AppWidget.moredetailTextFeildStyle(),
                                     ),
                                     onTap: () {
                                       Navigator.push(
@@ -135,7 +171,7 @@ class _MoreDetailPlannerState extends State<MoreDetailPlanner> {
                   ],
                 ),
               ),
-              height: 656.0,
+              height: MediaQuery.of(context).size.height,
             ),
           ],
         ),

@@ -11,9 +11,26 @@ class Noti extends StatefulWidget {
 class _NotiState extends State<Noti> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title:  Text('Notification', style: AppWidget.boldTextFeildStyle().copyWith(fontSize: 31),),
+    return Container(
+      height: 765,
+      width: 396,
+      decoration: BoxDecoration(
+        color: Color(0xFFFCF5EC),
+      ),
+      child: Container(
+        margin: EdgeInsets.only(left: 15, right: 15, top: 40),
+        decoration: BoxDecoration(
+          color: Color(0xFFFCF5EC),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Notification',
+              style: AppWidget.boldTextFeildStyle().copyWith(fontSize: 31),
+            ),
+          ],
+        ),
       ),
     );
   }

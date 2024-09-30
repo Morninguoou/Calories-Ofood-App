@@ -133,4 +133,13 @@ class AppWidget {
       fontFamily: 'Poppins',
     );
   }
+
+  static TextStyle foodquantityTextFeildStyle() {
+    return const TextStyle(
+      color: Colors.white,
+      fontSize: 10,
+      fontWeight: FontWeight.normal,
+      fontFamily: 'Poppins',
+    );
+  }
 }

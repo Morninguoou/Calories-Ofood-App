@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projectapp/widget/widget_support.dart';
+import 'package:projectapp/widget/bottomnav.dart';
+import 'package:projectapp/screens/addmoreOption.dart';
 
 class Optionblock extends StatefulWidget {
   const Optionblock({super.key});
@@ -41,7 +43,7 @@ class _OptionblockState extends State<Optionblock> {
             children: [
               GestureDetector(
               //TODO:link to add option
-                onTap: (){},
+                onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context) => Bottomnav(initialPage:MoreOpt())));},
                 child: Container(
                   margin: const EdgeInsets.symmetric(vertical: 4),
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
