@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projectapp/screens/dailycaloriesPage.dart';
-import 'package:projectapp/screens/foodrecommendationPage.dart';
+import 'package:projectapp/screens/foodrecommendationSelect.dart';
 import 'package:projectapp/widget/bottomnav.dart';
 import 'package:projectapp/widget/widget_support.dart';
 
@@ -110,7 +110,7 @@ class _FeatureBoxState extends State<FeatureBox> {
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
-                                Bottomnav(initialPage: FoodRecommendation())));
+                                Bottomnav(initialPage: FoodRecommendationSelect())));
                   },
                   child: Container(
                     padding: const EdgeInsets.symmetric(

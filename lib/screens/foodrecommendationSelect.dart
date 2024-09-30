@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:projectapp/screens/foodrecommendationPlan.dart';
+import 'package:projectapp/widget/bottomnav.dart';
 import 'package:projectapp/widget/optionblockgrey.dart';
 import 'package:projectapp/widget/widget_support.dart';
 import 'package:projectapp/widget/icon_back.dart';
 
-class FoodRecommendation extends StatefulWidget {
-  const FoodRecommendation({super.key});
+class FoodRecommendationSelect extends StatefulWidget {
+  const FoodRecommendationSelect({super.key});
 
   @override
-  State<FoodRecommendation> createState() => _FoodRecommendationState();
+  State<FoodRecommendationSelect> createState() =>
+      _FoodRecommendationSelectState();
 }
 
-class _FoodRecommendationState extends State<FoodRecommendation> {
+class _FoodRecommendationSelectState extends State<FoodRecommendationSelect> {
   String selectedGender = '';
   String selectedWeightManagement =
       'Stable'; // เพิ่มตัวแปรสำหรับ Weight Management
@@ -522,7 +525,42 @@ class _FoodRecommendationState extends State<FoodRecommendation> {
                       SizedBox(height: 30),
                       GestureDetector(
                         onTap: () {
-                          // TODOTap to random food
+                          // ตรวจสอบข้อมูลกับ backend
+                          bool dataIsValid = checkDataWithBackend();
+
+                          if (dataIsValid) {
+                            // ถ้าข้อมูลถูกต้อง ให้ไปยังหน้า FoodRecommendationsPage
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Bottomnav(
+                                        initialPage:
+                                            FoodRecommendationPlan())));
+                          } else {
+                            // ถ้าข้อมูลไม่ถูกต้อง แสดง popup
+                            showDialog(
+                              context: context,
+                              barrierDismissible: false,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: Text("No Food Recommendations"),
+                                  content: Text(
+                                      "Based on your selections, we are unable to recommend any food. Please choose new options."),
+                                  actions: [
+                                    TextButton(
+                                      child: Text("Go Back"),
+                                      onPressed: () {
+                                        Navigator.of(context)
+                                            .pop(); // ปิด popup
+                                      },
+                                    ),
+                                  ],
+                                );
+                              },
+                              barrierColor: Colors.grey
+                                  .withOpacity(0.5), // พื้นหลังโปร่งใสสีเทา
+                            );
+                          }
                         },
                         child: Container(
                           margin: EdgeInsets.symmetric(vertical: 10),
@@ -557,11 +595,11 @@ class _FoodRecommendationState extends State<FoodRecommendation> {
                                   fontWeight: FontWeight.w500,
                                   fontFamily: 'Poppins',
                                 ),
-                              )
+                              ),
                             ],
                           ),
                         ),
-                      ),
+                      )
                     ],
                   ),
                 ),
@@ -576,5 +614,12 @@ class _FoodRecommendationState extends State<FoodRecommendation> {
         ],
       ),
     );
+  }
+
+  bool checkDataWithBackend() {
+    // ตรงนี้คุณจะต้องเขียนการเช็คข้อมูลจาก backend จริง
+    // return true ถ้าข้อมูลถูกต้อง
+    // return false ถ้าข้อมูลไม่ถูกต้อง
+    return true; // ปัจจุบันจะคืนค่า false เสมอ
   }
 }
