@@ -25,19 +25,19 @@ class _FriendrequestsState extends State<Friendrequests> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFFCF5EC),
+      backgroundColor: const Color(0xFFFCF5EC),
       body: Column(
         children: [
           Stack(
             alignment: Alignment.bottomCenter,
             children: [
-              Container(
+              SizedBox(
                 height: 120.0,
                 child: Stack(
                   children: [
                     Container(
                       height: 120.0,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                           color: Color.fromRGBO(240, 214, 181, 1),
                           borderRadius: BorderRadius.only(
                             bottomLeft: Radius.circular(20.0),
@@ -61,10 +61,10 @@ class _FriendrequestsState extends State<Friendrequests> {
                   ],
                 ),
               ),
-              Positioned(
+              const Positioned(
                 top: 60,
                 left: 30,
-                child: const IconBack(),
+                child: IconBack(),
               ),
               Positioned(
                 top: 60,
@@ -76,7 +76,7 @@ class _FriendrequestsState extends State<Friendrequests> {
                       barrierDismissible: false,
                       builder: (BuildContext context) {
                         return AlertDialog(
-                          title: Text("Add friend"),
+                          title: const Text("Add friend"),
                           content: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
@@ -145,7 +145,7 @@ class _FriendrequestsState extends State<Friendrequests> {
                                   ),
                                 ),
                               ),
-                              SizedBox(height: 10),
+                              const SizedBox(height: 10),
                               if (foundFriend != null) // แสดงผลเพื่อนที่ค้นพบ
                                 Row(
                                   children: [
@@ -153,25 +153,25 @@ class _FriendrequestsState extends State<Friendrequests> {
                                       backgroundImage: AssetImage(
                                           foundFriend!['profileImage']!),
                                     ),
-                                    SizedBox(width: 10),
+                                    const SizedBox(width: 10),
                                     Text(foundFriend!['name']!),
                                   ],
                                 )
                               else if (searchName
                                   .isNotEmpty) // ถ้าไม่พบผู้ใช้งาน
-                                Text('ไม่พบผู้ใช้งาน',
+                                const Text('ไม่พบผู้ใช้งาน',
                                     style: TextStyle(color: Colors.red)),
                             ],
                           ),
                           actions: [
                             TextButton(
-                              child: Text("Add friend"),
+                              child: const Text("Add friend"),
                               onPressed: () {
                                 Navigator.of(context).pop(); // ปิด popup
                               },
                             ),
                             ElevatedButton(
-                              child: Text("View profile"),
+                              child: const Text("View profile"),
                               onPressed: () {
                                 if (foundFriend != null) {
                                   // หากพบเพื่อน
@@ -181,7 +181,7 @@ class _FriendrequestsState extends State<Friendrequests> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            Friendprofile()), // เปลี่ยนหน้า
+                                            const Friendprofile()), // เปลี่ยนหน้า
                                   ); // TODOTap to random food// ปิด popup
                                 }
                               },
@@ -209,7 +209,7 @@ class _FriendrequestsState extends State<Friendrequests> {
               ),
             ],
           ),
-          FriendList(),
+          const FriendList(),
         ],
       ),
     );
