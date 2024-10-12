@@ -53,7 +53,7 @@ class _DailycaloriesState extends State<Dailycalories> {
                 padding: const EdgeInsets.all(25),
                 child: Column(
                   children: [
-                    Row(
+                    const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Column(
@@ -62,7 +62,7 @@ class _DailycaloriesState extends State<Dailycalories> {
                               'Fats',
                               style: TextStyle(
                                 fontSize: 13,
-                                color: const Color.fromRGBO(137, 132, 132, 1),
+                                color: Color.fromRGBO(137, 132, 132, 1),
                                 fontWeight: FontWeight.w500
                               ),
                             ),
@@ -83,7 +83,7 @@ class _DailycaloriesState extends State<Dailycalories> {
                               'Carb.',
                               style: TextStyle(
                                 fontSize: 13,
-                                color: const Color.fromRGBO(137, 132, 132, 1),
+                                color: Color.fromRGBO(137, 132, 132, 1),
                                 fontWeight: FontWeight.w500
                               ),
                             ),
@@ -104,7 +104,7 @@ class _DailycaloriesState extends State<Dailycalories> {
                               'Proteins',
                               style: TextStyle(
                                 fontSize: 13,
-                                color: const Color.fromRGBO(137, 132, 132, 1),
+                                color: Color.fromRGBO(137, 132, 132, 1),
                                 fontWeight: FontWeight.w500
                               ),
                             ),
@@ -141,7 +141,7 @@ class _DailycaloriesState extends State<Dailycalories> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     Container(
                       child: SingleChildScrollView(
                         child: Column(
@@ -149,13 +149,13 @@ class _DailycaloriesState extends State<Dailycalories> {
                             Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(45),
-                                color: Color.fromRGBO(187, 207, 63, 1),
+                                color: const Color.fromRGBO(187, 207, 63, 1),
                                 boxShadow: [
                                   BoxShadow(
                                     color: Colors.black.withOpacity(0.3),
                                     spreadRadius: 2,
                                     blurRadius: 3,
-                                    offset: Offset(0, 3),
+                                    offset: const Offset(0, 3),
                                   ),
                                 ],
                               ),
@@ -175,7 +175,7 @@ class _DailycaloriesState extends State<Dailycalories> {
                                           style: AppWidget
                                               .headlineTextFeildStyle(),
                                         ),
-                                        Text(
+                                        const Text(
                                           'Oatmeal with fruits and nuts',
                                           style: TextStyle(
                                             fontSize: 13,
@@ -186,7 +186,7 @@ class _DailycaloriesState extends State<Dailycalories> {
                                     ),
                                   ),
                                   // Align เพื่อจัดวาง 450cal ไปทางขวาบน
-                                  Align(
+                                  const Align(
                                     alignment: Alignment.topRight,
                                     child: Text(
                                       '450cal',
@@ -199,17 +199,17 @@ class _DailycaloriesState extends State<Dailycalories> {
                                 ],
                               ),
                             ),
-                            SizedBox(height: 10),
+                            const SizedBox(height: 10),
                             Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(45),
-                                color: Color.fromRGBO(232, 235, 80, 1),
+                                color: const Color.fromRGBO(232, 235, 80, 1),
                                 boxShadow: [
                                   BoxShadow(
                                     color: Colors.black.withOpacity(0.3),
                                     spreadRadius: 2,
                                     blurRadius: 3,
-                                    offset: Offset(0, 3),
+                                    offset: const Offset(0, 3),
                                   ),
                                 ],
                               ),
@@ -229,7 +229,7 @@ class _DailycaloriesState extends State<Dailycalories> {
                                           style: AppWidget
                                               .headlineTextFeildStyle(),
                                         ),
-                                        Text(
+                                        const Text(
                                           'Oatmeal with fruits and nuts',
                                           style: TextStyle(
                                             fontSize: 13,
@@ -240,7 +240,7 @@ class _DailycaloriesState extends State<Dailycalories> {
                                     ),
                                   ),
                                   // Align เพื่อจัดวาง 450cal ไปทางขวาบน
-                                  Align(
+                                  const Align(
                                     alignment: Alignment.topRight,
                                     child: Text(
                                       '450cal',
@@ -253,17 +253,17 @@ class _DailycaloriesState extends State<Dailycalories> {
                                 ],
                               ),
                             ),
-                            SizedBox(height: 10),
+                            const SizedBox(height: 10),
                             Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(45),
-                                color: Color.fromRGBO(243, 164, 12, 1),
+                                color: const Color.fromRGBO(243, 164, 12, 1),
                                 boxShadow: [
                                   BoxShadow(
                                     color: Colors.black.withOpacity(0.3),
                                     spreadRadius: 2,
                                     blurRadius: 3,
-                                    offset: Offset(0, 3),
+                                    offset: const Offset(0, 3),
                                   ),
                                 ],
                               ),
@@ -283,7 +283,7 @@ class _DailycaloriesState extends State<Dailycalories> {
                                           style: AppWidget
                                               .headlineTextFeildStyle(),
                                         ),
-                                        Text(
+                                        const Text(
                                           'Oatmeal with fruits and nuts',
                                           style: TextStyle(
                                             fontSize: 13,
@@ -294,7 +294,7 @@ class _DailycaloriesState extends State<Dailycalories> {
                                     ),
                                   ),
                                   // Align เพื่อจัดวาง 450cal ไปทางขวาบน
-                                  Align(
+                                  const Align(
                                     alignment: Alignment.topRight,
                                     child: Text(
                                       '450cal',
@@ -307,17 +307,17 @@ class _DailycaloriesState extends State<Dailycalories> {
                                 ],
                               ),
                             ),
-                            SizedBox(height: 10),
+                            const SizedBox(height: 10),
                             Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(45),
-                                color: Color.fromRGBO(206, 134, 239, 1),
+                                color: const Color.fromRGBO(206, 134, 239, 1),
                                 boxShadow: [
                                   BoxShadow(
                                     color: Colors.black.withOpacity(0.3),
                                     spreadRadius: 2,
                                     blurRadius: 3,
-                                    offset: Offset(0, 3),
+                                    offset: const Offset(0, 3),
                                   ),
                                 ],
                               ),
@@ -337,7 +337,7 @@ class _DailycaloriesState extends State<Dailycalories> {
                                           style: AppWidget
                                               .headlineTextFeildStyle(),
                                         ),
-                                        Text(
+                                        const Text(
                                           'Oatmeal with fruits and nuts',
                                           style: TextStyle(
                                             fontSize: 13,
@@ -348,7 +348,7 @@ class _DailycaloriesState extends State<Dailycalories> {
                                     ),
                                   ),
                                   // Align เพื่อจัดวาง 450cal ไปทางขวาบน
-                                  Align(
+                                  const Align(
                                     alignment: Alignment.topRight,
                                     child: Text(
                                       '450cal',
@@ -365,7 +365,7 @@ class _DailycaloriesState extends State<Dailycalories> {
                         ),
                       ),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     GestureDetector(
                       onTap: () {
                         // แสดง popup สร้าง Planner
@@ -377,17 +377,17 @@ class _DailycaloriesState extends State<Dailycalories> {
                                 ""; // ตัวแปรเก็บชื่อ Planner ที่กรอก
 
                             return AlertDialog(
-                              title: Text("Create Planner"),
+                              title: const Text("Create Planner"),
                               content: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Text("Planner Name"),
+                                  const Text("Planner Name"),
                                   TextField(
                                     onChanged: (value) {
                                       plannerName =
                                           value; // อัพเดทค่าที่ผู้ใช้กรอก
                                     },
-                                    decoration: InputDecoration(
+                                    decoration: const InputDecoration(
                                       hintText: "Enter planner name",
                                       border: OutlineInputBorder(),
                                     ),
@@ -396,13 +396,13 @@ class _DailycaloriesState extends State<Dailycalories> {
                               ),
                               actions: [
                                 TextButton(
-                                  child: Text("Cancel"),
+                                  child: const Text("Cancel"),
                                   onPressed: () {
                                     Navigator.of(context).pop(); // ปิด popup
                                   },
                                 ),
                                 ElevatedButton(
-                                  child: Text("Create!"),
+                                  child: const Text("Create!"),
                                   onPressed: () {
                                     if (plannerName.isNotEmpty) {
                                       // ตรวจสอบว่าผู้ใช้ได้กรอกชื่อ Planner หรือไม่
@@ -412,7 +412,7 @@ class _DailycaloriesState extends State<Dailycalories> {
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                              builder: (context) => Bottomnav(
+                                              builder: (context) => const Bottomnav(
                                                   initialPage: MealPlan())));
                                     }
                                   },
@@ -425,17 +425,17 @@ class _DailycaloriesState extends State<Dailycalories> {
                         );
                       },
                       child: Container(
-                        margin: EdgeInsets.symmetric(vertical: 10),
-                        padding: EdgeInsets.symmetric(vertical: 10),
+                        margin: const EdgeInsets.symmetric(vertical: 10),
+                        padding: const EdgeInsets.symmetric(vertical: 10),
                         decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 79, 108, 78),
+                          color: const Color.fromARGB(255, 79, 108, 78),
                           borderRadius: BorderRadius.circular(10),
                           boxShadow: [
                             BoxShadow(
                               color: Colors.black.withOpacity(0.3),
                               spreadRadius: 1,
                               blurRadius: 3,
-                              offset: Offset(0, 3),
+                              offset: const Offset(0, 3),
                             ),
                           ],
                         ),

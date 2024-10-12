@@ -54,7 +54,7 @@ class _FoodRecommendationPlanState extends State<FoodRecommendationPlan> {
                 child: Column(
                   children: [
                     Container(
-                      child: Row(
+                      child: const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(Icons.access_time),
@@ -81,17 +81,17 @@ class _FoodRecommendationPlanState extends State<FoodRecommendationPlan> {
                                 ""; // ตัวแปรเก็บชื่อ Planner ที่กรอก
 
                             return AlertDialog(
-                              title: Text("Create Planner"),
+                              title: const Text("Create Planner"),
                               content: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Text("Planner Name"),
+                                  const Text("Planner Name"),
                                   TextField(
                                     onChanged: (value) {
                                       plannerName =
                                           value; // อัพเดทค่าที่ผู้ใช้กรอก
                                     },
-                                    decoration: InputDecoration(
+                                    decoration: const InputDecoration(
                                       hintText: "Enter planner name",
                                       border: OutlineInputBorder(),
                                     ),
@@ -100,13 +100,13 @@ class _FoodRecommendationPlanState extends State<FoodRecommendationPlan> {
                               ),
                               actions: [
                                 TextButton(
-                                  child: Text("Cancel"),
+                                  child: const Text("Cancel"),
                                   onPressed: () {
                                     Navigator.of(context).pop(); // ปิด popup
                                   },
                                 ),
                                 ElevatedButton(
-                                  child: Text("Create!"),
+                                  child: const Text("Create!"),
                                   onPressed: () {
                                     if (plannerName.isNotEmpty) {
                                       // ตรวจสอบว่าผู้ใช้ได้กรอกชื่อ Planner หรือไม่
@@ -116,7 +116,7 @@ class _FoodRecommendationPlanState extends State<FoodRecommendationPlan> {
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                              builder: (context) => Bottomnav(
+                                              builder: (context) => const Bottomnav(
                                                   initialPage: PlannerMain())));
                                     }
                                   },
@@ -129,17 +129,17 @@ class _FoodRecommendationPlanState extends State<FoodRecommendationPlan> {
                         );
                       },
                       child: Container(
-                        margin: EdgeInsets.symmetric(vertical: 10),
-                        padding: EdgeInsets.symmetric(vertical: 10),
+                        margin: const EdgeInsets.symmetric(vertical: 10),
+                        padding: const EdgeInsets.symmetric(vertical: 10),
                         decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 79, 108, 78),
+                          color: const Color.fromARGB(255, 79, 108, 78),
                           borderRadius: BorderRadius.circular(10),
                           boxShadow: [
                             BoxShadow(
                               color: Colors.black.withOpacity(0.3),
                               spreadRadius: 1,
                               blurRadius: 3,
-                              offset: Offset(0, 3),
+                              offset: const Offset(0, 3),
                             ),
                           ],
                         ),
@@ -178,17 +178,19 @@ class _FoodRecommendationPlanState extends State<FoodRecommendationPlan> {
 }
 
 class planlist extends StatelessWidget {
+  const planlist({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
       shrinkWrap: true, // เพื่อให้ไม่ใช้พื้นที่เกินความจำเป็น
-      physics: NeverScrollableScrollPhysics(), // ปิดการเลื่อนใน ListView นี้
+      physics: const NeverScrollableScrollPhysics(), // ปิดการเลื่อนใน ListView นี้
       itemCount: 7, // จำนวนรายการที่ต้องการ
       itemBuilder: (context, index) {
         return Container(
           margin:
-              EdgeInsets.symmetric(vertical: 5), // ตั้งค่าระยะห่างระหว่างรายการ
-          child: Planlist(), // แสดง Planlist() ที่คุณมีอยู่แล้ว
+              const EdgeInsets.symmetric(vertical: 5), // ตั้งค่าระยะห่างระหว่างรายการ
+          child: const Planlist(), // แสดง Planlist() ที่คุณมีอยู่แล้ว
         );
       },
     );

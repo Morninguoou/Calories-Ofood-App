@@ -68,7 +68,7 @@ class _FoodRecommendationPlanDetailState
                   padding: const EdgeInsets.all(15),
                   child: Column(
                     children: [
-                      Row(
+                      const Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Column(
@@ -77,7 +77,7 @@ class _FoodRecommendationPlanDetailState
                                 'Fats',
                                 style: TextStyle(
                                   fontSize: 13,
-                                  color: const Color.fromRGBO(137, 132, 132, 1),
+                                  color: Color.fromRGBO(137, 132, 132, 1),
                                 ),
                               ),
                               Text(
@@ -96,7 +96,7 @@ class _FoodRecommendationPlanDetailState
                                 'Carb.',
                                 style: TextStyle(
                                   fontSize: 13,
-                                  color: const Color.fromRGBO(137, 132, 132, 1),
+                                  color: Color.fromRGBO(137, 132, 132, 1),
                                 ),
                               ),
                               Text(
@@ -115,7 +115,7 @@ class _FoodRecommendationPlanDetailState
                                 'Proteins',
                                 style: TextStyle(
                                   fontSize: 13,
-                                  color: const Color.fromRGBO(137, 132, 132, 1),
+                                  color: Color.fromRGBO(137, 132, 132, 1),
                                 ),
                               ),
                               Text(
@@ -148,20 +148,20 @@ class _FoodRecommendationPlanDetailState
                           ),
                         ],
                       ),
-                      SizedBox(height: 5),
+                      const SizedBox(height: 5),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.calendar_today_outlined),
+                          const Icon(Icons.calendar_today_outlined),
                           Text('  Monday, 18 August  ',
                               style: AppWidget.dateboldTextFeildStyle()),
                         ],
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Container(
                         child: CustomNavBar(onItemTapped: _onItemTapped),
                       ),
-                      SizedBox(height: 10.0),
+                      const SizedBox(height: 10.0),
                       // Display the selected page
 
                       _pages[_selectedIndex],
