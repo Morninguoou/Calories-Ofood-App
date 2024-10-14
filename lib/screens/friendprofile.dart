@@ -18,20 +18,20 @@ class _FriendprofileState extends State<Friendprofile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFFCF5EC),
+      backgroundColor: const Color(0xFFFCF5EC),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Stack(
             alignment: Alignment.bottomCenter,
             children: [
-              Container(
+              SizedBox(
                 height: 180.0,
                 child: Stack(
                   children: [
                     Container(
                       height: 145.0,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                           color: Color.fromRGBO(240, 214, 181, 1),
                           borderRadius: BorderRadius.only(
                             bottomLeft: Radius.circular(20.0),
@@ -41,7 +41,7 @@ class _FriendprofileState extends State<Friendprofile> {
                   ],
                 ),
               ),
-              Positioned(
+              const Positioned(
                 child: CircleAvatar(
                   radius: 45.0,
                   backgroundColor: Color(0xFF000000),
@@ -49,7 +49,7 @@ class _FriendprofileState extends State<Friendprofile> {
               ),
             ],
           ),
-          SizedBox(height: 5.0),
+          const SizedBox(height: 5.0),
           Column(
             children: [
               Container(
@@ -57,7 +57,7 @@ class _FriendprofileState extends State<Friendprofile> {
                 child: Column(
                   children: [
                     Text('Name', style: AppWidget.nameTextFeildStyle()),
-                    Text('23 Friends',
+                    const Text('23 Friends',
                         style: TextStyle(
                           color: Color(0xFF4F6C4E),
                           fontSize: 14,
@@ -65,15 +65,15 @@ class _FriendprofileState extends State<Friendprofile> {
                           letterSpacing: 0.7,
                           fontFamily: 'Poppins',
                         )),
-                    Text('Bio'),
-                    Text('Bio'),
-                    Text('Bio'),
+                    const Text('Bio'),
+                    const Text('Bio'),
+                    const Text('Bio'),
                     GestureDetector(
                       child: Container(
                         width: 140.0,
                         height: 30,
                         decoration: BoxDecoration(
-                          color: Color(0xFF4F6C4E),
+                          color: const Color(0xFF4F6C4E),
                           borderRadius: BorderRadius.circular(30.0),
                         ),
                         child: Row(
@@ -83,7 +83,7 @@ class _FriendprofileState extends State<Friendprofile> {
                               'Edit profile ',
                               style: AppWidget.profilebuttonTextFeildStyle(),
                             ),
-                            Icon(
+                            const Icon(
                               Icons.edit_square,
                               color: Colors.white,
                             )
@@ -95,7 +95,7 @@ class _FriendprofileState extends State<Friendprofile> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    Bottomnav(initialPage: EditProfile())));
+                                    const Bottomnav(initialPage: EditProfile())));
                       },
                     ),
                   ],
@@ -104,11 +104,11 @@ class _FriendprofileState extends State<Friendprofile> {
             ],
           ),
           Container(
-            margin: EdgeInsets.only(left: 10),
+            margin: const EdgeInsets.only(left: 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   'Plans',
                   textAlign: TextAlign.start,
                   style: TextStyle(
@@ -119,12 +119,12 @@ class _FriendprofileState extends State<Friendprofile> {
                     fontFamily: 'Poppins',
                   ),
                 ),
-                Container(
+                SizedBox(
                   height: 165,
                   width: 400,
                   child: ListView(
                     scrollDirection: Axis.horizontal,
-                    children: [
+                    children: const [
                       MealProfile(),
                       MealProfile(),
                       MealProfile(),
@@ -133,11 +133,11 @@ class _FriendprofileState extends State<Friendprofile> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(right: 10),
+                  padding: const EdgeInsets.only(right: 10),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
+                      const Text(
                         'Friend Request',
                         textAlign: TextAlign.start,
                         style: TextStyle(
@@ -162,7 +162,7 @@ class _FriendprofileState extends State<Friendprofile> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      Friendrequests()), // เปลี่ยนหน้า
+                                      const Friendrequests()), // เปลี่ยนหน้า
                             );
                           },
                           child: Text(
@@ -175,15 +175,15 @@ class _FriendprofileState extends State<Friendprofile> {
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10.0,
                 ),
-                Container(
+                SizedBox(
                   height: 165,
                   width: 400,
                   child: ListView(
                     scrollDirection: Axis.horizontal,
-                    children: [
+                    children: const [
                       FriendReqProfile(),
                       FriendReqProfile(),
                       FriendReqProfile(),

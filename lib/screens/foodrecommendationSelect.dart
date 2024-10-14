@@ -68,13 +68,13 @@ class _FoodRecommendationSelectState extends State<FoodRecommendationSelect> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Text('Gender:',
+                          const Text('Gender:',
                               style: TextStyle(
                                 fontSize: 13,
                                 fontWeight: FontWeight.bold,
                                 fontFamily: 'Poppins',
                               )),
-                          SizedBox(width: 25),
+                          const SizedBox(width: 25),
                           GestureDetector(
                             onTap: () {
                               setState(() {
@@ -94,11 +94,11 @@ class _FoodRecommendationSelectState extends State<FoodRecommendationSelect> {
                                     color: Colors.black.withOpacity(0.3),
                                     spreadRadius: 1,
                                     blurRadius: 3,
-                                    offset: Offset(0, 2),
+                                    offset: const Offset(0, 2),
                                   ),
                                 ],
                               ),
-                              child: Row(
+                              child: const Row(
                                 children: [
                                   Icon(
                                     Icons.female, // ไอคอนที่แสดงข้างหน้า Female
@@ -118,7 +118,7 @@ class _FoodRecommendationSelectState extends State<FoodRecommendationSelect> {
                               ),
                             ),
                           ),
-                          SizedBox(width: 25), // ระยะห่างระหว่างปุ่ม
+                          const SizedBox(width: 25), // ระยะห่างระหว่างปุ่ม
                           GestureDetector(
                             onTap: () {
                               setState(() {
@@ -138,11 +138,11 @@ class _FoodRecommendationSelectState extends State<FoodRecommendationSelect> {
                                     color: Colors.black.withOpacity(0.3),
                                     spreadRadius: 1,
                                     blurRadius: 3,
-                                    offset: Offset(0, 2),
+                                    offset: const Offset(0, 2),
                                   ),
                                 ],
                               ),
-                              child: Row(
+                              child: const Row(
                                 children: [
                                   Icon(
                                     Icons.male, // ไอคอนที่แสดงข้างหน้า Male
@@ -164,14 +164,14 @@ class _FoodRecommendationSelectState extends State<FoodRecommendationSelect> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 20),
-                      Text('Weight Management:',
+                      const SizedBox(height: 20),
+                      const Text('Weight Management:',
                           style: TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.bold,
                             fontFamily: 'Poppins',
                           )),
-                      SizedBox(height: 15),
+                      const SizedBox(height: 15),
                       Row(
                         mainAxisAlignment:
                             MainAxisAlignment.center, // ปรับให้อยู่ตรงกลาง
@@ -212,7 +212,7 @@ class _FoodRecommendationSelectState extends State<FoodRecommendationSelect> {
                             ),
                           ),
 
-                          SizedBox(width: 20),
+                          const SizedBox(width: 20),
 
                           // ปุ่มสำหรับ Loss
                           ChoiceChip(
@@ -250,7 +250,7 @@ class _FoodRecommendationSelectState extends State<FoodRecommendationSelect> {
                             ),
                           ),
 
-                          SizedBox(width: 20),
+                          const SizedBox(width: 20),
 
                           // ปุ่มสำหรับ Stable
                           ChoiceChip(
@@ -289,11 +289,11 @@ class _FoodRecommendationSelectState extends State<FoodRecommendationSelect> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 25),
+                      const SizedBox(height: 25),
                       // เพิ่ม Row สำหรับข้อความ Weight และ TextField
                       Row(
                         children: [
-                          Text(
+                          const Text(
                             'Weight :',
                             style: TextStyle(
                               fontSize: 13,
@@ -301,7 +301,7 @@ class _FoodRecommendationSelectState extends State<FoodRecommendationSelect> {
                               fontFamily: 'Poppins',
                             ),
                           ),
-                          SizedBox(width: 10),
+                          const SizedBox(width: 10),
                           Expanded(
                             child: Container(
                               decoration: BoxDecoration(
@@ -312,19 +312,19 @@ class _FoodRecommendationSelectState extends State<FoodRecommendationSelect> {
                                     color: Colors.black.withOpacity(0.2),
                                     spreadRadius: 2,
                                     blurRadius: 5,
-                                    offset: Offset(0, 2),
+                                    offset: const Offset(0, 2),
                                   ),
                                 ],
                               ),
                               // ปรับขนาดกรอบที่ใส่เลขที่นี่
-                              constraints: BoxConstraints(
+                              constraints: const BoxConstraints(
                                   maxHeight: 40), // ตั้งค่าขนาดสูงสุด
                               child: TextField(
                                 onChanged: (value) {
                                   // เพิ่มโค้ดเมื่อค่าถูกเปลี่ยน
                                 },
                                 decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.symmetric(
+                                  contentPadding: const EdgeInsets.symmetric(
                                       vertical: 5,
                                       horizontal: 15), // ปรับขนาดของช่อง
                                   border: OutlineInputBorder(
@@ -336,8 +336,8 @@ class _FoodRecommendationSelectState extends State<FoodRecommendationSelect> {
                               ),
                             ),
                           ),
-                          SizedBox(width: 15),
-                          Text(
+                          const SizedBox(width: 15),
+                          const Text(
                             'to',
                             style: TextStyle(
                               fontSize: 13,
@@ -345,7 +345,7 @@ class _FoodRecommendationSelectState extends State<FoodRecommendationSelect> {
                               fontFamily: 'Poppins',
                             ),
                           ),
-                          SizedBox(width: 15),
+                          const SizedBox(width: 15),
                           Expanded(
                             child: Container(
                               decoration: BoxDecoration(
@@ -356,18 +356,18 @@ class _FoodRecommendationSelectState extends State<FoodRecommendationSelect> {
                                     color: Colors.black.withOpacity(0.2),
                                     spreadRadius: 2,
                                     blurRadius: 5,
-                                    offset: Offset(0, 2),
+                                    offset: const Offset(0, 2),
                                   ),
                                 ],
                               ),
-                              constraints: BoxConstraints(
+                              constraints: const BoxConstraints(
                                   maxHeight: 40), // ตั้งค่าขนาดสูงสุด
                               child: TextField(
                                 onChanged: (value) {
                                   // เพิ่มโค้ดเมื่อค่าถูกเปลี่ยน
                                 },
                                 decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.symmetric(
+                                  contentPadding: const EdgeInsets.symmetric(
                                       vertical: 5,
                                       horizontal: 15), // ปรับขนาดของช่อง
                                   border: OutlineInputBorder(
@@ -379,8 +379,8 @@ class _FoodRecommendationSelectState extends State<FoodRecommendationSelect> {
                               ),
                             ),
                           ),
-                          SizedBox(width: 15),
-                          Text(
+                          const SizedBox(width: 15),
+                          const Text(
                             'kg.',
                             style: TextStyle(
                               fontSize: 13,
@@ -390,11 +390,11 @@ class _FoodRecommendationSelectState extends State<FoodRecommendationSelect> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
 
                       Row(
                         children: [
-                          Text(
+                          const Text(
                             'Activity Level :',
                             style: TextStyle(
                               fontSize: 13,
@@ -402,7 +402,7 @@ class _FoodRecommendationSelectState extends State<FoodRecommendationSelect> {
                               fontFamily: 'Poppins',
                             ),
                           ),
-                          SizedBox(width: 10),
+                          const SizedBox(width: 10),
                           Expanded(
                             child: Container(
                               decoration: BoxDecoration(
@@ -416,12 +416,12 @@ class _FoodRecommendationSelectState extends State<FoodRecommendationSelect> {
                                         Colors.black.withOpacity(0.2), // สีเงา
                                     spreadRadius: 2, // ขยายขอบเขตของเงา
                                     blurRadius: 5, // ความเบลอของเงา
-                                    offset: Offset(0, 2), // ทิศทางเงา
+                                    offset: const Offset(0, 2), // ทิศทางเงา
                                   ),
                                 ],
                               ),
                               child: Padding(
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                     horizontal: 10), // ปรับ padding ที่นี่
                                 child: DropdownButton<String>(
                                   value:
@@ -446,7 +446,7 @@ class _FoodRecommendationSelectState extends State<FoodRecommendationSelect> {
                                   },
                                   isExpanded: true,
                                   underline:
-                                      SizedBox(), // ปิดเส้นขอบที่อยู่ด้านล่าง
+                                      const SizedBox(), // ปิดเส้นขอบที่อยู่ด้านล่าง
                                 ),
                               ),
                             ),
@@ -454,25 +454,25 @@ class _FoodRecommendationSelectState extends State<FoodRecommendationSelect> {
                         ],
                       ),
 
-                      SizedBox(height: 20),
-                      Text('Additional Options :',
+                      const SizedBox(height: 20),
+                      const Text('Additional Options :',
                           style: TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.bold,
                             fontFamily: 'Poppins',
                           )),
-                      SizedBox(height: 15),
-                      Optionblockgrey(),
-                      SizedBox(height: 25),
+                      const SizedBox(height: 15),
+                      const Optionblockgrey(),
+                      const SizedBox(height: 25),
                       Row(
                         children: [
-                          Text('Time :',
+                          const Text('Time :',
                               style: TextStyle(
                                 fontSize: 13,
                                 fontWeight: FontWeight.bold,
                                 fontFamily: 'Poppins',
                               )),
-                          SizedBox(width: 10),
+                          const SizedBox(width: 10),
                           Expanded(
                             child: Container(
                               decoration: BoxDecoration(
@@ -486,12 +486,12 @@ class _FoodRecommendationSelectState extends State<FoodRecommendationSelect> {
                                         Colors.black.withOpacity(0.2), // สีเงา
                                     spreadRadius: 2, // ขยายขอบเขตของเงา
                                     blurRadius: 5, // ความเบลอของเงา
-                                    offset: Offset(0, 2), // ทิศทางเงา
+                                    offset: const Offset(0, 2), // ทิศทางเงา
                                   ),
                                 ],
                               ),
                               child: Padding(
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                     horizontal: 10), // ปรับ padding ที่นี่
                                 child: DropdownButton<String>(
                                   value: selectedTime,
@@ -515,14 +515,14 @@ class _FoodRecommendationSelectState extends State<FoodRecommendationSelect> {
                                       : null, // ปิดการใช้งานเมื่อเลือก Gain หรือ Loss
                                   isExpanded: true,
                                   underline:
-                                      SizedBox(), // ปิดเส้นขอบที่อยู่ด้านล่าง
+                                      const SizedBox(), // ปิดเส้นขอบที่อยู่ด้านล่าง
                                 ),
                               ),
                             ),
                           ),
                         ],
                       ),
-                      SizedBox(height: 30),
+                      const SizedBox(height: 30),
                       GestureDetector(
                         onTap: () {
                           // ตรวจสอบข้อมูลกับ backend
@@ -533,7 +533,7 @@ class _FoodRecommendationSelectState extends State<FoodRecommendationSelect> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => Bottomnav(
+                                    builder: (context) => const Bottomnav(
                                         initialPage:
                                             FoodRecommendationPlan())));
                           } else {
@@ -543,12 +543,12 @@ class _FoodRecommendationSelectState extends State<FoodRecommendationSelect> {
                               barrierDismissible: false,
                               builder: (BuildContext context) {
                                 return AlertDialog(
-                                  title: Text("No Food Recommendations"),
-                                  content: Text(
+                                  title: const Text("No Food Recommendations"),
+                                  content: const Text(
                                       "Based on your selections, we are unable to recommend any food. Please choose new options."),
                                   actions: [
                                     TextButton(
-                                      child: Text("Go Back"),
+                                      child: const Text("Go Back"),
                                       onPressed: () {
                                         Navigator.of(context)
                                             .pop(); // ปิด popup
@@ -563,17 +563,17 @@ class _FoodRecommendationSelectState extends State<FoodRecommendationSelect> {
                           }
                         },
                         child: Container(
-                          margin: EdgeInsets.symmetric(vertical: 10),
-                          padding: EdgeInsets.symmetric(vertical: 10),
+                          margin: const EdgeInsets.symmetric(vertical: 10),
+                          padding: const EdgeInsets.symmetric(vertical: 10),
                           decoration: BoxDecoration(
-                            color: Color.fromARGB(255, 79, 108, 78),
+                            color: const Color.fromARGB(255, 79, 108, 78),
                             borderRadius: BorderRadius.circular(10),
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.black.withOpacity(0.3),
                                 spreadRadius: 1,
                                 blurRadius: 3,
-                                offset: Offset(0, 3),
+                                offset: const Offset(0, 3),
                               ),
                             ],
                           ),
@@ -606,10 +606,10 @@ class _FoodRecommendationSelectState extends State<FoodRecommendationSelect> {
               ),
             ),
           ),
-          Positioned(
+          const Positioned(
             top: 50,
             left: 30,
-            child: const IconBack(),
+            child: IconBack(),
           ),
         ],
       ),

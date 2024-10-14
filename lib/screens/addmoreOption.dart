@@ -55,12 +55,12 @@ class _MoreOptState extends State<MoreOpt> {
       body: Container(
         height: 765,
         width: 396,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Color(0xFFFCF5EC),
         ),
         child: Container(
-          margin: EdgeInsets.only(top: 75),
-          decoration: BoxDecoration(
+          margin: const EdgeInsets.only(top: 75),
+          decoration: const BoxDecoration(
             color: Color(0xFFFFFFFF),
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(60), topRight: Radius.circular(60)),
@@ -70,7 +70,7 @@ class _MoreOptState extends State<MoreOpt> {
             children: [
               Container(
                 /////////Title Begin
-                margin: EdgeInsets.only(left: 30, right: 30, top: 30),
+                margin: const EdgeInsets.only(left: 30, right: 30, top: 30),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -79,7 +79,7 @@ class _MoreOptState extends State<MoreOpt> {
                       style:
                           AppWidget.boldTextFeildStyle().copyWith(fontSize: 31),
                     ),
-                    Icon(
+                    const Icon(
                       Icons.close,
                       size: 40,
                     ),
@@ -89,7 +89,7 @@ class _MoreOptState extends State<MoreOpt> {
 
               // Food Nationality Filter
               Container(
-                margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -119,7 +119,7 @@ class _MoreOptState extends State<MoreOpt> {
                         );
                       }).toList(),
                     ),
-                    SizedBox(height: 10,),
+                    const SizedBox(height: 10,),
 
                     Text('Meals',
                         style: AppWidget.boldTextFeildStyle()),
@@ -147,7 +147,7 @@ class _MoreOptState extends State<MoreOpt> {
                         );
                       }).toList(),
                     ),
-                    SizedBox(height: 10,),
+                    const SizedBox(height: 10,),
 
                     Text('Food Type',
                         style: AppWidget.boldTextFeildStyle()),
@@ -175,7 +175,7 @@ class _MoreOptState extends State<MoreOpt> {
                         );
                       }).toList(),
                     ),
-                    SizedBox(height: 10,),
+                    const SizedBox(height: 10,),
 
                     Text('Cooking Method',
                         style: AppWidget.boldTextFeildStyle()),
@@ -203,7 +203,7 @@ class _MoreOptState extends State<MoreOpt> {
                         );
                       }).toList(),
                     ),
-                    SizedBox(height: 10,),
+                    const SizedBox(height: 10,),
 
                     Text('Main Ingredients',
                         style: AppWidget.boldTextFeildStyle()),
@@ -248,21 +248,21 @@ class FilterOption extends StatelessWidget {
   final String label;
   final bool isSelected;
 
-  const FilterOption({required this.label, required this.isSelected});
+  const FilterOption({super.key, required this.label, required this.isSelected});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
       decoration: BoxDecoration(
-        color: isSelected ? Color(0xFFF1C737) : Color(0xFFFFF0DE),
+        color: isSelected ? const Color(0xFFF1C737) : const Color(0xFFFFF0DE),
         borderRadius: BorderRadius.circular(20.0),
         //border: Border.all(color: isSelected ? Color(0xFFF1C737) : Color(0xFFFFF0DE)),
       ),
       child: Text(
         label,
         style: TextStyle(
-          color: isSelected ? Colors.black : Color(0xFF757575),
+          color: isSelected ? Colors.black : const Color(0xFF757575),
           fontWeight: FontWeight.bold,
           fontSize: 11,
         ),
