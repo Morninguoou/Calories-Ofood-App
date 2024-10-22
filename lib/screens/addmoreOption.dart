@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:projectapp/screens/mainpage.dart';
+import 'package:projectapp/widget/bottomnav.dart';
 import 'package:projectapp/widget/widget_support.dart';
 
 class MoreOpt extends StatefulWidget {
@@ -49,6 +51,12 @@ class _MoreOptState extends State<MoreOpt> {
   ];
   List<String> calories = ['low calorie', 'Moderate-calorie', 'high calorie'];
 
+  void clearAllFilters() {
+    setState(() {
+      selectedOptions.clear();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,6 +67,7 @@ class _MoreOptState extends State<MoreOpt> {
           color: Color(0xFFFCF5EC),
         ),
         child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 10),
           margin: const EdgeInsets.only(top: 75),
           decoration: const BoxDecoration(
             color: Color(0xFFFFFFFF),
@@ -69,7 +78,6 @@ class _MoreOptState extends State<MoreOpt> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                /////////Title Begin
                 margin: const EdgeInsets.only(left: 30, right: 30, top: 30),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -79,13 +87,18 @@ class _MoreOptState extends State<MoreOpt> {
                       style:
                           AppWidget.boldTextFeildStyle().copyWith(fontSize: 31),
                     ),
-                    const Icon(
-                      Icons.close,
-                      size: 40,
+                    GestureDetector(
+                      onTap: () {
+                        
+                      },
+                      child: const Icon(
+                        Icons.close,
+                        size: 40,
+                      ),
                     ),
                   ],
                 ),
-              ), /////////Title End
+              ),
 
               // Food Nationality Filter
               Container(
@@ -231,10 +244,59 @@ class _MoreOptState extends State<MoreOpt> {
                         );
                       }).toList(),
                     ),
-
                   ],
                 ),
               ),
+              SizedBox(height: 10,),
+              if (selectedOptions.isNotEmpty)
+                Container(child: 
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      GestureDetector(
+                        onTap: clearAllFilters,
+                        child: Container(
+                          padding: EdgeInsets.symmetric(horizontal: 55,vertical: 10),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.3),
+                                spreadRadius: 1,
+                                blurRadius: 3,
+                                offset: const Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                          child: Text("Clear All", style: TextStyle(color: Colors.red)),
+                        ),
+                      ),
+                      SizedBox(width: 15,),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => const Bottomnav(initialPage:Mainpage())));
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(horizontal: 45,vertical: 10),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Color.fromARGB(255, 79, 108, 78),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.3),
+                                spreadRadius: 1,
+                                blurRadius: 3,
+                                offset: const Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                          child: Text("Apply Filter" ,style: TextStyle(color: Colors.white),),
+                        ),
+                      )
+                    ],
+                  ),
+              )     
             ],
           ),
         ),

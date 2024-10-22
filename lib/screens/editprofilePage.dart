@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:projectapp/screens/myprofilePage.dart';
+import 'package:projectapp/widget/bottomnav.dart';
 import 'package:projectapp/widget/widget_support.dart';
 import 'package:projectapp/widget/icon_back.dart';
 
@@ -284,6 +286,9 @@ class _EditProfileState extends State<EditProfile> {
               height: 5.0,
             ),
             GestureDetector(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const Bottomnav(initialPage:Myprofile())));
+              },
               child: Container(
                 width: 140.0,
                 height: 30,

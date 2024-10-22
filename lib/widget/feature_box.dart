@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projectapp/screens/dailycaloriesPage.dart';
+import 'package:projectapp/screens/foodlistPage.dart';
 import 'package:projectapp/screens/foodrecommendationSelect.dart';
 import 'package:projectapp/widget/bottomnav.dart';
 import 'package:projectapp/widget/widget_support.dart';
@@ -56,47 +57,56 @@ class _FeatureBoxState extends State<FeatureBox> {
                 children: [
                   Text("this features!",
                       style: AppWidget.topicTextFeildStyle()),
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 241, 199, 55),
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.3),
-                          spreadRadius: 1,
-                          blurRadius: 3,
-                          offset: const Offset(0, 2),
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      children: [
-                        Image.asset(
-                          "asset/images/mainleftfeature.png",
-                          width: 60,
-                          height: 60,
-                        ),
-                        const SizedBox(
-                          height: 6,
-                        ),
-                        Text(
-                          "Calorie Calculation",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: 'Poppins',
-                            shadows: [
-                              Shadow(
-                                offset: const Offset(2.0, 2.0),
-                                blurRadius: 3.0,
-                                color: Colors.grey.withOpacity(0.5),
-                              ),
-                            ],
+                  GestureDetector(
+                    onTap: (){
+                       Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                Bottomnav(initialPage: FoodList())));
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: const Color.fromARGB(255, 241, 199, 55),
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.3),
+                            spreadRadius: 1,
+                            blurRadius: 3,
+                            offset: const Offset(0, 2),
                           ),
-                        )
-                      ],
+                        ],
+                      ),
+                      child: Column(
+                        children: [
+                          Image.asset(
+                            "asset/images/mainleftfeature.png",
+                            width: 60,
+                            height: 60,
+                          ),
+                          const SizedBox(
+                            height: 6,
+                          ),
+                          Text(
+                            "Calorie Calculation",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              fontFamily: 'Poppins',
+                              shadows: [
+                                Shadow(
+                                  offset: const Offset(2.0, 2.0),
+                                  blurRadius: 3.0,
+                                  color: Colors.grey.withOpacity(0.5),
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   )
                 ],

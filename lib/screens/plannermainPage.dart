@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:projectapp/screens/foodlistPage.dart';
 import 'package:projectapp/widget/bottomnav.dart';
 import 'package:projectapp/screens/planindatelistPage.dart';
 import 'package:projectapp/widget/widget_support.dart';
@@ -197,7 +198,11 @@ class _PlannerMainState extends State<PlannerMain> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Function when button is pressed
+           Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    Bottomnav(initialPage: FoodList())));
         },
         child: const Icon(Icons.add),
       ),

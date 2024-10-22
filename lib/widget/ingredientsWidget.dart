@@ -9,6 +9,20 @@ class Ingredientswidget extends StatefulWidget {
 }
 
 class _IngredientswidgetState extends State<Ingredientswidget> {
+  int quantity = 0;
+
+  void addQuantity(){
+    setState(() {
+      quantity += 1;
+    });
+  }
+
+  void subtractQuantity(){
+    setState(() {
+      quantity = quantity <= 0 ? 0 : quantity - 1;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -28,16 +42,19 @@ class _IngredientswidgetState extends State<Ingredientswidget> {
                 Container(
                   child: Row(
                     children: [
-                      Container(
-                        padding: const EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                          color: const Color.fromARGB(255, 79, 108, 78),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: const Icon(
-                          Icons.remove,
-                          color: Colors.white,
-                          size: 18,
+                      GestureDetector(
+                        onTap: subtractQuantity,
+                        child: Container(
+                          padding: const EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 79, 108, 78),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: const Icon(
+                            Icons.remove,
+                            color: Colors.white,
+                            size: 18,
+                          ),
                         ),
                       ),
                       Container(
@@ -49,20 +66,23 @@ class _IngredientswidgetState extends State<Ingredientswidget> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Text(
-                          "1",
+                          "$quantity",
                           style: AppWidget.boldTextFeildStyle(),
                         ),
                       ),
-                      Container(
-                        padding: const EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                          color: const Color.fromARGB(255, 79, 108, 78),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: const Icon(
-                          Icons.add,
-                          color: Colors.white,
-                          size: 18,
+                      GestureDetector(
+                        onTap: addQuantity,
+                        child: Container(
+                          padding: const EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 79, 108, 78),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: const Icon(
+                            Icons.add,
+                            color: Colors.white,
+                            size: 18,
+                          ),
                         ),
                       ),
                     ],
