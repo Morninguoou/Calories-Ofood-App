@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:projectapp/screens/foodlistPage.dart';
+import 'package:projectapp/screens/foodrecommendationSelect.dart';
+import 'package:projectapp/widget/bottomnav.dart';
 import 'package:projectapp/widget/widget_support.dart';
 
 class Searchbar extends StatefulWidget {
@@ -34,7 +37,13 @@ class _SearchbarState extends State<Searchbar> {
           contentPadding: const EdgeInsets.symmetric(vertical: 5),
           suffixIcon: GestureDetector(
             //link to food list
-            onTap: (){},
+            onTap: (){
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        Bottomnav(initialPage: FoodList())));
+            },
             child: Container(
               height: 30,
               width: 30,
