@@ -12,7 +12,7 @@ class _NotiState extends State<Noti> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 765,
+      height: MediaQuery.of(context).size.height,
       width: 396,
       decoration: BoxDecoration(
         color: Color(0xFFFCF5EC),
@@ -29,6 +29,14 @@ class _NotiState extends State<Noti> {
               'Notification',
               style: AppWidget.boldTextFeildStyle().copyWith(fontSize: 31),
             ),
+            Container(
+              alignment: Alignment.center,
+              child: Image.asset(
+              "asset/images/no notification.png",
+            ),
+            ),
+            
+
           ],
         ),
       ),
