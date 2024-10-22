@@ -27,184 +27,268 @@ class _PlannerMainState extends State<PlannerMain> {
           fontWeight: FontWeight.bold,
         ),
       ),
-      body: Column(
+      body: Stack(
+        alignment: Alignment.bottomCenter,
         children: [
-          Padding(
-            padding: const EdgeInsets.all(0.0),
-            child: Container(
-              decoration: BoxDecoration(
-                color: Color.fromARGB(255, 253, 253, 253),
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(60.0),
-                  topRight: Radius.circular(60.0),
-                ),
-              ),
-              height: 656.0,
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                child: ListView.builder(
-                  itemCount: 7, // Number of items to display
-                  itemBuilder: (context, index) {
-                    return Container(
-                      margin: EdgeInsets.only(top: 20.0, left: 5, right: 5),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.white,
-                        //border: Border.all(color: Colors.black), // Added border
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.3),
-                            spreadRadius: 1,
-                            blurRadius: 3,
-                            offset: Offset(0, 2),
+          Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(0.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Color.fromARGB(255, 253, 253, 253),
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(60.0),
+                      topRight: Radius.circular(60.0),
+                    ),
+                  ),
+                  height: 656.0,
+                  child: Padding(
+                    padding: EdgeInsets.only(top: 20, left: 20, right: 20),
+                    child: ListView.builder(
+                      itemCount: 7, // Number of items to display
+                      itemBuilder: (context, index) {
+                        return Container(
+                          margin: EdgeInsets.only(top: 10.0, left: 5, right: 5, bottom: 10.0),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: Colors.white,
+                            //border: Border.all(color: Colors.black), // Added border
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.3),
+                                spreadRadius: 1,
+                                blurRadius: 3,
+                                offset: Offset(0, 2),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                      child: Stack(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.all(10.0),
-                            child: Column(
-                              // Align the text to the top-left
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Plan ${index + 1}',
-                                  style: TextStyle(
-                                    fontSize: 20.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                SizedBox(
-                                    height: 10), // Adds spacing between texts
-                                Text(
-                                  'Details of Plan ${index + 1}.\n\n',
-                                  style: TextStyle(fontSize: 16),
-                                ),
-                                // Ensure text can wrap properly
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                          child: Stack(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.all(10.0),
+                                child: Column(
+                                  // Align the text to the top-left
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Icon(Icons.access_time),
-                                    Text(' 1 week・18 August - 24 August'),
+                                    Text(
+                                      'Plan ${index + 1}',
+                                      style: TextStyle(
+                                        fontSize: 20.0,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                        height:
+                                            10), // Adds spacing between texts
+                                    Text(
+                                      'Details of Plan ${index + 1}.\n\n',
+                                      style: TextStyle(fontSize: 16),
+                                    ),
+                                    // Ensure text can wrap properly
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(Icons.access_time),
+                                        Text(' 1 week・18 August - 24 August'),
+                                      ],
+                                    ),
                                   ],
                                 ),
-                              ],
-                            ),
-                          ),
-                          // Positioned icon in the top-right corner
-                          Positioned(
-                            top: 5,
-                            right: 5,
-                            child: GestureDetector(
-                              onTap: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext) {
-                                    return AlertDialog(
-                                      titlePadding: EdgeInsets.zero,
-                                      backgroundColor: Color(0xFFF0D6B5),
-                                      title: Container(
-                                        height: 40,
-                                        decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(25),
-                                                topRight: Radius.circular(25)),
-                                            color: Colors.red),
-                                        child: Icon(
-                                          Icons.warning_rounded,
-                                          size: 40,
-                                        ),
-                                      ),
-                                      content: Text('Are you sure you want to delete ?',style:AppWidget.nutrientTextFeildStyle().copyWith(fontWeight: FontWeight.w600,fontSize: 16),textAlign: TextAlign.center,),
-                                      actions: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            TextButton(
-                                              onPressed: () {
-                                                Navigator.of(context).pop();
-                                              },
-                                              child: Container(
-                                                alignment: Alignment.center,
-                                                width: 90,
-                                                height: 40,
-                                                decoration: BoxDecoration(
-                                                  color: Color(0xFF4F6C4E),
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                ),
-                                                child: Text('Cancel', style: AppWidget.lightTextFeildStyle().copyWith(color: Colors.white),),
-                                              ),
+                              ),
+                              // Positioned icon in the top-right corner
+                              Positioned(
+                                top: 5,
+                                right: 5,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext) {
+                                        return AlertDialog(
+                                          titlePadding: EdgeInsets.zero,
+                                          backgroundColor: Color(0xFFF0D6B5),
+                                          title: Container(
+                                            height: 40,
+                                            decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.only(
+                                                    topLeft:
+                                                        Radius.circular(25),
+                                                    topRight:
+                                                        Radius.circular(25)),
+                                                color: Colors.red),
+                                            child: Icon(
+                                              Icons.warning_rounded,
+                                              size: 40,
                                             ),
-                                            TextButton(
-                                              onPressed: () {
-                                                Navigator.of(context).pop();
-                                              },
-                                              child: Container(
-                                                alignment: Alignment.center,
-                                                width: 90,
-                                                height: 40,
-                                                decoration: BoxDecoration(
-                                                  color: Color(0xFFFFFFFF),
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
+                                          ),
+                                          content: Text(
+                                            'Are you sure you want to delete ?',
+                                            style: AppWidget
+                                                    .nutrientTextFeildStyle()
+                                                .copyWith(
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize: 16),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                          actions: [
+                                            Row(
+                                              mainAxisAlignment: 
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                TextButton(
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                  child: Container(
+                                                    alignment: Alignment.center,
+                                                    width: 90,
+                                                    height: 40,
+                                                    decoration: BoxDecoration(
+                                                      color: Color(0xFF4F6C4E),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                      boxShadow: [
+                                                        BoxShadow(
+                                                          color: Colors.black.withOpacity(0.3),
+                                                          spreadRadius: 1,
+                                                          blurRadius: 3,
+                                                          offset: Offset(0, 2),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    child: Text(
+                                                      'Cancel',
+                                                      style: AppWidget
+                                                              .lightTextFeildStyle()
+                                                          .copyWith(
+                                                              color:
+                                                                  Colors.white),
+                                                    ),
+                                                  ),
                                                 ),
-                                                child: Text(
-                                                  'Confirm',
-                                                  style: AppWidget
-                                                          .lightTextFeildStyle()
-                                                      .copyWith(
-                                                          color: Colors.red),
+                                                TextButton(
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                  child: Container(
+                                                    alignment: Alignment.center,
+                                                    width: 90,
+                                                    height: 40,
+                                                    decoration: BoxDecoration(
+                                                      color: Color(0xFFFFFFFF),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                              boxShadow: [
+                                                                BoxShadow(
+                                                                  color: Colors.black.withOpacity(0.3),
+                                                                  spreadRadius: 1,
+                                                                  blurRadius: 3,
+                                                                  offset: Offset(0, 2),
+                                                                ),
+                                                              ],
+                                                    ),
+                                                    child: Text(
+                                                      'Confirm',
+                                                      style: AppWidget
+                                                              .lightTextFeildStyle()
+                                                          .copyWith(
+                                                              color:
+                                                                  Colors.red),
+                                                    ),
+                                                  ),
                                                 ),
-                                              ),
+                                              ],
                                             ),
                                           ],
-                                        ),
-                                      ],
+                                        );
+                                      },
                                     );
                                   },
-                                );
-                              },
-                              child: Icon(
-                                Icons.cancel,
-                                color: Colors.red,
+                                  child: Icon(
+                                    Icons.cancel,
+                                    color: Colors.red,
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
-                          Positioned(
-                            top: 10,
-                            right: 50,
-                            child: GestureDetector(
-                              child: Text(
-                                'More Detail',
-                                style: AppWidget.moredetailTextFeildStyle(),
+                              Positioned(
+                                top: 10,
+                                right: 50,
+                                child: GestureDetector(
+                                  child: Text(
+                                    'More Detail',
+                                    style: AppWidget.moredetailTextFeildStyle(),
+                                  ),
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => Bottomnav(
+                                                initialPage:
+                                                    MoreDetailPlanner())));
+                                  },
+                                ),
                               ),
-                              onTap: () {Navigator.push(context,MaterialPageRoute(builder: (context) => Bottomnav(initialPage: MoreDetailPlanner())));
-                              },
-                            ),
+                            ],
                           ),
-                        ],
-                      ),
-                    );
-                  },
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Positioned(
+            bottom: 15,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            Bottomnav(initialPage: FoodList())));
+              },
+              child: Container(
+                padding: EdgeInsets.only(left: 15, right: 15),
+                height: 40,
+                constraints: const BoxConstraints(
+                  maxWidth: 200,
+                ),
+                decoration: BoxDecoration(
+                  color: Color(0xFF4F6C4E),
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.3),
+                      spreadRadius: 1,
+                      blurRadius: 3,
+                      offset: Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    const Icon(
+                      Icons.add_circle_outline_sharp,
+                      color: Color(0xFFFFFFFF),
+                    ),
+                    Text(
+                      'Add More Planner',
+                      style: AppWidget.lightTextFeildStyle()
+                          .copyWith(color: Colors.white),
+                    ),
+                  ],
                 ),
               ),
             ),
           ),
         ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-           Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) =>
-                    Bottomnav(initialPage: FoodList())));
-        },
-        child: const Icon(Icons.add),
       ),
     );
   }
