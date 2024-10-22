@@ -22,7 +22,6 @@ class _IngredientswidgetState extends State<Ingredientswidget> {
       quantity = quantity <= 0 ? 0 : quantity - 1;
     });
   }
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(

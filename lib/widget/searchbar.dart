@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projectapp/screens/foodlistPage.dart';
+import 'package:projectapp/screens/foodrecommendationSelect.dart';
 import 'package:projectapp/widget/bottomnav.dart';
 import 'package:projectapp/widget/widget_support.dart';
 
@@ -37,7 +38,7 @@ class _SearchbarState extends State<Searchbar> {
           suffixIcon: GestureDetector(
             //link to food list
             onTap: (){
-               Navigator.push(
+              Navigator.push(
                 context,
                 MaterialPageRoute(
                     builder: (context) =>

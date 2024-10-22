@@ -59,7 +59,7 @@ class _FeatureBoxState extends State<FeatureBox> {
                       style: AppWidget.topicTextFeildStyle()),
                   GestureDetector(
                     onTap: (){
-                       Navigator.push(
+                      Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
