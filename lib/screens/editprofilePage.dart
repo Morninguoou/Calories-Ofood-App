@@ -263,7 +263,7 @@ class _EditProfileState extends State<EditProfile> {
                   Text('Weight',
                       style: AppWidget.editprofiletitleTextFeildStyle()),
                   Container(
-                    height: 33.0,
+                    height: 33.0, 
                     decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(10.0)),
