@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:projectapp/screens/mainpage.dart';
+import 'package:projectapp/widget/bottomnav.dart';
 import 'package:projectapp/widget/widget_support.dart';
 
 class MoreOpt extends StatefulWidget {
@@ -9,10 +11,13 @@ class MoreOpt extends StatefulWidget {
 }
 
 class _MoreOptState extends State<MoreOpt> {
-  // List of selected options to store the state of the filters
+  // List of confirmed selected options
   List<String> selectedOptions = [];
 
-  // Example list of food nationalities
+  // Temporary list to store the selected options before confirmation
+  List<String> tempSelectedOptions = [];
+
+  // Example lists of options
   List<String> foodNationalities = [
     'Thai Food',
     'French Food',
@@ -37,7 +42,7 @@ class _MoreOptState extends State<MoreOpt> {
   List<String> mainIngredient = [
     'Beans&Legumes',
     'Beef & Veal',
-    'Cheese & Diary',
+    'Cheese & Dairy',
     'Eggs',
     'Chicken & Poultry',
     'Fish & Seafood',
@@ -47,19 +52,18 @@ class _MoreOptState extends State<MoreOpt> {
     'Rice & Grains',
     'Vegetables'
   ];
-  List<String> calories = ['low calorie', 'Moderate-calorie', 'high calorie'];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        height: 765,
+        height: MediaQuery.of(context).size.height,
         width: 396,
         decoration: const BoxDecoration(
           color: Color(0xFFFCF5EC),
         ),
         child: Container(
-          margin: const EdgeInsets.only(top: 75),
+          margin: const EdgeInsets.only(top: 70),
           decoration: const BoxDecoration(
             color: Color(0xFFFFFFFF),
             borderRadius: BorderRadius.only(
@@ -68,8 +72,8 @@ class _MoreOptState extends State<MoreOpt> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Title Begin
               Container(
-                /////////Title Begin
                 margin: const EdgeInsets.only(left: 30, right: 30, top: 30),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -79,176 +83,174 @@ class _MoreOptState extends State<MoreOpt> {
                       style:
                           AppWidget.boldTextFeildStyle().copyWith(fontSize: 31),
                     ),
-                    const Icon(
-                      Icons.close,
-                      size: 40,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    Bottomnav(initialPage: Mainpage())));
+                      },
+                      child: const Icon(
+                        Icons.close,
+                        size: 40,
+                      ),
                     ),
-                  ],
-                ),
-              ), /////////Title End
-
-              // Food Nationality Filter
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Food Nationality',
-                        style: AppWidget.boldTextFeildStyle()),
-                    // Wrapping the options in Wrap for responsiveness
-                    Wrap(
-                      spacing: 8.0, // Horizontal space between options
-                      runSpacing: 8.0, // Vertical space between rows of options
-                      children: foodNationalities.map((nationality) {
-                        // Each option wrapped in GestureDetector
-                        bool isSelected = selectedOptions.contains(nationality);
-                        return GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              if (isSelected) {
-                                selectedOptions.remove(nationality);
-                              } else {
-                                selectedOptions.add(nationality);
-                              }
-                            });
-                          },
-                          child: FilterOption(
-                            label: nationality,
-                            isSelected: isSelected,
-                          ),
-                        );
-                      }).toList(),
-                    ),
-                    const SizedBox(height: 10,),
-
-                    Text('Meals',
-                        style: AppWidget.boldTextFeildStyle()),
-                    // Wrapping the options in Wrap for responsiveness
-                    Wrap(
-                      spacing: 8.0, // Horizontal space between options
-                      runSpacing: 8.0, // Vertical space between rows of options
-                      children: meals.map((nationality) {
-                        // Each option wrapped in GestureDetector
-                        bool isSelected = selectedOptions.contains(nationality);
-                        return GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              if (isSelected) {
-                                selectedOptions.remove(nationality);
-                              } else {
-                                selectedOptions.add(nationality);
-                              }
-                            });
-                          },
-                          child: FilterOption(
-                            label: nationality,
-                            isSelected: isSelected,
-                          ),
-                        );
-                      }).toList(),
-                    ),
-                    const SizedBox(height: 10,),
-
-                    Text('Food Type',
-                        style: AppWidget.boldTextFeildStyle()),
-                    // Wrapping the options in Wrap for responsiveness
-                    Wrap(
-                      spacing: 8.0, // Horizontal space between options
-                      runSpacing: 8.0, // Vertical space between rows of options
-                      children: foodType.map((nationality) {
-                        // Each option wrapped in GestureDetector
-                        bool isSelected = selectedOptions.contains(nationality);
-                        return GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              if (isSelected) {
-                                selectedOptions.remove(nationality);
-                              } else {
-                                selectedOptions.add(nationality);
-                              }
-                            });
-                          },
-                          child: FilterOption(
-                            label: nationality,
-                            isSelected: isSelected,
-                          ),
-                        );
-                      }).toList(),
-                    ),
-                    const SizedBox(height: 10,),
-
-                    Text('Cooking Method',
-                        style: AppWidget.boldTextFeildStyle()),
-                    // Wrapping the options in Wrap for responsiveness
-                    Wrap(
-                      spacing: 8.0, // Horizontal space between options
-                      runSpacing: 8.0, // Vertical space between rows of options
-                      children: cookingMethod.map((nationality) {
-                        // Each option wrapped in GestureDetector
-                        bool isSelected = selectedOptions.contains(nationality);
-                        return GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              if (isSelected) {
-                                selectedOptions.remove(nationality);
-                              } else {
-                                selectedOptions.add(nationality);
-                              }
-                            });
-                          },
-                          child: FilterOption(
-                            label: nationality,
-                            isSelected: isSelected,
-                          ),
-                        );
-                      }).toList(),
-                    ),
-                    const SizedBox(height: 10,),
-
-                    Text('Main Ingredients',
-                        style: AppWidget.boldTextFeildStyle()),
-                    // Wrapping the options in Wrap for responsiveness
-                    Wrap(
-                      spacing: 8.0, // Horizontal space between options
-                      runSpacing: 8.0, // Vertical space between rows of options
-                      children: mainIngredient.map((nationality) {
-                        // Each option wrapped in GestureDetector
-                        bool isSelected = selectedOptions.contains(nationality);
-                        return GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              if (isSelected) {
-                                selectedOptions.remove(nationality);
-                              } else {
-                                selectedOptions.add(nationality);
-                              }
-                            });
-                          },
-                          child: FilterOption(
-                            label: nationality,
-                            isSelected: isSelected,
-                          ),
-                        );
-                      }).toList(),
-                    ),
-
                   ],
                 ),
               ),
+              // Filters Section Begin
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const NeverScrollableScrollPhysics(),
+                  padding: const EdgeInsets.all(10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildFilterSection(
+                          'Food Nationality', foodNationalities),
+                      _buildFilterSection('Meals', meals),
+                      _buildFilterSection('Food Type', foodType),
+                      _buildFilterSection('Cooking Method', cookingMethod),
+                      _buildFilterSection('Main Ingredients', mainIngredient),
+                    ],
+                  ),
+                ),
+              ),
+
+              // Confirm Button, show only if there's something in tempSelectedOptions
+              if (tempSelectedOptions.isNotEmpty)
+                Padding(
+                  padding: EdgeInsets.only(bottom: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.3),
+                              spreadRadius: 1,
+                              blurRadius: 10,
+                              offset: Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        width: 160,
+                        child: ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                selectedOptions = [];
+                                tempSelectedOptions = [];
+                              });
+                              // ScaffoldMessenger.of(context).showSnackBar(
+                              //   const SnackBar(content: Text('Options cleared!')),
+                              // );
+                            },
+                            style: ButtonStyle(
+                              backgroundColor: WidgetStateProperty.all<Color>(
+                                  Color(0xFFFFFFFF)),
+                              foregroundColor: WidgetStateProperty.all<Color>(
+                                  Color(0xFFEF3B4F)),
+                              shape: WidgetStateProperty.all<OutlinedBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      10.0), // Change button border radius
+                                ),
+                              ),
+                            ),
+                            child: const Text('Clear All')),
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.3),
+                              spreadRadius: 1,
+                              blurRadius: 10,
+                              offset: Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        width: 160,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              selectedOptions = List.from(tempSelectedOptions);
+                            });
+                            // ScaffoldMessenger.of(context).showSnackBar(
+                            //   const SnackBar(content: Text('Options confirmed!')),
+                            // );
+                          },
+                          style: ButtonStyle(
+                            backgroundColor: WidgetStateProperty.all<Color>(
+                                Color(0xFF4F6C4E)),
+                            foregroundColor:
+                                WidgetStateProperty.all<Color>(Colors.white),
+                            shape: WidgetStateProperty.all<OutlinedBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(
+                                    10.0), // Change button border radius
+                              ),
+                            ),
+                          ),
+                          child: const Text('Apply Filter'),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
             ],
           ),
         ),
       ),
     );
   }
+
+  // Function to build filter sections
+  Widget _buildFilterSection(String title, List<String> options) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(title, style: AppWidget.boldTextFeildStyle()),
+        const SizedBox(height: 10),
+        Wrap(
+          spacing: 8.0, // Horizontal space between options
+          runSpacing: 8.0, // Vertical space between rows of options
+          children: options.map((option) {
+            bool isSelected = tempSelectedOptions.contains(option);
+            return GestureDetector(
+              onTap: () {
+                setState(() {
+                  if (isSelected) {
+                    tempSelectedOptions.remove(option);
+                  } else {
+                    tempSelectedOptions.add(option);
+                  }
+                });
+              },
+              child: FilterOption(
+                label: option,
+                isSelected: isSelected,
+              ),
+            );
+          }).toList(),
+        ),
+        const SizedBox(height: 10),
+      ],
+    );
+  }
 }
 
-// Filter Option Widget with customizable appearance based on selection
+// Filter Option Widget
 class FilterOption extends StatelessWidget {
   final String label;
   final bool isSelected;
 
-  const FilterOption({super.key, required this.label, required this.isSelected});
+  const FilterOption(
+      {super.key, required this.label, required this.isSelected});
 
   @override
   Widget build(BuildContext context) {
@@ -257,7 +259,6 @@ class FilterOption extends StatelessWidget {
       decoration: BoxDecoration(
         color: isSelected ? const Color(0xFFF1C737) : const Color(0xFFFFF0DE),
         borderRadius: BorderRadius.circular(20.0),
-        //border: Border.all(color: isSelected ? Color(0xFFF1C737) : Color(0xFFFFF0DE)),
       ),
       child: Text(
         label,
@@ -269,5 +270,4 @@ class FilterOption extends StatelessWidget {
       ),
     );
   }
-
 }
