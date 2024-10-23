@@ -43,7 +43,7 @@ class _FoodRecommendationPlanDetailState
                 Container(
                   margin: const EdgeInsets.only(top: 60),
                   child: Text(
-                    'Daily Calories',
+                    'Food Recommendation',
                     style: AppWidget.headlineTextFeildStyle(),
                   ),
                 ),

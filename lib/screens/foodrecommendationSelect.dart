@@ -16,7 +16,7 @@ class FoodRecommendationSelect extends StatefulWidget {
 class _FoodRecommendationSelectState extends State<FoodRecommendationSelect> {
   String selectedGender = '';
   String selectedWeightManagement =
-      'Stable'; // เพิ่มตัวแปรสำหรับ Weight Management
+      'None'; // เพิ่มตัวแปรสำหรับ Weight Management
   String selectedTime = 'Morning';
   String selectedActivityLevel =
       'Sedentary'; // ตัวแปรสำหรับช่อง select ข้างๆ Time
