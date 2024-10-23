@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projectapp/screens/signupPage.dart';
 import 'package:projectapp/widget/widget_support.dart';
+import 'package:projectapp/api/authentication/signin.dart'; // Import your AuthService
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -16,15 +17,28 @@ class _LoginState extends State<Login> {
   String? _emailError;
   String? _passwordError;
 
+  // Method to call the signIn method from AuthService
+  Future<void> _handleSignIn() async {
+    String email = _emailController.text;
+    String password = _passwordController.text;
+
+    // Call the AuthService.signIn function with email and password
+    await AuthService.signIn(email, password);
+
+    // No need to show anything or update the UI after sign-in
+  }
+
+  // Validate the email and password inputs
   void _validateInputs() {
     setState(() {
       _emailError = _emailController.text.isEmpty ? "Please Enter Your Email" : null;
       _passwordError = _passwordController.text.isEmpty ? "Please Enter Your Password" : null;
-
-      if (_emailError == null && _passwordError == null) {
-        // Perform login logic here
-      }
     });
+
+    // If there are no errors, proceed to sign-in
+    if (_emailError == null && _passwordError == null) {
+      _handleSignIn();
+    }
   }
 
   @override
@@ -34,6 +48,7 @@ class _LoginState extends State<Login> {
         child: Container(
           child: Stack(
             children: [
+              // Background gradient
               Container(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height / 2,
@@ -48,9 +63,10 @@ class _LoginState extends State<Login> {
                   ),
                 ),
               ),
+              // Foreground content
               Container(
-                margin:
-                    EdgeInsets.only(top: MediaQuery.of(context).size.height / 2.5),
+                margin: EdgeInsets.only(
+                    top: MediaQuery.of(context).size.height / 2.5),
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
                 decoration: const BoxDecoration(
@@ -61,6 +77,7 @@ class _LoginState extends State<Login> {
                 ),
                 child: const Text(""),
               ),
+              // Login form
               Container(
                 margin: const EdgeInsets.only(top: 70, left: 30, right: 30),
                 child: Column(
@@ -79,7 +96,6 @@ class _LoginState extends State<Login> {
                       child: Container(
                         padding: const EdgeInsets.only(left: 20, right: 20),
                         width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height / 2,
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(20),
@@ -122,7 +138,7 @@ class _LoginState extends State<Login> {
                             ),
                             const SizedBox(height: 40),
                             GestureDetector(
-                              onTap: _validateInputs,
+                              onTap: _validateInputs, // On tap, validate inputs and sign in
                               child: Material(
                                 elevation: 5,
                                 borderRadius: BorderRadius.circular(20),
@@ -138,10 +154,11 @@ class _LoginState extends State<Login> {
                                     child: Text(
                                       "LOGIN",
                                       style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                          fontFamily: 'Poppins'),
+                                        color: Colors.white,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'Poppins',
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -170,7 +187,9 @@ class _LoginState extends State<Login> {
                           ),
                           Text(
                             " Join now.",
-                            style: AppWidget.semiBoldTextFeildStyle().copyWith(color: Color.fromARGB(255, 79, 108, 78)),
+                            style: AppWidget.semiBoldTextFeildStyle().copyWith(
+                                  color: const Color.fromARGB(255, 79, 108, 78),
+                                ),
                           ),
                         ],
                       ),
