@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:projectapp/screens/signupPage.dart';
+import 'package:projectapp/screens/mainPage.dart'; // Import your MainPage
 import 'package:projectapp/widget/widget_support.dart';
-import 'package:projectapp/api/authentication/signin.dart'; // Import your AuthService
-
+import 'package:projectapp/api/authentication.dart'; // Import your AuthService
+import 'package:projectapp/widget/bottomnav.dart';
+import 'package:provider/provider.dart';
+import 'package:projectapp/providers/session_provider.dart';
 class Login extends StatefulWidget {
   const Login({super.key});
 
@@ -17,16 +20,31 @@ class _LoginState extends State<Login> {
   String? _emailError;
   String? _passwordError;
 
-  // Method to call the signIn method from AuthService
-  Future<void> _handleSignIn() async {
-    String email = _emailController.text;
-    String password = _passwordController.text;
+  // Method to call the signIn method from AuthService and navigate to MainPage on success
+Future<void> _handleSignIn() async {
+  String email = _emailController.text;
+  String password = _passwordController.text;
 
-    // Call the AuthService.signIn function with email and password
-    await AuthService.signIn(email, password);
+  // Call the AuthService.signIn function with email and password
+  Map<String, dynamic> result = await AuthService.signIn(email, password);
 
-    // No need to show anything or update the UI after sign-in
+  if (result['status'] == 'success') {
+    final sessionProvider = Provider.of<SessionProvider>(context, listen: false);
+    
+    // Set the idToken in the session provider
+    sessionProvider.setIdToken(result['idToken']);
+    print(result['message']);
+    // Navigate to MainPage
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const Bottomnav(initialPage: Mainpage())),
+    );
+  } else {
+    // Handle sign-in failure (display an error message)
+    print(result['message']);
   }
+}
+
 
   // Validate the email and password inputs
   void _validateInputs() {
