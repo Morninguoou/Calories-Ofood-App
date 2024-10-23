@@ -1,18 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:projectapp/api/planindatelistPage.dart';
 import 'package:projectapp/widget/bottomnav.dart';
 import 'package:projectapp/screens/mealplanPage.dart';
 import 'package:projectapp/widget/icon_back.dart';
 import 'package:projectapp/widget/widget_support.dart';
 import 'package:projectapp/widget/icon_share.dart';
 
+import '../models/planindatelistPage.dart';
+
 class MoreDetailPlanner extends StatefulWidget {
-  const MoreDetailPlanner({super.key});
+  final String planName;
+  const MoreDetailPlanner({super.key, required this.planName});
 
   @override
   State<MoreDetailPlanner> createState() => _MoreDetailPlannerState();
 }
 
 class _MoreDetailPlannerState extends State<MoreDetailPlanner> {
+  List<PlanDateListModel> planners = []; // Store fetched planners
+  bool isLoading = true; // Loading state
+
+  @override
+  void initState() {
+    super.initState();
+    fetchPlanners();
+  }
+
+  Future<void> fetchPlanners() async {
+    try {
+      List<PlanDateListModel> fetchedPlanners =
+          await PlanDateListService.getPlannersByUserID(widget.planName);
+      setState(() {
+        planners = fetchedPlanners; // Update planners with fetched data
+        isLoading = false; // Set loading to false after data is fetched
+      });
+    } catch (e) {
+      setState(() {
+        isLoading = false; // Set loading to false on error
+      });
+      // Optionally show an error message
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Error fetching planners: $e')));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,8 +59,9 @@ class _MoreDetailPlannerState extends State<MoreDetailPlanner> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
+                  
                   IconBack(),
-                  Text(' Plan 1'),
+                  Text(' ${widget.planName}'),
 
                   /// plan name
                 ],

@@ -10,7 +10,8 @@ import 'package:projectapp/widget/widget_support.dart';
 import 'package:projectapp/models/plannermainPage.dart';
 
 class PlannerMain extends StatefulWidget {
-  const PlannerMain({super.key});
+  final String userID;
+  const PlannerMain({super.key, required this.userID});
 
   @override
   State<PlannerMain> createState() => _PlannerMainState();
@@ -18,7 +19,7 @@ class PlannerMain extends StatefulWidget {
 
 class _PlannerMainState extends State<PlannerMain> {
   List<PlannermainPageModel> planners = []; // Store fetched planners
-  String userID = 'test0'; // Replace with the actual user ID
+  //String userID = userID; // Replace with the actual user ID
   bool isLoading = true; // Loading state
 
   @override
@@ -30,7 +31,7 @@ class _PlannerMainState extends State<PlannerMain> {
   Future<void> fetchPlanners() async {
     try {
       List<PlannermainPageModel> fetchedPlanners =
-          await PlannerService.getPlannersByUserID(userID);
+          await PlannerService.getPlannersByUserID(widget.userID);
       setState(() {
         planners = fetchedPlanners; // Update planners with fetched data
         isLoading = false; // Set loading to false after data is fetched
@@ -266,7 +267,7 @@ class _PlannerMainState extends State<PlannerMain> {
                                         MaterialPageRoute(
                                             builder: (context) => Bottomnav(
                                                 initialPage:
-                                                    MoreDetailPlanner())));
+                                                    MoreDetailPlanner(planName: planner.planName))));
                                   },
                                 ),
                               ),
