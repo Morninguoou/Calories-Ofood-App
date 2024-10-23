@@ -1,18 +1,51 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:projectapp/api/plannermainPage.dart';
 import 'package:projectapp/screens/foodlistPage.dart';
 import 'package:projectapp/widget/bottomnav.dart';
 import 'package:projectapp/screens/planindatelistPage.dart';
 import 'package:projectapp/widget/widget_support.dart';
 
+import 'package:projectapp/models/plannermainPage.dart';
+
 class PlannerMain extends StatefulWidget {
-  const PlannerMain({super.key});
+  final String userID;
+  const PlannerMain({super.key, required this.userID});
 
   @override
   State<PlannerMain> createState() => _PlannerMainState();
 }
 
 class _PlannerMainState extends State<PlannerMain> {
+  List<PlannermainPageModel> planners = []; // Store fetched planners
+  //String userID = userID; // Replace with the actual user ID
+  bool isLoading = true; // Loading state
+
   @override
+  void initState() {
+    super.initState();
+    fetchPlanners();
+  }
+
+  Future<void> fetchPlanners() async {
+    try {
+      List<PlannermainPageModel> fetchedPlanners =
+          await PlannerService.getPlannersByUserID(widget.userID);
+      setState(() {
+        planners = fetchedPlanners; // Update planners with fetched data
+        isLoading = false; // Set loading to false after data is fetched
+      });
+    } catch (e) {
+      setState(() {
+        isLoading = false; // Set loading to false on error
+      });
+      // Optionally show an error message
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Error fetching planners: $e')));
+    }
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFF0D6B5), // Background color
@@ -46,10 +79,12 @@ class _PlannerMainState extends State<PlannerMain> {
                   child: Padding(
                     padding: EdgeInsets.only(top: 20, left: 20, right: 20),
                     child: ListView.builder(
-                      itemCount: 7, // Number of items to display
+                      itemCount: planners.length, // Number of items to display
                       itemBuilder: (context, index) {
+                        PlannermainPageModel planner = planners[index];
                         return Container(
-                          margin: EdgeInsets.only(top: 10.0, left: 5, right: 5, bottom: 10.0),
+                          margin: EdgeInsets.only(
+                              top: 10.0, left: 5, right: 5, bottom: 10.0),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
                             color: Colors.white,
@@ -73,7 +108,7 @@ class _PlannerMainState extends State<PlannerMain> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Plan ${index + 1}',
+                                      planner.planName,
                                       style: TextStyle(
                                         fontSize: 20.0,
                                         fontWeight: FontWeight.bold,
@@ -92,7 +127,8 @@ class _PlannerMainState extends State<PlannerMain> {
                                           MainAxisAlignment.center,
                                       children: [
                                         Icon(Icons.access_time),
-                                        Text(' 1 week・18 August - 24 August'),
+                                        Text(
+                                            ' ${planner.formattedFirstDate}  To  ${planner.formattedLastDate}'),
                                       ],
                                     ),
                                   ],
@@ -135,7 +171,7 @@ class _PlannerMainState extends State<PlannerMain> {
                                           ),
                                           actions: [
                                             Row(
-                                              mainAxisAlignment: 
+                                              mainAxisAlignment:
                                                   MainAxisAlignment.center,
                                               children: [
                                                 TextButton(
@@ -153,7 +189,8 @@ class _PlannerMainState extends State<PlannerMain> {
                                                               10),
                                                       boxShadow: [
                                                         BoxShadow(
-                                                          color: Colors.black.withOpacity(0.3),
+                                                          color: Colors.black
+                                                              .withOpacity(0.3),
                                                           spreadRadius: 1,
                                                           blurRadius: 3,
                                                           offset: Offset(0, 2),
@@ -183,14 +220,15 @@ class _PlannerMainState extends State<PlannerMain> {
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               10),
-                                                              boxShadow: [
-                                                                BoxShadow(
-                                                                  color: Colors.black.withOpacity(0.3),
-                                                                  spreadRadius: 1,
-                                                                  blurRadius: 3,
-                                                                  offset: Offset(0, 2),
-                                                                ),
-                                                              ],
+                                                      boxShadow: [
+                                                        BoxShadow(
+                                                          color: Colors.black
+                                                              .withOpacity(0.3),
+                                                          spreadRadius: 1,
+                                                          blurRadius: 3,
+                                                          offset: Offset(0, 2),
+                                                        ),
+                                                      ],
                                                     ),
                                                     child: Text(
                                                       'Confirm',
@@ -229,7 +267,7 @@ class _PlannerMainState extends State<PlannerMain> {
                                         MaterialPageRoute(
                                             builder: (context) => Bottomnav(
                                                 initialPage:
-                                                    MoreDetailPlanner())));
+                                                    MoreDetailPlanner(planName: planner.planName))));
                                   },
                                 ),
                               ),

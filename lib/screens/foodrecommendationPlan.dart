@@ -117,7 +117,7 @@ class _FoodRecommendationPlanState extends State<FoodRecommendationPlan> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) => const Bottomnav(
-                                                  initialPage: PlannerMain())));
+                                                  initialPage: PlannerMain(userID: 'Eiei'))));
                                     }
                                   },
                                 ),
