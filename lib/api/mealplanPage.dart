@@ -3,9 +3,9 @@ import 'package:http/http.dart' as http;
 import 'package:projectapp/models/mealplanPage.dart'; // Import the Planner model
 
 class MealPlanService {
-  static Future<List<MealPlanModel>> getPlannersByUserID(String userID) async {
+  static Future<List<MealPlanModel>> getPlannersByUserID(String plannerID) async {
     // Assume you're using a hypothetical API endpoint
-    final response = await http.get(Uri.parse('http://10.0.2.2/planners/planname/{planName}'));
+    final response = await http.get(Uri.parse('http://10.0.2.2/planners/${plannerID}/meals'));
 
     if (response.statusCode == 200) {
       List<dynamic> data = json.decode(response.body);
