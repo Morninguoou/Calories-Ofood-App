@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:projectapp/screens/plannermainPage.dart';
 import 'package:projectapp/widget/bottomnav.dart';
+import 'package:projectapp/widget/icon_back.dart';
 import 'package:projectapp/widget/planlistforrecommen.dart';
 import 'package:projectapp/widget/widget_support.dart';
 
 class FoodRecommendationPlan extends StatefulWidget {
-  const FoodRecommendationPlan({super.key});
+  const FoodRecommendationPlan({super.key, required data});
 
   @override
   State<FoodRecommendationPlan> createState() => _FoodRecommendationPlanState();
@@ -30,7 +31,7 @@ class _FoodRecommendationPlanState extends State<FoodRecommendationPlan> {
                   margin: const EdgeInsets.only(top: 60),
                   child: Text(
                     'Food Recommendation',
-                    style: AppWidget.headlineTextFeildStyle(),
+                    style: AppWidget.boldTextFeildStyle(),
                   ),
                 ),
               ],
@@ -116,8 +117,10 @@ class _FoodRecommendationPlanState extends State<FoodRecommendationPlan> {
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                              builder: (context) => const Bottomnav(
-                                                  initialPage: PlannerMain(userID: 'Eiei'))));
+                                              builder: (context) =>
+                                                  const Bottomnav(
+                                                      initialPage: PlannerMain(
+                                                          userID: 'Eiei'))));
                                     }
                                   },
                                 ),
@@ -170,7 +173,12 @@ class _FoodRecommendationPlanState extends State<FoodRecommendationPlan> {
                 ),
               ),
             ),
-          )
+          ),
+          const Positioned(
+            top: 50,
+            left: 30,
+            child: IconBack(),
+          ),
         ],
       ),
     );

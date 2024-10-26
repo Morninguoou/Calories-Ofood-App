@@ -27,10 +27,11 @@ class _DailycaloriesState extends State<Dailycalories> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  margin: const EdgeInsets.only(top: 60,left: 20),
+                  margin: const EdgeInsets.only(top: 60, left: 20),
                   child: Text(
                     'Daily Calories',
-                    style: AppWidget.headlineTextFeildStyle().copyWith(letterSpacing: 0.5,fontSize: 30),
+                    style: AppWidget.headlineTextFeildStyle()
+                        .copyWith(letterSpacing: 0.5, fontSize: 30),
                   ),
                 ),
               ],
@@ -61,18 +62,16 @@ class _DailycaloriesState extends State<Dailycalories> {
                             Text(
                               'Fats',
                               style: TextStyle(
-                                fontSize: 13,
-                                color: Color.fromRGBO(137, 132, 132, 1),
-                                fontWeight: FontWeight.w500
-                              ),
+                                  fontSize: 13,
+                                  color: Color.fromRGBO(137, 132, 132, 1),
+                                  fontWeight: FontWeight.w500),
                             ),
                             Text(
                               '31g',
                               style: TextStyle(
-                                fontSize: 13,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w500
-                              ),
+                                  fontSize: 13,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w500),
                             )
                           ],
                         ),
@@ -82,18 +81,16 @@ class _DailycaloriesState extends State<Dailycalories> {
                             Text(
                               'Carb.',
                               style: TextStyle(
-                                fontSize: 13,
-                                color: Color.fromRGBO(137, 132, 132, 1),
-                                fontWeight: FontWeight.w500
-                              ),
+                                  fontSize: 13,
+                                  color: Color.fromRGBO(137, 132, 132, 1),
+                                  fontWeight: FontWeight.w500),
                             ),
                             Text(
                               '31g',
                               style: TextStyle(
-                                fontSize: 13,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w500
-                              ),
+                                  fontSize: 13,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w500),
                             ),
                           ],
                         ),
@@ -103,18 +100,16 @@ class _DailycaloriesState extends State<Dailycalories> {
                             Text(
                               'Proteins',
                               style: TextStyle(
-                                fontSize: 13,
-                                color: Color.fromRGBO(137, 132, 132, 1),
-                                fontWeight: FontWeight.w500
-                              ),
+                                  fontSize: 13,
+                                  color: Color.fromRGBO(137, 132, 132, 1),
+                                  fontWeight: FontWeight.w500),
                             ),
                             Text(
                               '31g',
                               style: TextStyle(
-                                fontSize: 13,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w500
-                              ),
+                                  fontSize: 13,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w500),
                             ),
                           ],
                         ),
@@ -124,18 +119,16 @@ class _DailycaloriesState extends State<Dailycalories> {
                             Text(
                               'Calories',
                               style: TextStyle(
-                                fontSize: 13,
-                                color: Color.fromRGBO(137, 132, 132, 1),
-                                fontWeight: FontWeight.w500
-                              ),
+                                  fontSize: 13,
+                                  color: Color.fromRGBO(137, 132, 132, 1),
+                                  fontWeight: FontWeight.w500),
                             ),
                             Text(
                               '500kcal',
                               style: TextStyle(
-                                fontSize: 13,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w500
-                              ),
+                                  fontSize: 13,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w500),
                             ),
                           ],
                         ),
@@ -412,8 +405,10 @@ class _DailycaloriesState extends State<Dailycalories> {
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                              builder: (context) => const Bottomnav(
-                                                  initialPage: MealPlan())));
+                                              builder: (context) =>
+                                                  const Bottomnav(
+                                                      initialPage:
+                                                          MealPlan())));
                                     }
                                   },
                                 ),

@@ -1,9 +1,15 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:projectapp/screens/foodrecommendationPlan.dart';
 import 'package:projectapp/widget/bottomnav.dart';
 import 'package:projectapp/widget/optionblockgrey.dart';
 import 'package:projectapp/widget/widget_support.dart';
 import 'package:projectapp/widget/icon_back.dart';
+
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class FoodRecommendationSelect extends StatefulWidget {
   const FoodRecommendationSelect({super.key});
@@ -15,11 +21,159 @@ class FoodRecommendationSelect extends StatefulWidget {
 
 class _FoodRecommendationSelectState extends State<FoodRecommendationSelect> {
   String selectedGender = '';
+  int height = 0;
+  int age = 0;
   String selectedWeightManagement =
       'None'; // เพิ่มตัวแปรสำหรับ Weight Management
-  String selectedTime = 'Morning';
+  int weightDef = 0;
+  int weightDiff = 0;
+  String selectedTime = '1 week';
+  List<String> additionalOpts = [];
   String selectedActivityLevel =
       'Sedentary'; // ตัวแปรสำหรับช่อง select ข้างๆ Time
+
+  // Future<bool> checkDataWithBackend() async {
+  //   // URL ของ API ใน Go (แก้ไขตามที่คุณตั้งค่า)
+  //   var url = Uri.parse('http://10.0.2.2:3000/FoodRecommendation');
+
+  //   // สร้าง JSON Object สำหรับส่งข้อมูลไปยัง Go API
+  //   var response = await http.post(
+  //     url,
+  //     headers: {"Content-Type": "application/json"},
+  //     body: jsonEncode({
+  //       "gender": selectedGender,
+  //       "weight_management": selectedWeightManagement,
+  //       "weightdef": weightDef,
+  //       "weightdiff": weightDiff,
+  //       "height": height,
+  //       "age": age,
+  //       "activity_level": selectedActivityLevel,
+  //       "additional_opts": additionalOpts,
+  //       "time": selectedTime,
+  //     }),
+  //   );
+
+  //   // ตรวจสอบสถานะการตอบกลับ
+  //   if (response.statusCode == 200) {
+  //     // แปลงข้อมูลที่ตอบกลับเป็น JSON
+  //     var data = jsonDecode(response.body);
+  //     // คาดหวังว่าจะได้รับค่า boolean (true/false)
+  //     return data['isValid']; // สมมุติว่า API ส่งคืน {'isValid': true/false}
+  //   } else {
+  //     throw Exception('Failed to check data');
+  //   }
+  // }
+  Future<bool> checkDataWithBackend() async {
+    try {
+      var url = Uri.parse('http://10.0.2.2/FoodRecommendation');
+      var response = await http.post(
+        url,
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({
+          "gender": selectedGender,
+          "weight_management": selectedWeightManagement,
+          "weightdef": weightDef,
+          "weightdiff": weightDiff,
+          "height": height,
+          "age": age,
+          "activity_level": selectedActivityLevel,
+          "additional_opts": additionalOpts,
+          "time": selectedTime,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        var data = jsonDecode(response.body);
+        print("Response data: $data"); // แสดงข้อมูลที่ได้รับจาก API
+
+        // ตรวจสอบว่ามี key 'isValid' หรือไม่
+        if (data.containsKey('isValid')) {
+          return data['isValid'];
+        } else {
+          throw Exception('Response does not contain "isValid"');
+        }
+      } else {
+        throw Exception(
+            'Failed to check data with status: ${response.statusCode}');
+      }
+    } catch (e) {
+      print("Error in checkDataWithBackend: $e");
+      return false;
+    }
+  }
+  // Future<bool> checkDataWithBackend() async {
+  //   try {
+  //     var url = Uri.parse('http://10.0.2.2/FoodRecommendation');
+  //     var response = await http.post(
+  //       url,
+  //       headers: {"Content-Type": "application/json"},
+  //       body: jsonEncode({
+  //         "gender": selectedGender,
+  //         "weight_management": selectedWeightManagement,
+  //         "weightdef": weightDef,
+  //         "weightdiff": weightDiff,
+  //         "height": height,
+  //         "age": age,
+  //         "activity_level": selectedActivityLevel,
+  //         "additional_opts": additionalOpts,
+  //         "time": selectedTime,
+  //       }),
+  //     );
+
+  //     if (response.statusCode == 200) {
+  //       var data = jsonDecode(response.body);
+  //       // ตรวจสอบว่าข้อมูลที่ได้รับมี key 'isValid' หรือไม่
+  //       if (data.containsKey('isValid')) {
+  //         return data['isValid'];
+  //       } else {
+  //         throw Exception('Response does not contain "isValid"');
+  //       }
+  //     } else {
+  //       throw Exception(
+  //           'Failed to check data with status: ${response.statusCode}');
+  //     }
+  //   } catch (e) {
+  //     print("Error in checkDataWithBackend: $e");
+  //     return false; // จัดการเมื่อเกิดข้อผิดพลาด
+  //   }
+  // }
+
+  // Future<bool> checkDataWithBackend() async {
+  //   try {
+  //     var url = Uri.parse('http://10.0.2.2/FoodRecommendation');
+  //     var response = await http.post(
+  //       url,
+  //       headers: {"Content-Type": "application/json"},
+  //       body: jsonEncode({
+  //         "gender": selectedGender,
+  //         "weight_management": selectedWeightManagement,
+  //         "weightdef": weightDef,
+  //         "weightdiff": weightDiff,
+  //         "height": height,
+  //         "age": age,
+  //         "activity_level": selectedActivityLevel,
+  //         "additional_opts": additionalOpts,
+  //         "time": selectedTime,
+  //       }),
+  //     );
+
+  //     if (response.statusCode == 200) {
+  //       var data = jsonDecode(response.body);
+  //       // ตรวจสอบว่าข้อมูลที่ได้รับมี key 'isValid' หรือไม่
+  //       if (data.containsKey('isValid')) {
+  //         return data['isValid'];
+  //       } else {
+  //         throw Exception('Response does not contain "isValid"');
+  //       }
+  //     } else {
+  //       throw Exception(
+  //           'Failed to check data with status: ${response.statusCode}');
+  //     }
+  //   } catch (e) {
+  //     print("Error in checkDataWithBackend: $e");
+  //     return false; // จัดการเมื่อเกิดข้อผิดพลาด
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -50,17 +204,17 @@ class _FoodRecommendationSelectState extends State<FoodRecommendationSelect> {
             left: 0,
             right: 0,
             bottom: 0,
-            child: Container(
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(55),
-                  topRight: Radius.circular(55),
-                ),
-              ),
+            child: SingleChildScrollView(
               child: Container(
-                padding: const EdgeInsets.all(40),
-                child: SingleChildScrollView(
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(55),
+                    topRight: Radius.circular(55),
+                  ),
+                ),
+                child: Container(
+                  padding: const EdgeInsets.all(40),
                   // เพิ่มเพื่อรองรับ scroll ในกรณีเนื้อหาเยอะ
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -78,14 +232,14 @@ class _FoodRecommendationSelectState extends State<FoodRecommendationSelect> {
                           GestureDetector(
                             onTap: () {
                               setState(() {
-                                selectedGender = 'Female';
+                                selectedGender = 'female';
                               });
                             },
                             child: Container(
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 12, vertical: 5),
                               decoration: BoxDecoration(
-                                color: selectedGender == 'Female'
+                                color: selectedGender == 'female'
                                     ? const Color.fromRGBO(240, 214, 181, 1)
                                     : Colors.white,
                                 borderRadius: BorderRadius.circular(10),
@@ -122,14 +276,14 @@ class _FoodRecommendationSelectState extends State<FoodRecommendationSelect> {
                           GestureDetector(
                             onTap: () {
                               setState(() {
-                                selectedGender = 'Male';
+                                selectedGender = 'male';
                               });
                             },
                             child: Container(
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 12, vertical: 5),
                               decoration: BoxDecoration(
-                                color: selectedGender == 'Male'
+                                color: selectedGender == 'male'
                                     ? const Color.fromRGBO(240, 214, 181, 1)
                                     : Colors.white,
                                 borderRadius: BorderRadius.circular(10),
@@ -159,6 +313,99 @@ class _FoodRecommendationSelectState extends State<FoodRecommendationSelect> {
                                         color: Colors.black,
                                       )),
                                 ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 20),
+                      Row(
+                        children: [
+                          const Text(
+                            'height :',
+                            style: TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Poppins',
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          Expanded(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: const Color.fromRGBO(255, 240, 222, 1),
+                                borderRadius: BorderRadius.circular(20),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.2),
+                                    spreadRadius: 2,
+                                    blurRadius: 5,
+                                    offset: const Offset(0, 2),
+                                  ),
+                                ],
+                              ),
+                              // ปรับขนาดกรอบที่ใส่เลขที่นี่
+                              constraints: const BoxConstraints(
+                                  maxHeight: 40), // ตั้งค่าขนาดสูงสุด
+                              child: TextField(
+                                onChanged: (value) {
+                                  height = int.tryParse(value) ??
+                                      0; // เพิ่มโค้ดเมื่อค่าถูกเปลี่ยน
+                                },
+                                decoration: InputDecoration(
+                                  contentPadding: const EdgeInsets.symmetric(
+                                      vertical: 5,
+                                      horizontal: 15), // ปรับขนาดของช่อง
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                    borderSide: BorderSide.none, // เพิ่มเส้นขอบ
+                                  ),
+                                ),
+                                keyboardType: TextInputType.number,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 15),
+                          const Text(
+                            'Age',
+                            style: TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Poppins',
+                            ),
+                          ),
+                          const SizedBox(width: 15),
+                          Expanded(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: const Color.fromRGBO(255, 240, 222, 1),
+                                borderRadius: BorderRadius.circular(20),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.2),
+                                    spreadRadius: 2,
+                                    blurRadius: 5,
+                                    offset: const Offset(0, 2),
+                                  ),
+                                ],
+                              ),
+                              constraints: const BoxConstraints(
+                                  maxHeight: 40), // ตั้งค่าขนาดสูงสุด
+                              child: TextField(
+                                onChanged: (value) {
+                                  age = int.tryParse(value) ??
+                                      0; // เพิ่มโค้ดเมื่อค่าถูกเปลี่ยน
+                                },
+                                decoration: InputDecoration(
+                                  contentPadding: const EdgeInsets.symmetric(
+                                      vertical: 5,
+                                      horizontal: 15), // ปรับขนาดของช่อง
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                    borderSide: BorderSide.none, // เพิ่มเส้นขอบ
+                                  ),
+                                ),
+                                keyboardType: TextInputType.number,
                               ),
                             ),
                           ),
@@ -321,7 +568,8 @@ class _FoodRecommendationSelectState extends State<FoodRecommendationSelect> {
                                   maxHeight: 40), // ตั้งค่าขนาดสูงสุด
                               child: TextField(
                                 onChanged: (value) {
-                                  // เพิ่มโค้ดเมื่อค่าถูกเปลี่ยน
+                                  weightDef = int.tryParse(value) ??
+                                      0; // เพิ่มโค้ดเมื่อค่าถูกเปลี่ยน
                                 },
                                 decoration: InputDecoration(
                                   contentPadding: const EdgeInsets.symmetric(
@@ -364,7 +612,8 @@ class _FoodRecommendationSelectState extends State<FoodRecommendationSelect> {
                                   maxHeight: 40), // ตั้งค่าขนาดสูงสุด
                               child: TextField(
                                 onChanged: (value) {
-                                  // เพิ่มโค้ดเมื่อค่าถูกเปลี่ยน
+                                  weightDiff = int.tryParse(value) ??
+                                      0; // เพิ่มโค้ดเมื่อค่าถูกเปลี่ยน
                                 },
                                 decoration: InputDecoration(
                                   contentPadding: const EdgeInsets.symmetric(
@@ -496,9 +745,11 @@ class _FoodRecommendationSelectState extends State<FoodRecommendationSelect> {
                                 child: DropdownButton<String>(
                                   value: selectedTime,
                                   items: <String>[
-                                    'Morning',
-                                    'Afternoon',
-                                    'Evening'
+                                    '1 week',
+                                    '2 week',
+                                    '3 week',
+                                    '4 week',
+                                    '5 week'
                                   ].map((String value) {
                                     return DropdownMenuItem<String>(
                                       value: value,
@@ -524,9 +775,18 @@ class _FoodRecommendationSelectState extends State<FoodRecommendationSelect> {
                       ),
                       const SizedBox(height: 30),
                       GestureDetector(
-                        onTap: () {
+                        onTap: () async {
+                          print(selectedGender);
+                          print(height);
+                          print(age);
+                          print(selectedWeightManagement);
+                          print(weightDef);
+                          print(weightDiff);
+                          print(selectedTime);
+                          print(additionalOpts);
+                          print(selectedActivityLevel);
                           // ตรวจสอบข้อมูลกับ backend
-                          bool dataIsValid = checkDataWithBackend();
+                          bool dataIsValid = await checkDataWithBackend();
 
                           if (dataIsValid) {
                             // ถ้าข้อมูลถูกต้อง ให้ไปยังหน้า FoodRecommendationsPage
@@ -534,8 +794,9 @@ class _FoodRecommendationSelectState extends State<FoodRecommendationSelect> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => const Bottomnav(
-                                        initialPage:
-                                            FoodRecommendationPlan())));
+                                            initialPage: FoodRecommendationPlan(
+                                          data: null,
+                                        ))));
                           } else {
                             // ถ้าข้อมูลไม่ถูกต้อง แสดง popup
                             showDialog(
@@ -614,12 +875,5 @@ class _FoodRecommendationSelectState extends State<FoodRecommendationSelect> {
         ],
       ),
     );
-  }
-
-  bool checkDataWithBackend() {
-    // ตรงนี้คุณจะต้องเขียนการเช็คข้อมูลจาก backend จริง
-    // return true ถ้าข้อมูลถูกต้อง
-    // return false ถ้าข้อมูลไม่ถูกต้อง
-    return true; // ปัจจุบันจะคืนค่า false เสมอ
   }
 }
