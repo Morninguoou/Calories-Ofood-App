@@ -413,7 +413,7 @@ class _DailycaloriesState extends State<Dailycalories> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) => const Bottomnav(
-                                                  initialPage: MealPlan())));
+                                                  initialPage: MealPlan(plannerID: '',planName: '',formattedDate: ''))));
                                     }
                                   },
                                 ),

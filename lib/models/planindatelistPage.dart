@@ -36,6 +36,7 @@ class PlanDateListModel {
 
 class Planner {
   final DateTime plannerDate;
+  final String plannerID;
   final int totalCalories;
   final int totalCarb;
   final int totalFat;
@@ -43,6 +44,7 @@ class Planner {
 
   Planner({
     required this.plannerDate,
+    required this.plannerID,
     required this.totalCalories,
     required this.totalCarb,
     required this.totalFat,
@@ -53,6 +55,7 @@ class Planner {
   factory Planner.fromJson(Map<String, dynamic> json) {
     return Planner(
       plannerDate: DateTime.parse(json['plannerDate']),
+      plannerID: json['plannerID'],
       totalCalories: json['totalCalories'],
       totalCarb: json['totalCarb'],
       totalFat: json['totalFat'],
@@ -64,6 +67,7 @@ class Planner {
   Map<String, dynamic> toJson() {
     return {
       'plannerDate': plannerDate.toIso8601String(),
+      'plannerID' : plannerID,
       'totalCalories': totalCalories,
       'totalCarb': totalCarb,
       'totalFat': totalFat,

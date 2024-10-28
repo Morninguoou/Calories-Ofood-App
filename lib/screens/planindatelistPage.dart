@@ -7,6 +7,7 @@ import 'package:projectapp/widget/widget_support.dart';
 import 'package:projectapp/widget/icon_share.dart';
 
 import '../models/planindatelistPage.dart';
+import 'package:intl/intl.dart';
 
 class MoreDetailPlanner extends StatefulWidget {
   final String planName;
@@ -17,29 +18,29 @@ class MoreDetailPlanner extends StatefulWidget {
 }
 
 class _MoreDetailPlannerState extends State<MoreDetailPlanner> {
-  bool isLoading = true; // Loading state
-  late PlanDateListModel plannerData; // Store the fetched planner data
+  bool isLoading = true;
+  late PlanDateListModel
+      plannerData; // Declare `plannerData` specific to this state
 
   @override
   void initState() {
     super.initState();
-    fetchPlanners();
+    fetchPlanners(widget.planName);
   }
 
-  Future<void> fetchPlanners() async {
+  Future<void> fetchPlanners(String planName) async {
     try {
-      // Fetch planner data based on planName
-      plannerData = await PlanDateListService.getPlannersByPlanName(widget.planName);
+      plannerData = await PlanDateListService.getPlannersByPlanName(planName);
       setState(() {
-        isLoading = false; // Set loading to false after data is fetched
+        isLoading = false;
       });
     } catch (e) {
       setState(() {
-        isLoading = false; // Set loading to false on error
+        isLoading = false;
       });
-      // Optionally show an error message
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('Error fetching planners: $e')));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error fetching planners: $e')),
+      );
     }
   }
 
@@ -75,116 +76,168 @@ class _MoreDetailPlannerState extends State<MoreDetailPlanner> {
         ),
       ),
       body: isLoading
-        ? Center(child: CircularProgressIndicator()) // Show loading indicator
-        : SingleChildScrollView(
-            child: Column(
-              children: [
-                SizedBox(height: 4),
-                Container(
-                  decoration: BoxDecoration(
-                    color: Color(0xFFF9F9F9),
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(50.0),
-                      topRight: Radius.circular(50.0),
-                    ),
-                  ),
-                  margin: EdgeInsets.only( top: 25),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.access_time),
-                          Text('  ${plannerData.firstDate.day}-${plannerData.firstDate.month}-${plannerData.firstDate.year} To ${plannerData.lastDate.day}-${plannerData.lastDate.month}-${plannerData.firstDate.year}'),
-                        ],
+          ? Center(child: CircularProgressIndicator()) // Show loading indicator
+          : SingleChildScrollView(
+              child: Column(
+                children: [
+                  SizedBox(height: 4),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Color(0xFFF9F9F9),
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(50.0),
+                        topRight: Radius.circular(50.0),
                       ),
-                      SizedBox(height: 10),
-                      Text('Date List:', style: AppWidget.dateboldTextFeildStyle()),
-                      SizedBox(height: 20.0),
-                      for (var planner in plannerData.planners)
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(20),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.3),
-                                spreadRadius: 1,
-                                blurRadius: 3,
-                                offset: Offset(0, 2),
-                              ),
-                            ],
-                          ),
-                          margin: EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 10),
-                          child: Column(
-                            children: [
-                              Container(
-                                margin: EdgeInsets.only(top: 10),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Text('Date : ${planner.plannerDate.day} ${planner.plannerDate.month}',
-                                        style: AppWidget.dateboldTextFeildStyle()),
-                                    Icon(Icons.calendar_today_outlined),
-                                  ],
+                    ),
+                    margin: EdgeInsets.only(top: 25),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.access_time),
+                            Text(
+                                '  ${plannerData.firstDate.day} ${DateFormat('MMMM').format(plannerData.firstDate)} ${plannerData.firstDate.year} - ${plannerData.lastDate.day} ${DateFormat('MMMM').format(plannerData.lastDate)} ${plannerData.firstDate.year}'),
+                          ],
+                        ),
+                        SizedBox(height: 10),
+                        Text('Date List:',
+                            style: AppWidget.dateboldTextFeildStyle()),
+                        SizedBox(height: 20.0),
+                        for (var planner in plannerData.planners)
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(20),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.3),
+                                  spreadRadius: 1,
+                                  blurRadius: 3,
+                                  offset: Offset(0, 2),
                                 ),
-                              ),
-                              SizedBox(height: 25.0),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: [
-                                  Column(
+                              ],
+                            ),
+                            margin: EdgeInsets.only(
+                                top: 10, left: 20, right: 20, bottom: 10),
+                            child: Column(
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.only(top: 10),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
                                     children: [
-                                      Text('Fats', style: AppWidget.nutrientTextFeildStyle().copyWith(color: const Color.fromRGBO(137, 132, 132, 1),)),
-                                      Text('${planner.totalFat}g', style: AppWidget.nutrientTextFeildStyle()),
+                                      Text(
+                                          'Date : ${DateFormat('EEEE').format(planner.plannerDate)}, ${planner.plannerDate.day} ${DateFormat('MMMM').format(planner.plannerDate)}',
+                                          style: AppWidget
+                                              .dateboldTextFeildStyle()),
+                                      Icon(Icons.calendar_today_outlined),
                                     ],
                                   ),
-                                  Column(
-                                    children: [
-                                      Text('Carb.', style: AppWidget.nutrientTextFeildStyle().copyWith(color: const Color.fromRGBO(137, 132, 132, 1),)),
-                                      Text('${planner.totalCarb}g', style: AppWidget.nutrientTextFeildStyle()),
-                                    ],
-                                  ),
-                                  Column(
-                                    children: [
-                                      Text('Proteins', style: AppWidget.nutrientTextFeildStyle().copyWith(color: const Color.fromRGBO(137, 132, 132, 1),)),
-                                      Text('${planner.totalProtein}g', style: AppWidget.nutrientTextFeildStyle()),
-                                    ],
-                                  ),
-                                  Column(
-                                    children: [
-                                      Text('Calories', style: AppWidget.nutrientTextFeildStyle().copyWith(color: const Color.fromRGBO(137, 132, 132, 1),)),
-                                      Text('${planner.totalCalories}cal', style: AppWidget.nutrientTextFeildStyle()),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 25.0),
-                              Container(
-                                padding: EdgeInsets.only(bottom: 15),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                ),
+                                SizedBox(height: 25.0),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
                                   children: [
-                                    Text('Total Calories: ${planner.totalCalories} cal', style: AppWidget.totalcalTextFeildStyle()),
-                                    GestureDetector(
-                                      child: Text('More Details', style: AppWidget.moredetailTextFeildStyle()),
-                                      onTap: () {
-                                        Navigator.push(context, MaterialPageRoute(builder: (context) => Bottomnav(initialPage: MealPlan())));
-                                      },
+                                    Column(
+                                      children: [
+                                        Text('Fats',
+                                            style: AppWidget
+                                                    .nutrientTextFeildStyle()
+                                                .copyWith(
+                                              color: const Color.fromRGBO(
+                                                  137, 132, 132, 1),
+                                            )),
+                                        Text('${planner.totalFat}g',
+                                            style: AppWidget
+                                                .nutrientTextFeildStyle()),
+                                      ],
+                                    ),
+                                    Column(
+                                      children: [
+                                        Text('Carb.',
+                                            style: AppWidget
+                                                    .nutrientTextFeildStyle()
+                                                .copyWith(
+                                              color: const Color.fromRGBO(
+                                                  137, 132, 132, 1),
+                                            )),
+                                        Text('${planner.totalCarb}g',
+                                            style: AppWidget
+                                                .nutrientTextFeildStyle()),
+                                      ],
+                                    ),
+                                    Column(
+                                      children: [
+                                        Text('Proteins',
+                                            style: AppWidget
+                                                    .nutrientTextFeildStyle()
+                                                .copyWith(
+                                              color: const Color.fromRGBO(
+                                                  137, 132, 132, 1),
+                                            )),
+                                        Text('${planner.totalProtein}g',
+                                            style: AppWidget
+                                                .nutrientTextFeildStyle()),
+                                      ],
+                                    ),
+                                    Column(
+                                      children: [
+                                        Text('Calories',
+                                            style: AppWidget
+                                                    .nutrientTextFeildStyle()
+                                                .copyWith(
+                                              color: const Color.fromRGBO(
+                                                  137, 132, 132, 1),
+                                            )),
+                                        Text('${planner.totalCalories}cal',
+                                            style: AppWidget
+                                                .nutrientTextFeildStyle()),
+                                      ],
                                     ),
                                   ],
                                 ),
-                              ),
-                            ],
+                                SizedBox(height: 25.0),
+                                Container(
+                                  padding: EdgeInsets.only(bottom: 15),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                          'Total Calories: ${planner.totalCalories} cal',
+                                          style: AppWidget
+                                              .totalcalTextFeildStyle()),
+                                      GestureDetector(
+                                        child: Text('More Details',
+                                            style: AppWidget
+                                                .moredetailTextFeildStyle()),
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) => Bottomnav(
+                                                          initialPage: MealPlan(
+                                                              plannerID: planner.plannerID,
+                                                              planName: widget.planName,
+                                                              formattedDate: '${DateFormat('EEEE').format(planner.plannerDate)}, ${planner.plannerDate.day} ${DateFormat('MMMM').format(planner.plannerDate)}',))));
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
     );
   }
 }

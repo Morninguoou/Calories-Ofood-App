@@ -2,13 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:projectapp/widget/widget_support.dart';
 
 class BonchonBox extends StatefulWidget {
-  const BonchonBox({super.key});
+  final String foodName;
+  final int calories;
+  final int dish;
+  final String imageURL;
+  final List<String> foodType;
+
+  const BonchonBox({Key? key, required this.foodName, required this.calories, required this.dish, required this.imageURL, required this.foodType,}) : super(key: key);
 
   @override
   State<BonchonBox> createState() => _BonchonBoxState();
 }
 
 class _BonchonBoxState extends State<BonchonBox> {
+  final int maxFoodNameLength = 20;
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -42,12 +50,19 @@ class _BonchonBoxState extends State<BonchonBox> {
                         children: [
                           ClipRRect(
                             borderRadius: BorderRadius.circular(10),
-                            child: Image.asset(
-                              "asset/images/bonchon_wing.png",
-                              height: 67,
-                              width: 78,
-                              fit: BoxFit.cover,
-                            ),
+                            child: widget.imageURL.startsWith('http')
+                                ? Image.network( // Use Image.network for URLs
+                                    widget.imageURL,
+                                    height: 67,
+                                    width: 78,
+                                    fit: BoxFit.cover,
+                                  )
+                                : Image.asset( // Use Image.asset for local assets
+                                    widget.imageURL,
+                                    height: 67,
+                                    width: 78,
+                                    fit: BoxFit.cover,
+                                  ),
                           ),
                           SizedBox(
                             width: 10,
@@ -57,19 +72,21 @@ class _BonchonBoxState extends State<BonchonBox> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Calorie : 850 cal • 10 pieces/set",
+                                "Calorie : ${widget.calories} cal",
                                 style: AppWidget.verylightTextFeildStyle()
                                     .copyWith(height: 1.3, fontSize: 13),
                               ),
                               Text(
-                                "Bonchon Wings",
+                                _truncateFoodName(widget.foodName),
                                 style: AppWidget.semiBoldTextFeildStyle()
                                     .copyWith(
                                         height: 1.3,
                                         fontWeight: FontWeight.bold),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
                               ),
                               Text(
-                                "Fried Food | Korean Food",
+                                widget.foodType.isNotEmpty ? widget.foodType.join(' | ') : 'No Tags',
                                 style: AppWidget.verylightTextFeildStyle()
                                     .copyWith(height: 1.3, fontSize: 13),
                               ),
@@ -98,7 +115,7 @@ class _BonchonBoxState extends State<BonchonBox> {
                     color: Color(0xFF4F6C4E),
                   ),
                   child:
-                      Text('x1', style: AppWidget.foodquantityTextFeildStyle()),
+                      Text('x${widget.dish}', style: AppWidget.foodquantityTextFeildStyle()),
                 ),
               ),
             ],
@@ -106,5 +123,11 @@ class _BonchonBoxState extends State<BonchonBox> {
         ),
       ],
     );
+  }
+  String _truncateFoodName(String foodName) {
+    if (foodName.length > maxFoodNameLength) {
+      return '${foodName.substring(0, maxFoodNameLength)}...'; // Truncate and add ellipsis
+    }
+    return foodName; // Return original if within limit
   }
 }
