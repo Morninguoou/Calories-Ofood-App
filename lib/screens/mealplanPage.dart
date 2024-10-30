@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:projectapp/api/mealplanPage.dart';
+import 'package:projectapp/models/mealplanPage.dart';
 import 'package:projectapp/screens/foodlistPage.dart';
 import 'package:projectapp/widget/bottomnav.dart';
 import 'package:projectapp/widget/icon_back.dart';
@@ -8,19 +10,29 @@ import 'package:projectapp/widget/icon_share.dart';
 import 'package:projectapp/widget/exerciseWidget.dart';
 
 class MealPlan extends StatefulWidget {
-  const MealPlan({super.key});
+  final String planName;
+  final String plannerID;
+  final String formattedDate;
+  const MealPlan({
+    Key? key, // Include 'Key? key' to properly inherit the StatefulWidget's key
+    required this.plannerID,
+    required this.planName,
+    required this.formattedDate,
+  }) : super(key: key);
 
   @override
   State<MealPlan> createState() => _MealPlanState();
 }
 
 class _MealPlanState extends State<MealPlan> {
+  bool isLoading = true;
+  MealPlanModel? mealData; // Declare `mealData` specific to this state
   int _selectedIndex = 0;
 
-  final List<Widget> _pages = [
-    const PlanPage(),
-    const ExercisePage(),
-  ];
+  // final List<Widget> _pages = [
+  //   const PlanPage(),
+  //   //const ExercisePage(),
+  // ];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -29,9 +41,34 @@ class _MealPlanState extends State<MealPlan> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    fetchPlanners(widget.plannerID);
+  }
+
+  Future<void> fetchPlanners(String plannerID) async {
+    try {
+      mealData = await MealPlanService.getPlannersByPlanID(plannerID);
+      setState(() {
+        isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error fetching planners: $e')),
+      );
+    }
+  }
+
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
+      body: isLoading 
+      ? Center(child: CircularProgressIndicator())
+      : Stack(
         children: [
           Container(
             width: double.infinity,
@@ -53,7 +90,7 @@ class _MealPlanState extends State<MealPlan> {
                         children: [
                           IconBack(),
                           Text(
-                            ' Plan 1',
+                            ' ${widget.planName}',
                             style: AppWidget.headlineTextFeildStyle()
                                 .copyWith(fontSize: 36),
                           ),
@@ -97,7 +134,7 @@ class _MealPlanState extends State<MealPlan> {
                                 ),
                               ),
                               Text(
-                                '31g',
+                                '${mealData?.totalAllFat}g',
                                 style: TextStyle(
                                   fontSize: 13,
                                   color: Colors.black,
@@ -116,7 +153,7 @@ class _MealPlanState extends State<MealPlan> {
                                 ),
                               ),
                               Text(
-                                '31g',
+                                '${mealData?.totalAllCarbs}g',
                                 style: TextStyle(
                                   fontSize: 13,
                                   color: Colors.black,
@@ -135,7 +172,7 @@ class _MealPlanState extends State<MealPlan> {
                                 ),
                               ),
                               Text(
-                                '31g',
+                                '${mealData?.totalAllProtein}g',
                                 style: TextStyle(
                                   fontSize: 13,
                                   color: Colors.black,
@@ -154,7 +191,7 @@ class _MealPlanState extends State<MealPlan> {
                                 ),
                               ),
                               Text(
-                                '500kcal',
+                                '${mealData?.totalAllCalories}kcal',
                                 style: TextStyle(
                                   fontSize: 13,
                                   color: Colors.black,
@@ -169,23 +206,32 @@ class _MealPlanState extends State<MealPlan> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(Icons.calendar_today_outlined),
-                          Text('  Monday, 18 August  ',
+                          Text('  ${widget.formattedDate}  ',
                               style: AppWidget.dateboldTextFeildStyle()),
                           GestureDetector(
-                            onTap: (){Navigator.push(context,MaterialPageRoute(builder: (context) => Bottomnav(initialPage: FoodList())));},
-                            child: Icon(Icons.add_circle,color: Color(0xFF4F6C4E),),
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          Bottomnav(initialPage: FoodList())));
+                            },
+                            child: Icon(
+                              Icons.add_circle,
+                              color: Color(0xFF4F6C4E),
+                            ),
                           ),
-                          
                         ],
                       ),
                       SizedBox(height: 10),
                       Container(
-                        child: CustomNavBar(onItemTapped: _onItemTapped),
+                        child:
+                            PlanPage(meals: mealData?.meals ?? []), // Pass the meals here //CustomNavBar(onItemTapped: _onItemTapped),
                       ),
-                      SizedBox(height: 10.0),
+                      SizedBox(height: 10.0), 
                       // Display the selected page
 
-                      _pages[_selectedIndex],
+                      //_pages[_selectedIndex],
                     ],
                   ),
                 ),
@@ -231,7 +277,6 @@ class _CustomNavBarState extends State<CustomNavBar> {
         children: [
           _buildNavItem('Plan', 0),
           _buildNavItem('Exercise', 1),
-          //_buildNavItem('Exercise', 2),
         ],
       ),
     );
@@ -264,11 +309,13 @@ class _CustomNavBarState extends State<CustomNavBar> {
 }
 
 class PlanPage extends StatelessWidget {
-  const PlanPage({super.key});
+  final List<Meal> meals; // Store meals as a property
+
+  const PlanPage({super.key, required this.meals}); // Updated constructor
 
   @override
   Widget build(BuildContext context) {
-    return const SelfPlanWidget();
+    return SelfPlanWidget(meals: meals); // Pass meals to SelfPlanWidget
   }
 }
 
