@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:projectapp/widget/detailfoodWidget.dart';
 import 'package:projectapp/widget/icon_back.dart';
 import 'package:projectapp/widget/icon_fav.dart';
@@ -7,8 +6,16 @@ import 'package:projectapp/widget/icon_share.dart';
 import 'package:projectapp/widget/ingredientsWidget.dart';
 import 'package:projectapp/widget/widget_support.dart';
 
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:projectapp/models/FoodlistModel.dart'; 
+
 class Detailfoodpage extends StatefulWidget {
-  const Detailfoodpage({super.key});
+  final String foodName;
+  final String foodId;
+  final String foodUrl;
+
+  const Detailfoodpage({super.key, required this.foodName, required this.foodId, required this.foodUrl}); // Modify constructor
 
   @override
   State<Detailfoodpage> createState() => _DetailfoodpageState();
@@ -16,11 +23,34 @@ class Detailfoodpage extends StatefulWidget {
 
 class _DetailfoodpageState extends State<Detailfoodpage> {
   int _selectedIndex = 0;
+  List<FoodModel>? foodDetails; // Variable to store food details
 
-  final List<Widget> _pages = [
+  late List<Widget> _pages;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchFoodList(); // Call the fetch function when the state is initialized
+    
+    _pages = [
     const Detail(),
-    const IngredientsPage(),
+    IngredientsPage(foodId: widget.foodId), // ส่ง foodId ไปยัง IngredientsPage
   ];
+  }
+
+
+  Future<void> fetchFoodList() async {
+    final response = await http.get(Uri.parse('http://10.0.2.2/Selectfood/${widget.foodName}')); // Use widget.foodName
+
+    if (response.statusCode == 200) {
+      List jsonResponse = json.decode(response.body);
+      setState(() {
+        foodDetails = jsonResponse.map((food) => FoodModel.fromJson(food)).toList(); // Store the details
+      });
+    } else {
+      throw Exception('Failed to load food detail');
+    }
+  }
 
   void _onItemTapped(int index) {
     setState(() {
@@ -52,7 +82,7 @@ class _DetailfoodpageState extends State<Detailfoodpage> {
                   topRight: Radius.circular(55),
                 ),
               ),
-              child: _pages[_selectedIndex], // แสดงผลตาม _selectedIndex
+              child: _pages[_selectedIndex], // Show content based on _selectedIndex
             ),
             Container(
               margin: const EdgeInsets.only(top: 70, left: 30, right: 30),
@@ -73,8 +103,8 @@ class _DetailfoodpageState extends State<Detailfoodpage> {
                         margin: const EdgeInsets.only(top: 15, bottom: 5),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(10),
-                          child: Image.asset(
-                            "asset/images/bonchon_wing.png",
+                          child: Image.network(
+                            widget.foodUrl,
                             width: 150,
                             height: 144,
                             fit: BoxFit.cover,
@@ -82,11 +112,13 @@ class _DetailfoodpageState extends State<Detailfoodpage> {
                         ),
                       ),
                       Text(
-                        "Bonchon Chicken",
+                        widget.foodName,
                         style: AppWidget.headlineTextFeildStyle().copyWith(
                           letterSpacing: 0.5,
                           fontSize: 28,
                         ),
+                        maxLines: 1, // จำกัดบรรทัดให้เหลือแค่ 1 บรรทัด
+                        overflow: TextOverflow.ellipsis, // ใช้ ... เมื่อข้อความยาวเกิน
                       ),
                     ],
                   ),
@@ -120,7 +152,7 @@ class _CustomNavBarState extends State<CustomNavBar> {
     setState(() {
       _selectedIndex = index;
     });
-    widget.onItemTapped(index); // แจ้ง StatefulWidget ว่ามีการเปลี่ยนแปลง index
+    widget.onItemTapped(index); // Notify parent widget about index change
   }
 
   @override
@@ -164,7 +196,7 @@ class _CustomNavBarState extends State<CustomNavBar> {
   }
 }
 
-// each topic detail
+// Each topic detail
 class Detail extends StatelessWidget {
   const Detail({super.key});
 
@@ -175,10 +207,12 @@ class Detail extends StatelessWidget {
 }
 
 class IngredientsPage extends StatelessWidget {
-  const IngredientsPage({super.key});
+  final String foodId; // รับ foodId เข้ามา
+
+  const IngredientsPage({super.key, required this.foodId}); // รับ foodId ใน constructor
 
   @override
   Widget build(BuildContext context) {
-    return const Ingredientswidget(); 
+    return Ingredientswidget(foodId: foodId);
   }
 }

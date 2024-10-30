@@ -156,7 +156,7 @@ class _MainpageState extends State<Mainpage> {
                   children: [
                     //* a list
                     GestureDetector(
-                       onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context) => const Bottomnav(initialPage:Detailfoodpage())));},
+                      //  onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context) => const Bottomnav(initialPage:Detailfoodpage())));},
                       child: Container(
                         margin: const EdgeInsets.only(top: 10),
                         decoration: BoxDecoration(

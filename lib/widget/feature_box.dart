@@ -145,7 +145,7 @@ class _FeatureBoxState extends State<FeatureBox> {
                           height: 60,
                         ),
                         const SizedBox(
-                          height: 6,
+                          height: 16,
                         ),
                         Text(
                           "Food",
