@@ -7,6 +7,8 @@ class Food {
   final int protein;
   final String imageURL; // New property for image URL
   final List<String> tags; // New property for food type tags
+  final String foodID; // New property for food ID
+  final String mealID; // New property for meal ID
 
   Food({
     required this.calories,
@@ -17,6 +19,8 @@ class Food {
     required this.protein,
     required this.imageURL, // Include new property in constructor
     required this.tags, // Include new property in constructor
+    required this.foodID, // Include new property in constructor
+    required this.mealID, // Include new property in constructor
   });
 
   factory Food.fromJson(Map<String, dynamic> json) {
@@ -29,6 +33,8 @@ class Food {
       protein: json['protein'],
       imageURL: json['imageURL'] ?? '', // Handle potential nulls
       tags: List<String>.from(json['tags'] ?? []), // Convert tags to a List<String>
+      foodID: json['foodID'] ?? '', // Handle potential nulls for foodID
+      mealID: json['mealID'] ?? '', // Handle potential nulls for mealID
     );
   }
 
@@ -42,21 +48,21 @@ class Food {
       'protein': protein,
       'imageURL': imageURL, // Include new property in JSON output
       'tags': _filterTags(tags), // Filter tags before including in JSON output
+      'foodID': foodID, // Include foodID in JSON output
+      'mealID': mealID, // Include mealID in JSON output
     };
   }
 
   List<String> _filterTags(List<String> tags) {
-  const excludedTags = ['breakfast', 'lunch', 'dinner', 'other'];
+    const excludedTags = ['breakfast', 'lunch', 'dinner', 'other'];
 
-  final filteredTags = tags.where((tag) {
-    bool isExcluded = excludedTags.contains(tag.toLowerCase());
-    return !isExcluded;
-  }).toList();
+    final filteredTags = tags.where((tag) {
+      bool isExcluded = excludedTags.contains(tag.toLowerCase());
+      return !isExcluded;
+    }).toList();
 
-  return filteredTags;
-}
-
-  
+    return filteredTags;
+  }
 }
 
 class Meal {

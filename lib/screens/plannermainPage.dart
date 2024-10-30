@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
 import 'package:projectapp/api/plannermainPage.dart';
@@ -26,6 +27,28 @@ class _PlannerMainState extends State<PlannerMain> {
   void initState() {
     super.initState();
     fetchPlanners();
+  }
+
+  Future<void> deletePlanner(String plannername) async {
+    final url = Uri.parse('http://10.0.2.2/delete/planner/$plannername');
+    try {
+      final response = await http.delete(url);
+      if (response.statusCode == 200) {
+        // Successfully deleted
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Planner deleted successfully!')),
+        );
+        fetchPlanners(); // Refresh planners list
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to delete planner.')),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error deleting planner: $e')),
+      );
+    }
   }
 
   Future<void> fetchPlanners() async {
@@ -150,10 +173,8 @@ class _PlannerMainState extends State<PlannerMain> {
                                             height: 40,
                                             decoration: BoxDecoration(
                                                 borderRadius: BorderRadius.only(
-                                                    topLeft:
-                                                        Radius.circular(25),
-                                                    topRight:
-                                                        Radius.circular(25)),
+                                                  topLeft:Radius.circular(25),
+                                                  topRight:Radius.circular(25)),
                                                 color: Colors.red),
                                             child: Icon(
                                               Icons.warning_rounded,
@@ -162,17 +183,14 @@ class _PlannerMainState extends State<PlannerMain> {
                                           ),
                                           content: Text(
                                             'Are you sure you want to delete ?',
-                                            style: AppWidget
-                                                    .nutrientTextFeildStyle()
-                                                .copyWith(
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize: 16),
+                                            style: AppWidget.nutrientTextFeildStyle().copyWith(
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 16),
                                             textAlign: TextAlign.center,
                                           ),
                                           actions: [
                                             Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
+                                              mainAxisAlignment: MainAxisAlignment.center,
                                               children: [
                                                 TextButton(
                                                   onPressed: () {
@@ -184,31 +202,24 @@ class _PlannerMainState extends State<PlannerMain> {
                                                     height: 40,
                                                     decoration: BoxDecoration(
                                                       color: Color(0xFF4F6C4E),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
+                                                      borderRadius:BorderRadius.circular(10),
                                                       boxShadow: [
                                                         BoxShadow(
-                                                          color: Colors.black
-                                                              .withOpacity(0.3),
+                                                          color: Colors.black.withOpacity(0.3),
                                                           spreadRadius: 1,
                                                           blurRadius: 3,
                                                           offset: Offset(0, 2),
                                                         ),
                                                       ],
                                                     ),
-                                                    child: Text(
-                                                      'Cancel',
-                                                      style: AppWidget
-                                                              .lightTextFeildStyle()
-                                                          .copyWith(
-                                                              color:
-                                                                  Colors.white),
+                                                    child: Text('Cancel',
+                                                    style: AppWidget.lightTextFeildStyle().copyWith(color:Colors.white),
                                                     ),
                                                   ),
                                                 ),
                                                 TextButton(
                                                   onPressed: () {
+                                                    deletePlanner(planner.planName);
                                                     Navigator.of(context).pop();
                                                   },
                                                   child: Container(
@@ -232,11 +243,7 @@ class _PlannerMainState extends State<PlannerMain> {
                                                     ),
                                                     child: Text(
                                                       'Confirm',
-                                                      style: AppWidget
-                                                              .lightTextFeildStyle()
-                                                          .copyWith(
-                                                              color:
-                                                                  Colors.red),
+                                                      style: AppWidget.lightTextFeildStyle().copyWith(color:Colors.red),
                                                     ),
                                                   ),
                                                 ),
