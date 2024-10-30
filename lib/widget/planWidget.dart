@@ -15,13 +15,13 @@ class Planwidget extends StatelessWidget {
           Foodlistcard(),
         ]),
         SizedBox(height: 10.0),
-        
+
         // Lunch Box
         buildMealBox('Lunch', 'Total Calories: 850 cal', [
           Foodlistcard(),
         ]),
         SizedBox(height: 10.0),
-        
+
         // Dinner Box
         buildMealBox('Dinner', 'Total Calories: 850 cal', [
           Foodlistcard(),
@@ -31,7 +31,8 @@ class Planwidget extends StatelessWidget {
   }
 
   // Method to build a meal box
-  Widget buildMealBox(String mealType, String totalCalories, List<Widget> items) {
+  Widget buildMealBox(
+      String mealType, String totalCalories, List<Widget> items) {
     return Container(
       ///////////////////////////////////// Box Widget
       decoration: BoxDecoration(
@@ -39,7 +40,8 @@ class Planwidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
       ),
       child: Container(
-        margin: EdgeInsets.only(top: 10.0, left: 12.0, right: 12.0, bottom: 10.0),
+        margin:
+            EdgeInsets.only(top: 10.0, left: 12.0, right: 12.0, bottom: 10.0),
         child: Column(
           children: [
             Row(
