@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:projectapp/screens/dailycaloriesedit.dart';
 import 'package:projectapp/screens/mealplanPage.dart';
 import 'package:projectapp/widget/bottomnav.dart';
 import 'package:projectapp/widget/icon_back.dart';
@@ -24,7 +25,7 @@ class _DailycaloriesState extends State<Dailycalories> {
               color: Color.fromARGB(255, 240, 214, 181),
             ),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
                   margin: const EdgeInsets.only(top: 60, left: 20),
@@ -139,57 +140,66 @@ class _DailycaloriesState extends State<Dailycalories> {
                       child: SingleChildScrollView(
                         child: Column(
                           children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(45),
-                                color: const Color.fromRGBO(187, 207, 63, 1),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.3),
-                                    spreadRadius: 2,
-                                    blurRadius: 3,
-                                    offset: const Offset(0, 3),
-                                  ),
-                                ],
-                              ),
-                              margin: const EdgeInsets.symmetric(
-                                  horizontal: 3, vertical: 5),
-                              padding: const EdgeInsets.all(20),
-                              child: Stack(
-                                children: [
-                                  Align(
-                                    alignment: Alignment.topLeft,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'Breakfast',
-                                          style: AppWidget
-                                              .headlineTextFeildStyle(),
-                                        ),
-                                        const Text(
-                                          'Oatmeal with fruits and nuts',
-                                          style: TextStyle(
-                                            fontSize: 13,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ],
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => const Bottomnav(
+                                            initialPage: Dailycaloriesedit())));
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(45),
+                                  color: const Color.fromRGBO(187, 207, 63, 1),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.3),
+                                      spreadRadius: 2,
+                                      blurRadius: 3,
+                                      offset: const Offset(0, 3),
                                     ),
-                                  ),
-                                  // Align เพื่อจัดวาง 450cal ไปทางขวาบน
-                                  const Align(
-                                    alignment: Alignment.topRight,
-                                    child: Text(
-                                      '450cal',
-                                      style: TextStyle(
-                                        fontSize: 13,
-                                        color: Colors.white,
+                                  ],
+                                ),
+                                margin: const EdgeInsets.symmetric(
+                                    horizontal: 3, vertical: 5),
+                                padding: const EdgeInsets.all(20),
+                                child: Stack(
+                                  children: [
+                                    Align(
+                                      alignment: Alignment.topLeft,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Breakfast',
+                                            style: AppWidget
+                                                .headlineTextFeildStyle(),
+                                          ),
+                                          const Text(
+                                            'Oatmeal with fruits and nuts',
+                                            style: TextStyle(
+                                              fontSize: 13,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                  ),
-                                ],
+                                    // Align เพื่อจัดวาง 450cal ไปทางขวาบน
+                                    const Align(
+                                      alignment: Alignment.topRight,
+                                      child: Text(
+                                        '450cal',
+                                        style: TextStyle(
+                                          fontSize: 13,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                             const SizedBox(height: 10),
@@ -461,6 +471,11 @@ class _DailycaloriesState extends State<Dailycalories> {
                 ),
               ),
             ),
+          ),
+          const Positioned(
+            top: 50,
+            left: 30,
+            child: IconBack(),
           ),
         ],
       ),
