@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:projectapp/screens/plannermainPage.dart';
 import 'package:projectapp/widget/bottomnav.dart';
+import 'package:projectapp/widget/icon_back.dart';
 import 'package:projectapp/widget/planlistforrecommen.dart';
 import 'package:projectapp/widget/widget_support.dart';
 
 class FoodRecommendationPlan extends StatefulWidget {
-  const FoodRecommendationPlan({super.key});
+  const FoodRecommendationPlan({super.key, required data});
 
   @override
   State<FoodRecommendationPlan> createState() => _FoodRecommendationPlanState();
@@ -29,8 +30,8 @@ class _FoodRecommendationPlanState extends State<FoodRecommendationPlan> {
                 Container(
                   margin: const EdgeInsets.only(top: 60),
                   child: Text(
-                    'Daily Calories',
-                    style: AppWidget.headlineTextFeildStyle(),
+                    'Food Recommendation',
+                    style: AppWidget.boldTextFeildStyle(),
                   ),
                 ),
               ],
@@ -116,8 +117,10 @@ class _FoodRecommendationPlanState extends State<FoodRecommendationPlan> {
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                              builder: (context) => const Bottomnav(
-                                                  initialPage: PlannerMain())));
+                                              builder: (context) =>
+                                                  const Bottomnav(
+                                                      initialPage: PlannerMain(
+                                                          userID: 'Eiei'))));
                                     }
                                   },
                                 ),
@@ -170,7 +173,12 @@ class _FoodRecommendationPlanState extends State<FoodRecommendationPlan> {
                 ),
               ),
             ),
-          )
+          ),
+          const Positioned(
+            top: 50,
+            left: 30,
+            child: IconBack(),
+          ),
         ],
       ),
     );
@@ -184,12 +192,13 @@ class planlist extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
       shrinkWrap: true, // เพื่อให้ไม่ใช้พื้นที่เกินความจำเป็น
-      physics: const NeverScrollableScrollPhysics(), // ปิดการเลื่อนใน ListView นี้
+      physics:
+          const NeverScrollableScrollPhysics(), // ปิดการเลื่อนใน ListView นี้
       itemCount: 7, // จำนวนรายการที่ต้องการ
       itemBuilder: (context, index) {
         return Container(
-          margin:
-              const EdgeInsets.symmetric(vertical: 5), // ตั้งค่าระยะห่างระหว่างรายการ
+          margin: const EdgeInsets.symmetric(
+              vertical: 5), // ตั้งค่าระยะห่างระหว่างรายการ
           child: const Planlist(), // แสดง Planlist() ที่คุณมีอยู่แล้ว
         );
       },

@@ -28,7 +28,7 @@ class _BottomnavState extends State<Bottomnav> {
     super.initState();
     pages = [
       const Mainpage(),
-      const PlannerMain(),
+      const PlannerMain(userID: 'Eiei'),
       const Dailycalories(),
       const Noti(),
       const Myprofile(),

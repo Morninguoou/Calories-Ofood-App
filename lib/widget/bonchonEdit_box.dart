@@ -1,14 +1,207 @@
 import 'package:flutter/material.dart';
 import 'package:projectapp/widget/widget_support.dart';
 
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
 class BonchonBox extends StatefulWidget {
-  const BonchonBox({super.key});
+  final String foodName;
+  final int calories;
+  final int dish;
+  final String imageURL;
+  final List<String> foodType;
+  final Function(bool) onEditModeChange;
+  //final VoidCallback confirmDishCountCallback;
+  final String foodID;
+
+  const BonchonBox({
+    Key? key,
+    required this.foodName,
+    required this.calories,
+    required this.dish,
+    required this.imageURL,
+    required this.foodType,
+    required this.onEditModeChange,
+    //required this.confirmDishCountCallback,
+    required this.foodID,
+  }) : super(key: key);
+
+  // void confirmDishCount() {
+  //   //confirmDishCountCallback();
+  // }
 
   @override
-  State<BonchonBox> createState() => _BonchonBoxState();
+  State<BonchonBox> createState() => BonchonBoxState();
 }
 
-class _BonchonBoxState extends State<BonchonBox> {
+class BonchonBoxState extends State<BonchonBox> {
+  final int maxFoodNameLength = 20;
+  bool isEditMode = false;
+  late int currentDishCount;
+
+  @override
+  void initState() {
+    super.initState();
+    currentDishCount = widget.dish; // Initialize with the initial value
+  }
+
+  void toggleEditMode() {
+    setState(() {
+      isEditMode = !isEditMode;
+      widget.onEditModeChange(isEditMode);
+    });
+  }
+
+  void incrementDishCount() {
+    setState(() {
+      currentDishCount++;
+    });
+  }
+
+  void decrementDishCount() {
+    if (currentDishCount > 1) {
+      setState(() {
+        currentDishCount--;
+      });
+    }
+  }
+
+   void showDeleteConfirmationDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          titlePadding: EdgeInsets.zero,
+          backgroundColor: Color(0xFFF0D6B5),
+          title: Container(
+            height: 40,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(25),
+                topRight: Radius.circular(25),
+              ),
+              color: Colors.red,
+            ),
+            child: Icon(
+              Icons.warning_rounded,
+              size: 40,
+              color: Colors.black,
+            ),
+          ),
+          content: Text(
+            'Are you sure you want to delete?',
+            style: AppWidget.nutrientTextFeildStyle().copyWith(
+              fontWeight: FontWeight.w600,
+              fontSize: 16,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          actions: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    width: 90,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: Color(0xFF4F6C4E),
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.3),
+                          spreadRadius: 1,
+                          blurRadius: 3,
+                          offset: Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: Text(
+                      'Cancel',
+                      style: AppWidget.lightTextFeildStyle()
+                          .copyWith(color: Colors.white),
+                    ),
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    deleteFood();
+                    Navigator.of(context).pop();
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    width: 90,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: Color(0xFFFFFFFF),
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.3),
+                          spreadRadius: 1,
+                          blurRadius: 3,
+                          offset: Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: Text(
+                      'Confirm',
+                      style: AppWidget.lightTextFeildStyle()
+                          .copyWith(color: Colors.red),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> deleteFood() async {
+    final response = await http.delete(
+      Uri.parse(
+          'http://10.0.2.2/delete/food/${widget.foodID}'), // Change to the appropriate foodID if necessary
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      // Handle successful response
+      print('Food deleted successfully!');
+      // Optionally, you can remove the BonchonBox from the UI or notify the user
+    } else {
+      // Handle error
+      print('Failed to delete food: ${response.body}');
+    }
+  }
+
+  Future<void> confirmDishCount() async {
+    final response = await http.put(
+      Uri.parse('http://10.0.2.2/food/${widget.foodID}/editDish'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, int>{
+        'dish': currentDishCount,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      // Handle successful response
+      print('Dish count updated successfully!');
+    } else {
+      // Handle error
+      print('Failed to update dish count: ${response.body}');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -33,7 +226,6 @@ class _BonchonBoxState extends State<BonchonBox> {
                   ],
                 ),
                 child: Stack(
-                  ////Begin --> Stack of Food card Container
                   children: [
                     Container(
                       margin: const EdgeInsets.symmetric(
@@ -42,12 +234,19 @@ class _BonchonBoxState extends State<BonchonBox> {
                         children: [
                           ClipRRect(
                             borderRadius: BorderRadius.circular(10),
-                            child: Image.asset(
-                              "asset/images/bonchon_wing.png",
-                              height: 67,
-                              width: 78,
-                              fit: BoxFit.cover,
-                            ),
+                            child: widget.imageURL.startsWith('http')
+                                ? Image.network(
+                                    widget.imageURL,
+                                    height: 67,
+                                    width: 78,
+                                    fit: BoxFit.cover,
+                                  )
+                                : Image.asset(
+                                    widget.imageURL,
+                                    height: 67,
+                                    width: 78,
+                                    fit: BoxFit.cover,
+                                  ),
                           ),
                           SizedBox(
                             width: 10,
@@ -57,19 +256,23 @@ class _BonchonBoxState extends State<BonchonBox> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Calorie : 850 cal • 10 pieces/set",
+                                "Calorie : ${widget.calories} cal",
                                 style: AppWidget.verylightTextFeildStyle()
                                     .copyWith(height: 1.3, fontSize: 13),
                               ),
                               Text(
-                                "Bonchon Wings",
+                                _truncateFoodName(widget.foodName),
                                 style: AppWidget.semiBoldTextFeildStyle()
                                     .copyWith(
                                         height: 1.3,
                                         fontWeight: FontWeight.bold),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
                               ),
                               Text(
-                                "Fried Food | Korean Food",
+                                widget.foodType.isNotEmpty
+                                    ? widget.foodType.join(' | ')
+                                    : 'No Tags',
                                 style: AppWidget.verylightTextFeildStyle()
                                     .copyWith(height: 1.3, fontSize: 13),
                               ),
@@ -81,24 +284,79 @@ class _BonchonBoxState extends State<BonchonBox> {
                     Positioned(
                       bottom: 10.0,
                       right: 12.0,
-                      child: Icon(Icons.edit_square),
+                      child: GestureDetector(
+                        onTap: () {
+                          if (isEditMode) {
+                            showDeleteConfirmationDialog(); // Call delete method when in edit mode
+                          } else {
+                            toggleEditMode(); // Toggle edit mode if not deleting
+                          }
+                        },
+                        child: Icon(isEditMode
+                            ? Icons.delete_forever
+                            : Icons.edit_square),
+                      ),
                     ),
+                    if (isEditMode)
+                      Positioned(
+                        top: -2,
+                        right: 30,
+                        child: Row(
+                          children: [
+                            Stack(
+                              children: [
+                                IconButton(
+                                  icon: Icon(
+                                    Icons.remove,
+                                    color: Colors.black,
+                                    size: 15,
+                                  ),
+                                  onPressed: () {},
+                                ),
+                                IconButton(
+                                  icon: Icon(Icons.square_outlined,color: Colors.black),
+                                  onPressed: () {
+                                    decrementDishCount();
+                                    print('Reduce icon clicked');
+                                  },
+                                ),
+                              ],
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.add_box_outlined,color: Colors.black),
+                              onPressed: () {
+                                incrementDishCount();
+                                print('Add icon clicked');
+                              },
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.check, color: Colors.green),
+                              onPressed: () {
+                                //confirmDishCount(); // Confirm and send update
+                                toggleEditMode(); // Exit edit mode
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
                   ],
-                ), ////End --> Stack of Food card Container
+                ),
               ),
               Positioned(
                 top: 5,
                 right: 0,
                 child: Container(
-                  width: 15,
-                  height: 15,
+                  width: 20,
+                  height: 20,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(25),
                     color: Color(0xFF4F6C4E),
                   ),
-                  child:
-                      Text('x1', style: AppWidget.foodquantityTextFeildStyle()),
+                  child: Text(
+                    'x${currentDishCount}',
+                    style: AppWidget.foodquantityTextFeildStyle().copyWith(fontSize: 12),
+                  ),
                 ),
               ),
             ],
@@ -106,5 +364,12 @@ class _BonchonBoxState extends State<BonchonBox> {
         ),
       ],
     );
+  }
+
+  String _truncateFoodName(String foodName) {
+    if (foodName.length > maxFoodNameLength) {
+      return '${foodName.substring(0, maxFoodNameLength)}...';
+    }
+    return foodName;
   }
 }
