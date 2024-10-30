@@ -17,13 +17,14 @@ class _FoodlistcardState extends State<Foodlistcard> {
       children: [
         //* a list
         GestureDetector(
-          onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        const Bottomnav(initialPage: Detailfoodpage())));
-          },
+          //TODO
+          // onTap: () {
+          //   Navigator.push(
+          //       context,
+          //       MaterialPageRoute(
+          //           builder: (context) =>
+          //               const Bottomnav(initialPage: Detailfoodpage())));
+          // },
           child: Container(
             margin: const EdgeInsets.only(top: 10),
             decoration: BoxDecoration(
