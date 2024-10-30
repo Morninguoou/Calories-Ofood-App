@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projectapp/widget/exerciseWidget.dart';
+import 'package:projectapp/widget/icon_back.dart';
 import 'package:projectapp/widget/planWidget.dart';
 import 'package:projectapp/widget/widget_support.dart';
 
@@ -43,8 +44,8 @@ class _FoodRecommendationPlanDetailState
                 Container(
                   margin: const EdgeInsets.only(top: 60),
                   child: Text(
-                    'Daily Calories',
-                    style: AppWidget.headlineTextFeildStyle(),
+                    'Food Recommendation',
+                    style: AppWidget.boldTextFeildStyle(),
                   ),
                 ),
               ],
@@ -170,7 +171,12 @@ class _FoodRecommendationPlanDetailState
                 ),
               ),
             ),
-          )
+          ),
+          const Positioned(
+            top: 50,
+            left: 30,
+            child: IconBack(),
+          ),
         ],
       ),
     );
