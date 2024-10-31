@@ -88,8 +88,9 @@ class _OptionblockgreyState extends State<Optionblockgrey> {
                         onOptionsSelected: (options) {
                           setState(() {
                             widget.onOptionsSelected(options);
-                          });
+                          });                        
                         },
+                        currentSelections: widget.selectedOptions,
                       ),
                     ),
                   );

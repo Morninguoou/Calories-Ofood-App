@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:projectapp/screens/mainpage.dart';
-import 'package:projectapp/widget/bottomnav.dart';
 import 'package:projectapp/widget/widget_support.dart';
 
 class MoreOpt extends StatefulWidget {
   final Function(List<String>) onOptionsSelected;
+  final List<String> currentSelections; // New parameter for current selections
 
-  const MoreOpt({super.key, required this.onOptionsSelected});
+  const MoreOpt({
+    super.key,
+    required this.onOptionsSelected,
+    required this.currentSelections, // Include new parameter
+  });
 
   @override
   State<MoreOpt> createState() => _MoreOptState();
 }
 
 class _MoreOptState extends State<MoreOpt> {
-  // List of confirmed selected options
-  List<String> selectedOptions = [];
-
   // Temporary list to store the selected options before confirmation
-  List<String> tempSelectedOptions = [];
+  List<String> tempSelectedOptions = []; // Only use this to manage temporary selections
 
   // Example lists of options
   List<String> foodNationalities = [
@@ -56,6 +56,13 @@ class _MoreOptState extends State<MoreOpt> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    // Initialize tempSelectedOptions with the current selections
+    tempSelectedOptions = List.from(widget.currentSelections);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
@@ -87,12 +94,7 @@ class _MoreOptState extends State<MoreOpt> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (context) =>
-                        //             Bottomnav(initialPage: Mainpage())));
-                         Navigator.pop(context);
+                        Navigator.pop(context);
                       },
                       child: const Icon(
                         Icons.close,
@@ -144,12 +146,9 @@ class _MoreOptState extends State<MoreOpt> {
                         child: ElevatedButton(
                             onPressed: () {
                               setState(() {
-                                selectedOptions = [];
-                                tempSelectedOptions = [];
+                                widget.onOptionsSelected([]); 
+                                tempSelectedOptions.clear();
                               });
-                              // ScaffoldMessenger.of(context).showSnackBar(
-                              //   const SnackBar(content: Text('Options cleared!')),
-                              // );
                             },
                             style: ButtonStyle(
                               backgroundColor: WidgetStateProperty.all<Color>(
@@ -181,23 +180,15 @@ class _MoreOptState extends State<MoreOpt> {
                         child: ElevatedButton(
                           onPressed: () {
                             setState(() {
-                              selectedOptions = List.from(tempSelectedOptions);
+                              widget.onOptionsSelected(List.from(tempSelectedOptions));
                             });
-                            // ScaffoldMessenger.of(context).showSnackBar(
-                            //   const SnackBar(content: Text('Options confirmed!')),
-                            // );
-                            widget.onOptionsSelected(selectedOptions);
                             Navigator.pop(context);
                           },
                           style: ButtonStyle(
-                            backgroundColor: WidgetStateProperty.all<Color>(
-                                Color(0xFF4F6C4E)),
-                            foregroundColor:
-                                WidgetStateProperty.all<Color>(Colors.white),
-                            shape: WidgetStateProperty.all<OutlinedBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(
-                                    10.0), // Change button border radius
+                            backgroundColor: WidgetStateProperty.all<Color>(Color(0xFF4F6C4E)),
+                            foregroundColor:WidgetStateProperty.all<Color>(Colors.white),
+                            shape: WidgetStateProperty.all<OutlinedBorder>(RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0), // Change button border radius
                               ),
                             ),
                           ),

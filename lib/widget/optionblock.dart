@@ -51,7 +51,7 @@ class _OptionblockState extends State<Optionblock> {
             children: [
               GestureDetector(
               //TODO:link to add option
-                onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context) => MoreOpt(onOptionsSelected: updateSelectedOptions,)));},
+                onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context) => MoreOpt(onOptionsSelected: updateSelectedOptions,currentSelections: selectedOptions,)));},
                 child: Container(
                   margin: const EdgeInsets.symmetric(vertical: 4),
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
