@@ -28,6 +28,60 @@ class _DailycaloriesState extends State<Dailycalories> {
     }
   }
 
+  Future<FoodCalculated> selectMeal(String mealType) async {
+    final response =
+        await http.get(Uri.parse('http://10.0.2.2/Addtomeal/$mealType'));
+
+    if (response.statusCode == 200) {
+      final jsonData = json.decode(response.body);
+      return FoodCalculated.fromJson(jsonData);
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
+
+  // Future<bool> checkDataWithBackend() async {
+  //   try {
+  //     final sessionProvider =
+  //         Provider.of<SessionProvider>(context, listen: false);
+  //     String idToken = sessionProvider.idToken;
+
+  //     // Get current user ID
+  //     Map<String, dynamic> currentUser =
+  //         await AuthService.getCurrentUser(idToken);
+  //     userId = currentUser['uid'];
+  //     var url = Uri.parse('http://10.0.2.2/AddtoPlanner/$userId');
+  //     var response = await http.post(
+  //       url,
+  //       headers: {"Content-Type": "application/json"},
+  //       body: jsonEncode({"PlannerName": plannerName}),
+  //     );
+
+  //     if (response.statusCode == 200) {
+  //       var data = jsonDecode(response.body);
+  //       print("Response data: $data"); // แสดงข้อมูลที่ได้รับจาก API
+
+  //       // ตรวจสอบว่ามี key 'isValid' หรือไม่
+  //       if (data.containsKey('status')) {
+  //         if (data['status'] == 'OK') {
+  //           print("test");
+  //           return true;
+  //         } else {
+  //           return false;
+  //         }
+  //       } else {
+  //         return false;
+  //       }
+  //     } else {
+  //       throw Exception(
+  //           'Failed to check data with status: ${response.statusCode}');
+  //     }
+  //   } catch (e) {
+  //     print("Error in checkDataWithBackend: $e");
+  //     return false;
+  //   }
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -375,7 +429,7 @@ class _DailycaloriesState extends State<Dailycalories> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          'other',
+                                          'Other',
                                           style: AppWidget
                                               .headlineTextFeildStyle(),
                                         ),
@@ -455,7 +509,10 @@ class _DailycaloriesState extends State<Dailycalories> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) => Bottomnav(
-                                                  initialPage: MealPlan(plannerID: '',planName: '',formattedDate: ''))));
+                                                  initialPage: MealPlan(
+                                                      plannerID: '',
+                                                      planName: '',
+                                                      formattedDate: ''))));
                                     }
                                   },
                                 ),

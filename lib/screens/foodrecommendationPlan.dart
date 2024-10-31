@@ -340,13 +340,15 @@ class planlist extends StatelessWidget {
                         child: Text('More Details',
                             style: AppWidget.moredetailTextFeildStyle()),
                         onTap: () {
+                          print('${planners[index].plannerID}');
                           Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => Bottomnav(
                                         initialPage:
-                                            FoodRecommendationPlanDetail(plannerID:
-                                                            planners[index].plannerID,),
+                                            FoodRecommendationPlanDetail(
+                                          plannerID: planners[index].plannerID,
+                                        ),
                                       )));
                         },
                       ),

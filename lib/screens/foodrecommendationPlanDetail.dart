@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:projectapp/api/foodrecdetail.dart';
+import 'package:projectapp/models/NutritionData.dart';
 import 'package:projectapp/widget/exerciseWidget.dart';
 import 'package:projectapp/widget/icon_back.dart';
-import 'package:projectapp/widget/planWidget.dart';
-import 'package:projectapp/widget/widget_support.dart';
+import 'package:projectapp/widget/selfplanlistforrecommen.dart';
 
+import 'package:projectapp/widget/widget_support.dart';
 
 import 'dart:convert';
 
@@ -13,7 +15,6 @@ import 'package:projectapp/models/mealplanPage.dart';
 import 'package:projectapp/screens/foodlistPage.dart';
 import 'package:projectapp/widget/bottomnav.dart';
 import 'package:projectapp/widget/icon_back.dart';
-import 'package:projectapp/widget/selfplanWidget.dart';
 import 'package:projectapp/widget/widget_support.dart';
 import 'package:projectapp/widget/icon_share.dart';
 import 'package:projectapp/widget/exerciseWidget.dart';
@@ -32,12 +33,14 @@ class FoodRecommendationPlanDetail extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<FoodRecommendationPlanDetail> createState() => _FoodRecommendationPlanDetailState();
+  State<FoodRecommendationPlanDetail> createState() =>
+      _FoodRecommendationPlanDetailState();
 }
 
-class _FoodRecommendationPlanDetailState extends State<FoodRecommendationPlanDetail> {
+class _FoodRecommendationPlanDetailState
+    extends State<FoodRecommendationPlanDetail> {
   bool isLoading = true;
-  MealPlanModel? mealData; // Declare `mealData` specific to this state
+  late NutritionData mealData; // Declare `mealData` specific to this state
   int _selectedIndex = 0;
 
   bool isEditModeActive = false;
@@ -48,54 +51,6 @@ class _FoodRecommendationPlanDetailState extends State<FoodRecommendationPlanDet
     });
   }
 
-  // Future<void> confirmDishCount() async {
-
-  //   setState(() {
-  //     isLoading = true;
-  //   });
-
-  //   final url = Uri.parse("http://10.0.2.2/food/9234e3c37de844ae8a1d7565994731f4/editDish");
-
-  //   // Create your payload; customize as per your API requirements
-  //   final payload = {
-  //     "dish": 2,
-  //     // Add other necessary data if needed
-  //   };
-
-  //   try {
-  //     final response = await http.put(
-  //       url,
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: jsonEncode(payload),
-  //     );
-
-  //     if (response.statusCode == 200) {
-  //       print('Dish count confirmed and updated.');
-  //       ScaffoldMessenger.of(context).showSnackBar(
-  //         SnackBar(content: Text('Dish count successfully updated!')),
-  //       );
-  //     } else {
-  //       throw Exception('Failed to update dish count. Status code: ${response.statusCode}');
-  //     }
-  //   } catch (e) {
-  //     print('Error confirming dish count: $e');
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       SnackBar(content: Text('Error confirming dish count: $e')),
-  //     );
-  //   } finally {
-  //     setState(() {
-  //       isLoading = false;
-  //     });
-  //   }
-  // }
-
-  // final List<Widget> _pages = [
-  //   const PlanPage(),
-  //   //const ExercisePage(),
-  // ];
-
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -105,12 +60,14 @@ class _FoodRecommendationPlanDetailState extends State<FoodRecommendationPlanDet
   @override
   void initState() {
     super.initState();
-    fetchPlanners(widget.plannerID);
+    fetchdata(widget.plannerID);
   }
 
-  Future<void> fetchPlanners(String plannerID) async {
+  Future<void> fetchdata(String plannerID) async {
     try {
-      mealData = await MealPlanService.getPlannersByPlanID(plannerID);
+      mealData =
+          await PlanAppRecommendDetailService.getFoodRecommendationDetail(
+              plannerID);
       setState(() {
         isLoading = false;
       });
@@ -141,8 +98,11 @@ class _FoodRecommendationPlanDetailState extends State<FoodRecommendationPlanDet
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Container(
-                        margin:
-                            const EdgeInsets.only(top: 60, left: 20, right: 20,),
+                        margin: const EdgeInsets.only(
+                          top: 60,
+                          left: 20,
+                          right: 20,
+                        ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -157,7 +117,6 @@ class _FoodRecommendationPlanDetailState extends State<FoodRecommendationPlanDet
                                 ),
                               ],
                             ),
-                            IconShare(),
                           ],
                         ),
                       ),
@@ -197,7 +156,7 @@ class _FoodRecommendationPlanDetailState extends State<FoodRecommendationPlanDet
                                       ),
                                     ),
                                     Text(
-                                      '${mealData?.totalAllFat}g',
+                                      '${mealData?.message.fat}g',
                                       style: TextStyle(
                                         fontSize: 13,
                                         color: Colors.black,
@@ -218,7 +177,7 @@ class _FoodRecommendationPlanDetailState extends State<FoodRecommendationPlanDet
                                       ),
                                     ),
                                     Text(
-                                      '${mealData?.totalAllCarbs}g',
+                                      '${mealData?.message.carb}g',
                                       style: TextStyle(
                                         fontSize: 13,
                                         color: Colors.black,
@@ -239,7 +198,7 @@ class _FoodRecommendationPlanDetailState extends State<FoodRecommendationPlanDet
                                       ),
                                     ),
                                     Text(
-                                      '${mealData?.totalAllProtein}g',
+                                      '${mealData?.message.protein}g',
                                       style: TextStyle(
                                         fontSize: 13,
                                         color: Colors.black,
@@ -259,7 +218,7 @@ class _FoodRecommendationPlanDetailState extends State<FoodRecommendationPlanDet
                                       ),
                                     ),
                                     Text(
-                                      '${mealData?.totalAllCalories}kcal',
+                                      '${mealData?.message.calories}kcal',
                                       style: TextStyle(
                                         fontSize: 13,
                                         color: Colors.black,
@@ -277,22 +236,12 @@ class _FoodRecommendationPlanDetailState extends State<FoodRecommendationPlanDet
                                 Icon(Icons.calendar_today_outlined),
                                 Text(' date ',
                                     style: AppWidget.dateboldTextFeildStyle()),
-                                GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => Bottomnav(
-                                                initialPage: FoodList())));
-                                  },
-                                  child: Icon(Icons.add_circle,color: Color(0xFF4F6C4E),),
-                                ),
                               ],
                             ),
                             SizedBox(height: 10),
                             Container(
                               child: PlanPage(
-                                meals: mealData?.meals ?? [],
+                                data: mealData,
                                 onEditModeChange: toggleConfirmButton,
                               ), // Pass the meals here //CustomNavBar(onItemTapped: _onItemTapped),
                             ),
@@ -345,17 +294,23 @@ class _FoodRecommendationPlanDetailState extends State<FoodRecommendationPlanDet
                           child: ElevatedButton(
                             onPressed: () {
                               print('Confirm button clicked');
-                              widget.bonchonBoxKey.currentState?.confirmDishCount();
-                              widget.bonchonBoxKey.currentState?.toggleEditMode();
+                              widget.bonchonBoxKey.currentState
+                                  ?.confirmDishCount();
+                              widget.bonchonBoxKey.currentState
+                                  ?.toggleEditMode();
                               setState(() {
                                 isEditModeActive = !isEditModeActive;
                               });
                             },
                             style: ButtonStyle(
-                              backgroundColor: WidgetStateProperty.all<Color>(Color(0xFF4F6C4E)),
-                              foregroundColor:WidgetStateProperty.all<Color>(Colors.white),
-                              shape: WidgetStateProperty.all<OutlinedBorder>(RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10.0), // Change button border radius
+                              backgroundColor: WidgetStateProperty.all<Color>(
+                                  Color(0xFF4F6C4E)),
+                              foregroundColor:
+                                  WidgetStateProperty.all<Color>(Colors.white),
+                              shape: WidgetStateProperty.all<OutlinedBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      10.0), // Change button border radius
                                 ),
                               ),
                             ),
@@ -436,21 +391,21 @@ class _CustomNavBarState extends State<CustomNavBar> {
 }
 
 class PlanPage extends StatelessWidget {
-  final List<Meal> meals; // Store meals as a property
+  final NutritionData data; // Store meals as a property
   final Function(bool) onEditModeChange;
   //final VoidCallback confirmDishCountCallback;
 
   const PlanPage({
     super.key,
-    required this.meals,
+    required this.data,
     required this.onEditModeChange,
     //required this.confirmDishCountCallback,
   }); // Updated constructor
 
   @override
   Widget build(BuildContext context) {
-    return SelfPlanWidget(
-      meals: meals,
+    return SelfPlanWidgetFR(
+      meals: data,
       onEditModeChange: onEditModeChange,
       //confirmDishCountCallback: confirmDishCountCallback,
     ); // Pass meals to SelfPlanWidget
