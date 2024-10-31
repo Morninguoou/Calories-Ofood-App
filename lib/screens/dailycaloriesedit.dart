@@ -15,9 +15,9 @@ class Dailycaloriesedit extends StatefulWidget {
 class _DailycalorieseditState extends State<Dailycaloriesedit> {
   int _selectedIndex = 0;
 
-  final List<Widget> _pages = [
-    const PlanPage(),
-  ];
+  // final List<Widget> _pages = [
+  //   const PlanPage(),
+  // ];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -172,7 +172,7 @@ class _DailycalorieseditState extends State<Dailycaloriesedit> {
 
                       // Display the selected page
 
-                      _pages[_selectedIndex],
+                      // _pages[_selectedIndex],
                     ],
                   ),
                 ),
@@ -255,11 +255,14 @@ class _CustomNavBarState extends State<CustomNavBar> {
   }
 }
 
-class PlanPage extends StatelessWidget {
-  const PlanPage({super.key});
+// class PlanPage extends StatelessWidget {
+//   const PlanPage({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return const SelfPlanWidget(meals: [],);
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return const SelfPlanWidget(meals: [], onEditModeChange: (bool ) {  },
+     
+//       //confirmDishCountCallback: confirmDishCountCallback,
+//     );
+//   }
+// }
