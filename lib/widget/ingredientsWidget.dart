@@ -1,27 +1,109 @@
 import 'package:flutter/material.dart';
 import 'package:projectapp/widget/widget_support.dart';
 
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
 class Ingredientswidget extends StatefulWidget {
-  const Ingredientswidget({super.key});
+  final String foodId;
+
+  const Ingredientswidget({super.key, required this.foodId});
 
   @override
   State<Ingredientswidget> createState() => _IngredientswidgetState();
 }
 
 class _IngredientswidgetState extends State<Ingredientswidget> {
-  int quantity = 0;
+  List<Map<String, String>>? ingredients;
+  int quantity = 1;
+  bool isLoading = true;
+  String errorMessage = '';
+  List<TextEditingController> controllers = []; // เพิ่ม List สำหรับเก็บ TextEditingControllers
 
-  void addQuantity(){
+  void addQuantity() {
     setState(() {
       quantity += 1;
     });
   }
 
-  void subtractQuantity(){
+  void subtractQuantity() {
     setState(() {
-      quantity = quantity <= 0 ? 0 : quantity - 1;
+      quantity = quantity <= 1 ? 1 : quantity - 1;
     });
   }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchIngredients();
+  }
+
+  @override
+  void dispose() {
+    // เคลียร์ controllers เมื่อไม่ใช้แล้ว
+    for (var controller in controllers) {
+      controller.dispose();
+    }
+    super.dispose();
+  }
+
+  Future<void> fetchIngredients() async {
+    try {
+      final response = await http.get(Uri.parse('http://10.0.2.2/Selectingredient/${widget.foodId}'));
+      if (response.statusCode == 200) {
+        print(response.body);
+        List jsonResponse = json.decode(response.body);
+        setState(() {
+          ingredients = jsonResponse.map((data) => {
+          'name': data['name'].toString(),
+          'imageUrl': data['imageUrl'].toString(),
+          'gram': data['gram']?.toString() ?? '0',
+        }).toList();
+          // สร้าง TextEditingControllers สำหรับแต่ละ ingredient
+        controllers = List.generate(ingredients!.length, 
+          (index) => TextEditingController(text: ingredients![index]['gram']));
+        isLoading = false;
+        });
+      } else {
+        throw Exception('Failed to load ingredients');
+      }
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+        errorMessage = e.toString();
+      });
+    }
+  }
+
+  Future<void> sendIngredients() async {
+    try {
+      final ingredientData = ingredients!.asMap().entries.map((entry) {
+        final index = entry.key;
+        final ingredient = entry.value;
+        return {
+          "name": ingredient['name'],
+          "gram": int.parse(controllers[index].text),
+        };
+      }).toList();
+
+      final response = await http.post(
+        Uri.parse('http://10.0.2.2/Calculation/${widget.foodId}/${quantity}'),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode(ingredientData),
+      );
+
+      if (response.statusCode == 200) {
+        print('Successfully sent data!');
+        print(ingredientData);
+      } else {
+        print('Failed to send data: ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      print('Error occurred: $e');
+    }
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -32,60 +114,55 @@ class _IngredientswidgetState extends State<Ingredientswidget> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                  child: Text(
-                    "Food quantity",
-                    style: AppWidget.boldTextFeildStyle(),
-                  ),
+                Text(
+                  "Food quantity",
+                  style: AppWidget.boldTextFeildStyle(),
                 ),
-                Container(
-                  child: Row(
-                    children: [
-                      GestureDetector(
-                        onTap: subtractQuantity,
-                        child: Container(
-                          padding: const EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                            color: const Color.fromARGB(255, 79, 108, 78),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: const Icon(
-                            Icons.remove,
-                            color: Colors.white,
-                            size: 18,
-                          ),
-                        ),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 5),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 17, vertical: 2),
+                Row(
+                  children: [
+                    GestureDetector(
+                      onTap: subtractQuantity,
+                      child: Container(
+                        padding: const EdgeInsets.all(5),
                         decoration: BoxDecoration(
-                          color: const Color.fromARGB(255, 217, 217, 217),
+                          color: const Color.fromARGB(255, 79, 108, 78),
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        child: Text(
-                          "$quantity",
-                          style: AppWidget.boldTextFeildStyle(),
+                        child: const Icon(
+                          Icons.remove,
+                          color: Colors.white,
+                          size: 18,
                         ),
                       ),
-                      GestureDetector(
-                        onTap: addQuantity,
-                        child: Container(
-                          padding: const EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                            color: const Color.fromARGB(255, 79, 108, 78),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: const Icon(
-                            Icons.add,
-                            color: Colors.white,
-                            size: 18,
-                          ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 5),
+                      padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 2),
+                      decoration: BoxDecoration(
+                        color: const Color.fromARGB(255, 217, 217, 217),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Text(
+                        "$quantity",
+                        style: AppWidget.boldTextFeildStyle(),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: addQuantity,
+                      child: Container(
+                        padding: const EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          color: const Color.fromARGB(255, 79, 108, 78),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: const Icon(
+                          Icons.add,
+                          color: Colors.white,
+                          size: 18,
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 )
               ],
             ),
@@ -96,20 +173,24 @@ class _IngredientswidgetState extends State<Ingredientswidget> {
                 color: const Color.fromARGB(255, 240, 214, 181),
                 borderRadius: BorderRadius.circular(20),
               ),
-              child: ListView(
-                padding: const EdgeInsets.all(8.0),
-                children: <Widget>[
-                  buildCard('Rice'),
-                  buildCard('Chicken'),
-                  buildCard('Onion'),
-                ],
-              ),
+              child: isLoading
+                  ? const Center(child: CircularProgressIndicator())
+                  : errorMessage.isNotEmpty
+                      ? Center(child: Text(errorMessage))
+                      : ingredients != null
+                          ? ListView.builder(
+                              padding: const EdgeInsets.all(8.0),
+                              itemCount: ingredients!.length,
+                              itemBuilder: (context, index) {
+                                return buildCard(ingredients![index],index);
+                              },
+                            )
+                          : const Center(child: Text('No ingredients found')),
             ),
             GestureDetector(
-              //TODO->Popup
-              onTap: () {},
+              onTap: sendIngredients, // เรียกฟังก์ชันส่งข้อมูล
               child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 5,horizontal: 55),
+                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 55),
                 margin: const EdgeInsets.only(top: 15),
                 decoration: BoxDecoration(
                   color: const Color.fromARGB(255, 79, 108, 78),
@@ -123,7 +204,10 @@ class _IngredientswidgetState extends State<Ingredientswidget> {
                     ),
                   ],
                 ),
-                child: Text("Apply",style: AppWidget.semiBoldTextFeildStyle().copyWith(color: Colors.white),),
+                child: Text(
+                  "Apply",
+                  style: AppWidget.semiBoldTextFeildStyle().copyWith(color: Colors.white),
+                ),
               ),
             )
           ],
@@ -132,16 +216,7 @@ class _IngredientswidgetState extends State<Ingredientswidget> {
     );
   }
 
-  Widget buildCard(String ingredient) {
-    String image = '';
-    if (ingredient == 'Rice') {
-      image = 'iconrice.png';
-    } else if (ingredient == 'Chicken') {
-      image = 'iconchicken.png';
-    } else if (ingredient == 'Onion') {
-      image = 'icononion.png';
-    }
-
+  Widget buildCard(Map<String, String> ingredient, int index) {
     return Card(
       color: Colors.white,
       margin: const EdgeInsets.symmetric(vertical: 5),
@@ -150,15 +225,20 @@ class _IngredientswidgetState extends State<Ingredientswidget> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Image.asset(
-              "asset/images/$image",
+            Image.network(
+              ingredient['imageUrl'] ?? '', // URL ของรูปภาพ
               height: 45,
               width: 45,
+              errorBuilder: (context, error, stackTrace) => Icon(Icons.error), // กรณีโหลดรูปไม่ได้
             ),
-            const SizedBox(width: 10,),
+            const SizedBox(width: 10),
             Text(
-              ingredient,
-              style: AppWidget.boldTextFeildStyle().copyWith(letterSpacing: 1),
+              ingredient['name'] != null && ingredient['name']!.length > 10
+                  ? '${ingredient['name']!.substring(0, 10)}..'
+                  : ingredient['name'] ?? '', // ชื่อของวัตถุดิบ
+              style: AppWidget.boldTextFeildStyle().copyWith(fontSize: 15,letterSpacing: 0.5),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
             ),
             const Spacer(),
             Row(
@@ -168,20 +248,22 @@ class _IngredientswidgetState extends State<Ingredientswidget> {
                   height: 30,
                   margin: const EdgeInsets.symmetric(horizontal: 6),
                   decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 235, 235, 235),
-                      borderRadius: BorderRadius.circular(10)),
+                    color: const Color.fromARGB(255, 235, 235, 235),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                   child: TextField(
+                    controller: controllers[index], // ใช้ controller ที่สร้างไว้
                     textAlign: TextAlign.center,
                     decoration: InputDecoration(
-                      hintText: '10',
+                      hintText: '${ingredient['gram']}',
                       hintStyle: AppWidget.semiBoldTextFeildStyle(),
                       border: InputBorder.none,
-                      contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 17, vertical: 6),
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 17, vertical: 6),
                     ),
+                    keyboardType: TextInputType.number,
                   ),
                 ),
-                Text("g.", style: AppWidget.boldTextFeildStyle())
+                Text("g.", style: AppWidget.boldTextFeildStyle()),
               ],
             ),
           ],

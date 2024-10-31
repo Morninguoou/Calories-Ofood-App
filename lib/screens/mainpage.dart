@@ -10,6 +10,10 @@ import 'package:projectapp/providers/session_provider.dart';
 import 'package:projectapp/widget/searchbar.dart';
 import 'package:projectapp/widget/widget_support.dart';
 
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:projectapp/models/FoodlistModel.dart';// เพิ่ม import ของ FoodModel
+
 
 class Mainpage extends StatefulWidget {
   const Mainpage({super.key});
@@ -19,13 +23,25 @@ class Mainpage extends StatefulWidget {
 }
 
 class _MainpageState extends State<Mainpage> {
+
+  Future<List<FoodModel>> fetchFoodList() async {
+    final response = await http.get(Uri.parse('http://10.0.2.2/'));
+
+    if (response.statusCode == 200) {
+      List jsonResponse = json.decode(response.body);
+      return jsonResponse.map((food) => FoodModel.fromJson(food)).toList();
+    } else {
+      throw Exception('Failed to load food list');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
           decoration: const BoxDecoration(color: Color.fromARGB(255, 252, 245, 236)),
-          height: MediaQuery.of(context).size.height,
+          height: MediaQuery.of(context).size.height * 1.22,
           child: Container(
             margin: const EdgeInsets.only(top: 50, left: 20,right: 20),
             child: 
@@ -98,10 +114,7 @@ class _MainpageState extends State<Mainpage> {
                           const SizedBox(height: 8,),
                           const Optionblock(),
                           GestureDetector(
-                            // TODOTap to ranmdom food
-                            onTap: (){
-        
-                            },
+                            onTap: (){},
                             child: Container(
                               margin: const EdgeInsets.symmetric(vertical: 8),
                               padding: const EdgeInsets.symmetric(vertical: 5),
@@ -157,85 +170,95 @@ class _MainpageState extends State<Mainpage> {
 
                   ],
                 ),
-                Column(
-                  children: [
-                    //* a list
-                    GestureDetector(
-                       onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context) => const Bottomnav(initialPage:Detailfoodpage())));},
-                      child: Container(
-                        margin: const EdgeInsets.only(top: 10),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.3),
-                              spreadRadius: 1,
-                              blurRadius: 3,
-                              offset: const Offset(0, 2),
-                            ),
-                          ],
-                        ),
-                        child: Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 10,vertical: 8),
-                          child: Row(
-                            children: [
-                              ClipRRect(
+                FutureBuilder<List<FoodModel>>(
+                  future: fetchFoodList(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(child: CircularProgressIndicator());
+                    } else if (snapshot.hasError) {
+                      return Center(child: Text('Error: ${snapshot.error}'));
+                    } else {
+                      final foodList = snapshot.data!.take(4).toList();
+                      return Column(
+                        children: foodList.map((food) {
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => Bottomnav(
+                                    initialPage: Detailfoodpage(
+                                      foodName: food.name,
+                                      foodId: food.foodId,
+                                      foodUrl: food.imageUrl,
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                            child: Container(
+                              margin: const EdgeInsets.only(top: 10),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
                                 borderRadius: BorderRadius.circular(10),
-                                child: Image.asset("asset/images/bonchon_wing.png",height: 67, width: 78,fit: BoxFit.cover,)
-                              ),
-                              const SizedBox(width: 10,),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text("Calorie : 850 cal • 10 pieces/set", style: AppWidget.verylightTextFeildStyle().copyWith(height: 1.3,fontSize: 13),),
-                                  Text("Bonchon Wings", style: AppWidget.semiBoldTextFeildStyle().copyWith(height: 1.3,fontWeight: FontWeight.bold),),
-                                  Text("Fried Food | Korean Food", style: AppWidget.verylightTextFeildStyle().copyWith(height: 1.3,fontSize: 13),),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.3),
+                                    spreadRadius: 1,
+                                    blurRadius: 3,
+                                    offset: const Offset(0, 2),
+                                  ),
                                 ],
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 10),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.3),
-                            spreadRadius: 1,
-                            blurRadius: 3,
-                            offset: const Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      child: Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 10,vertical: 8),
-                        child: Row(
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child: Image.asset("asset/images/bonchon_wing.png",height: 67, width: 78,fit: BoxFit.cover,)
+                              ),
+                              child: Container(
+                                margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                                child: Row(
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(10),
+                                      child: Image.network(
+                                        food.imageUrl,
+                                        height: 67,
+                                        width: 78,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 10),
+                                    Expanded(
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "Calorie: ${food.calories} cal • ${food.dish} pieces/set",
+                                            style: AppWidget.verylightTextFeildStyle().copyWith(height: 1.3, fontSize: 13),
+                                            overflow: TextOverflow.ellipsis, // แก้ไข overflow
+                                            maxLines: 1,
+                                          ),
+                                          Text(
+                                            food.name,
+                                            style: AppWidget.semiBoldTextFeildStyle().copyWith(height: 1.3, fontWeight: FontWeight.bold),
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 1,
+                                          ),
+                                          Text(
+                                            food.tags.join(' | '),
+                                            style: AppWidget.verylightTextFeildStyle().copyWith(height: 1.3, fontSize: 13),
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 1,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
-                            const SizedBox(width: 10,),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text("Calorie : 850 cal • 10 pieces/set", style: AppWidget.verylightTextFeildStyle().copyWith(height: 1.3,fontSize: 13),),
-                                Text("Bonchon Wings", style: AppWidget.semiBoldTextFeildStyle().copyWith(height: 1.3,fontWeight: FontWeight.bold),),
-                                Text("Fried Food | Korean Food", style: AppWidget.verylightTextFeildStyle().copyWith(height: 1.3,fontSize: 13),),
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
+                          );
+                        }).toList(),
+                      );
+                    }
+                  },
                 )
               ],),
           ),

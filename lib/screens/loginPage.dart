@@ -6,6 +6,7 @@ import 'package:projectapp/api/authentication.dart'; // Import your AuthService
 import 'package:projectapp/widget/bottomnav.dart';
 import 'package:provider/provider.dart';
 import 'package:projectapp/providers/session_provider.dart';
+
 class Login extends StatefulWidget {
   const Login({super.key});
 
@@ -20,32 +21,85 @@ class _LoginState extends State<Login> {
   String? _emailError;
   String? _passwordError;
 
-  // Method to call the signIn method from AuthService and navigate to MainPage on success
-Future<void> _handleSignIn() async {
-  String email = _emailController.text;
-  String password = _passwordController.text;
+  Future<void> _handleSignIn() async {
+    String email = _emailController.text;
+    String password = _passwordController.text;
 
-  // Call the AuthService.signIn function with email and password
-  Map<String, dynamic> result = await AuthService.signIn(email, password);
+    // Call the AuthService.signIn function with email and password
+    Map<String, dynamic> result = await AuthService.signIn(email, password);
+    print(result['status']);
+    if (result['status'] == 'success') {
+      final sessionProvider = Provider.of<SessionProvider>(context, listen: false);
 
-  if (result['status'] == 'success') {
-    final sessionProvider = Provider.of<SessionProvider>(context, listen: false);
-    
-    // Set the idToken in the session provider
-    sessionProvider.setIdToken(result['idToken']);
-    print(result['message']);
-    // Navigate to MainPage
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const Bottomnav(initialPage: Mainpage())),
-    );
-  } else {
-    // Handle sign-in failure (display an error message)
-    print(result['message']);
-  }
+      // Set the idToken in the session provider
+      sessionProvider.setIdToken(result['idToken']);
+      print(result['message']);
+
+      showDialog(
+  context: context,
+  builder: (BuildContext context) {
+    return AlertDialog(
+      titlePadding: const EdgeInsets.all(0),
+      title: Container(
+        padding: const EdgeInsets.only(left: 15, top: 15, bottom: 15),
+        decoration: const BoxDecoration(
+          color: Color.fromARGB(255, 240, 214, 181),
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20.0),
+            topRight: Radius.circular(20.0),
+          ),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const SizedBox(width: 60),
+            Text(
+              'Login Successful',
+              style: AppWidget.semiBoldTextFeildStyle(),
+            ),
+            const Spacer(),
+          ],
+        ),
+      ),
+      content: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 20),
+        child: Text(
+          'Welcome back to your partner!',
+          style: AppWidget.lightTextFeildStyle().copyWith(color: Colors.black),
+          textAlign: TextAlign.center,
+        ),
+      ),
+      actions: [
+        Center(
+          child: GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Bottomnav(initialPage: Mainpage())),
+              );
+            },
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 73, vertical: 10),
+              decoration: BoxDecoration(
+                color: const Color.fromARGB(255, 79, 108, 78),
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Text(
+                "Confirm",
+                style: AppWidget.semiBoldTextFeildStyle()
+                    .copyWith(color: Colors.white, fontSize: 15),
+              ),
+            ),
+          ),
+        ),],
+      );},);
+    } else {
+      // Handle sign-in failure (display an error message)
+      // TODO : เพิ่ม UI แจ้ง user
+      print(result['message']);
+    }
 }
 
-  // Validate the email and password inputs
   void _validateInputs() {
     setState(() {
       _emailError = _emailController.text.isEmpty ? "Please Enter Your Email" : null;
@@ -65,7 +119,6 @@ Future<void> _handleSignIn() async {
         child: Container(
           child: Stack(
             children: [
-              // Background gradient
               Container(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height / 2,
@@ -80,10 +133,9 @@ Future<void> _handleSignIn() async {
                   ),
                 ),
               ),
-              // Foreground content
               Container(
-                margin: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height / 2.5),
+                margin:
+                    EdgeInsets.only(top: MediaQuery.of(context).size.height / 2.5),
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
                 decoration: const BoxDecoration(
@@ -94,7 +146,6 @@ Future<void> _handleSignIn() async {
                 ),
                 child: const Text(""),
               ),
-              // Login form
               Container(
                 margin: const EdgeInsets.only(top: 70, left: 30, right: 30),
                 child: Column(
@@ -113,6 +164,7 @@ Future<void> _handleSignIn() async {
                       child: Container(
                         padding: const EdgeInsets.only(left: 20, right: 20),
                         width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height / 2,
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(20),
@@ -155,7 +207,7 @@ Future<void> _handleSignIn() async {
                             ),
                             const SizedBox(height: 40),
                             GestureDetector(
-                              onTap: _validateInputs, // On tap, validate inputs and sign in
+                              onTap: _validateInputs,
                               child: Material(
                                 elevation: 5,
                                 borderRadius: BorderRadius.circular(20),
@@ -171,11 +223,10 @@ Future<void> _handleSignIn() async {
                                     child: Text(
                                       "LOGIN",
                                       style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: 'Poppins',
-                                      ),
+                                          color: Colors.white,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: 'Poppins'),
                                     ),
                                   ),
                                 ),
@@ -204,9 +255,7 @@ Future<void> _handleSignIn() async {
                           ),
                           Text(
                             " Join now.",
-                            style: AppWidget.semiBoldTextFeildStyle().copyWith(
-                                  color: const Color.fromARGB(255, 79, 108, 78),
-                                ),
+                            style: AppWidget.semiBoldTextFeildStyle().copyWith(color: Color.fromARGB(255, 79, 108, 78)),
                           ),
                         ],
                       ),
