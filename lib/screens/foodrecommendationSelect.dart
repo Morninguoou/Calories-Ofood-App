@@ -175,6 +175,15 @@ class _FoodRecommendationSelectState extends State<FoodRecommendationSelect> {
   //   }
   // }
 
+  List<String> selectedOptions = [];
+
+  // This function updates the selected options
+  void updateSelectedOptions(List<String> options) {
+    setState(() {
+      selectedOptions = options;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -711,7 +720,7 @@ class _FoodRecommendationSelectState extends State<FoodRecommendationSelect> {
                             fontFamily: 'Poppins',
                           )),
                       const SizedBox(height: 15),
-                      const Optionblockgrey(),
+                      Optionblockgrey(selectedOptions: selectedOptions,onOptionsSelected: updateSelectedOptions,),
                       const SizedBox(height: 25),
                       Row(
                         children: [

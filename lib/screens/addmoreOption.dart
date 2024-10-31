@@ -4,7 +4,9 @@ import 'package:projectapp/widget/bottomnav.dart';
 import 'package:projectapp/widget/widget_support.dart';
 
 class MoreOpt extends StatefulWidget {
-  const MoreOpt({super.key});
+  final Function(List<String>) onOptionsSelected;
+
+  const MoreOpt({super.key, required this.onOptionsSelected});
 
   @override
   State<MoreOpt> createState() => _MoreOptState();
@@ -85,11 +87,12 @@ class _MoreOptState extends State<MoreOpt> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    Bottomnav(initialPage: Mainpage())));
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) =>
+                        //             Bottomnav(initialPage: Mainpage())));
+                         Navigator.pop(context);
                       },
                       child: const Icon(
                         Icons.close,
@@ -183,6 +186,8 @@ class _MoreOptState extends State<MoreOpt> {
                             // ScaffoldMessenger.of(context).showSnackBar(
                             //   const SnackBar(content: Text('Options confirmed!')),
                             // );
+                            widget.onOptionsSelected(selectedOptions);
+                            Navigator.pop(context);
                           },
                           style: ButtonStyle(
                             backgroundColor: WidgetStateProperty.all<Color>(
