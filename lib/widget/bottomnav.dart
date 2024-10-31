@@ -11,7 +11,6 @@ import 'package:projectapp/screens/myprofilePage.dart';
 import 'package:provider/provider.dart';
 import 'package:projectapp/providers/session_provider.dart';
 
-
 class Bottomnav extends StatefulWidget {
   final Widget initialPage;
 
@@ -27,11 +26,13 @@ class _BottomnavState extends State<Bottomnav> {
   List<Widget>? pages; // Nullable to allow checking if pages is initialized
 
   Future<void> _getUserIdAndInfo() async {
-    final sessionProvider = Provider.of<SessionProvider>(context, listen: false);
+    final sessionProvider =
+        Provider.of<SessionProvider>(context, listen: false);
     String idToken = sessionProvider.idToken;
 
     // Get current user ID
-    Map<String, dynamic> currentUser = await AuthService.getCurrentUser(idToken);
+    Map<String, dynamic> currentUser =
+        await AuthService.getCurrentUser(idToken);
 
     if (currentUser.containsKey('uid')) {
       setState(() {
@@ -48,9 +49,8 @@ class _BottomnavState extends State<Bottomnav> {
     pages = [
       const Mainpage(),
 
-      const Dailycalories(checkPopup: false),
-
       PlannerMain(userID: userId), // Use fetched userId here
+      const Dailycalories(checkPopup: false),
 
       const Noti(),
       const Myprofile(),
@@ -102,4 +102,3 @@ class _BottomnavState extends State<Bottomnav> {
     );
   }
 }
-

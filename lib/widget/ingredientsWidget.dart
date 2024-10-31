@@ -18,7 +18,8 @@ class _IngredientswidgetState extends State<Ingredientswidget> {
   int quantity = 1;
   bool isLoading = true;
   String errorMessage = '';
-  List<TextEditingController> controllers = []; // เพิ่ม List สำหรับเก็บ TextEditingControllers
+  List<TextEditingController> controllers =
+      []; // เพิ่ม List สำหรับเก็บ TextEditingControllers
 
   void addQuantity() {
     setState(() {
@@ -49,20 +50,25 @@ class _IngredientswidgetState extends State<Ingredientswidget> {
 
   Future<void> fetchIngredients() async {
     try {
-      final response = await http.get(Uri.parse('http://10.0.2.2/Selectingredient/${widget.foodId}'));
+      final response = await http
+          .get(Uri.parse('http://10.0.2.2/Selectingredient/${widget.foodId}'));
       if (response.statusCode == 200) {
         print(response.body);
         List jsonResponse = json.decode(response.body);
         setState(() {
-          ingredients = jsonResponse.map((data) => {
-          'name': data['name'].toString(),
-          'imageUrl': data['imageUrl'].toString(),
-          'gram': data['gram']?.toString() ?? '0',
-        }).toList();
+          ingredients = jsonResponse
+              .map((data) => {
+                    'name': data['name'].toString(),
+                    'imageUrl': data['imageUrl'].toString(),
+                    'gram': data['grams']?.toString() ?? '0',
+                  })
+              .toList();
           // สร้าง TextEditingControllers สำหรับแต่ละ ingredient
-        controllers = List.generate(ingredients!.length, 
-          (index) => TextEditingController(text: ingredients![index]['gram']));
-        isLoading = false;
+          controllers = List.generate(
+              ingredients!.length,
+              (index) =>
+                  TextEditingController(text: ingredients![index]['gram']));
+          isLoading = false;
         });
       } else {
         throw Exception('Failed to load ingredients');
@@ -82,7 +88,7 @@ class _IngredientswidgetState extends State<Ingredientswidget> {
         final ingredient = entry.value;
         return {
           "name": ingredient['name'],
-          "gram": int.parse(controllers[index].text),
+          "grams": int.parse(controllers[index].text),
         };
       }).toList();
 
@@ -102,7 +108,6 @@ class _IngredientswidgetState extends State<Ingredientswidget> {
       print('Error occurred: $e');
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -137,7 +142,8 @@ class _IngredientswidgetState extends State<Ingredientswidget> {
                     ),
                     Container(
                       margin: const EdgeInsets.symmetric(horizontal: 5),
-                      padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 2),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 17, vertical: 2),
                       decoration: BoxDecoration(
                         color: const Color.fromARGB(255, 217, 217, 217),
                         borderRadius: BorderRadius.circular(10),
@@ -182,7 +188,7 @@ class _IngredientswidgetState extends State<Ingredientswidget> {
                               padding: const EdgeInsets.all(8.0),
                               itemCount: ingredients!.length,
                               itemBuilder: (context, index) {
-                                return buildCard(ingredients![index],index);
+                                return buildCard(ingredients![index], index);
                               },
                             )
                           : const Center(child: Text('No ingredients found')),
@@ -190,7 +196,8 @@ class _IngredientswidgetState extends State<Ingredientswidget> {
             GestureDetector(
               onTap: sendIngredients, // เรียกฟังก์ชันส่งข้อมูล
               child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 55),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 5, horizontal: 55),
                 margin: const EdgeInsets.only(top: 15),
                 decoration: BoxDecoration(
                   color: const Color.fromARGB(255, 79, 108, 78),
@@ -206,7 +213,8 @@ class _IngredientswidgetState extends State<Ingredientswidget> {
                 ),
                 child: Text(
                   "Apply",
-                  style: AppWidget.semiBoldTextFeildStyle().copyWith(color: Colors.white),
+                  style: AppWidget.semiBoldTextFeildStyle()
+                      .copyWith(color: Colors.white),
                 ),
               ),
             )
@@ -229,14 +237,16 @@ class _IngredientswidgetState extends State<Ingredientswidget> {
               ingredient['imageUrl'] ?? '', // URL ของรูปภาพ
               height: 45,
               width: 45,
-              errorBuilder: (context, error, stackTrace) => Icon(Icons.error), // กรณีโหลดรูปไม่ได้
+              errorBuilder: (context, error, stackTrace) =>
+                  Icon(Icons.error), // กรณีโหลดรูปไม่ได้
             ),
             const SizedBox(width: 10),
             Text(
               ingredient['name'] != null && ingredient['name']!.length > 10
                   ? '${ingredient['name']!.substring(0, 10)}..'
                   : ingredient['name'] ?? '', // ชื่อของวัตถุดิบ
-              style: AppWidget.boldTextFeildStyle().copyWith(fontSize: 15,letterSpacing: 0.5),
+              style: AppWidget.boldTextFeildStyle()
+                  .copyWith(fontSize: 15, letterSpacing: 0.5),
               overflow: TextOverflow.ellipsis,
               maxLines: 1,
             ),
@@ -252,13 +262,15 @@ class _IngredientswidgetState extends State<Ingredientswidget> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: TextField(
-                    controller: controllers[index], // ใช้ controller ที่สร้างไว้
+                    controller:
+                        controllers[index], // ใช้ controller ที่สร้างไว้
                     textAlign: TextAlign.center,
                     decoration: InputDecoration(
                       hintText: '${ingredient['gram']}',
                       hintStyle: AppWidget.semiBoldTextFeildStyle(),
                       border: InputBorder.none,
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 17, vertical: 6),
+                      contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 17, vertical: 6),
                     ),
                     keyboardType: TextInputType.number,
                   ),

@@ -1,10 +1,14 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:projectapp/api/authentication.dart';
 import 'package:projectapp/models/dailyinfobar.dart';
+import 'package:projectapp/providers/session_provider.dart';
 import 'package:projectapp/screens/dailycaloriesedit.dart';
+import 'package:projectapp/screens/plannermainPage.dart';
 import 'package:projectapp/widget/bottomnav.dart';
 import 'package:projectapp/widget/widget_support.dart';
+import 'package:provider/provider.dart';
 
 class Dailycalories extends StatefulWidget {
   final bool checkPopup;
@@ -28,27 +32,37 @@ class _DailycaloriesState extends State<Dailycalories> {
     }
   }
 
-  Future<FoodCalculated> fetchFoodForMeal(String mealType) async {
+  Future<bool> fetchFoodForMeal(String mealType) async {
     final response =
         await http.get(Uri.parse('http://10.0.2.2/Addtomeal/$mealType'));
+    print(response.body);
 
     if (response.statusCode == 200) {
       final jsonData = json.decode(response.body);
-      return FoodCalculated.fromJson(jsonData);
+      return true;
     } else {
       throw Exception('Failed to load data');
     }
   }
 
   void onTapMeal(String mealType) async {
+    print(mealType);
     try {
-      final foodData = await fetchFoodForMeal(mealType);
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => Dailycaloriesedit(foodData: foodData),
-        ),
-      );
+      final FoodData = await fetchFoodForMeal(mealType);
+      print(FoodData);
+
+      // ตรวจสอบว่า foodData ไม่ใช่ null ก่อนทำการนำไปใช้
+      if (FoodData != false) {
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) => Dailycaloriesedit(foodData: foodData),
+        //   ),
+        // );
+      } else {
+        print("Error: foodData is null");
+        // แจ้งเตือนผู้ใช้หรือจัดการในกรณีที่ foodData เป็น null
+      }
     } catch (e) {
       // Handle any error if needed
       print("Error: $e");
@@ -57,7 +71,7 @@ class _DailycaloriesState extends State<Dailycalories> {
 //   void onTapMeal(String mealType) async {
 //   try {
 //     final foodData = await fetchFoodForMeal(mealType);
-    
+
 //     // ตรวจสอบค่าของ getcurrentfood
 //     if (foodData.getcurrentfood == null) {
 //       // แสดง Alert ถ้า getcurrentfood เป็น null
@@ -114,6 +128,48 @@ class _DailycaloriesState extends State<Dailycalories> {
 //   }
 // }
 
+  String plannerName = '';
+  String userId = '';
+  String errorText = '';
+
+  Future<bool> checkDataWithBackend() async {
+    try {
+      final sessionProvider =
+          Provider.of<SessionProvider>(context, listen: false);
+      String idToken = sessionProvider.idToken;
+
+      // Get current user ID
+      Map<String, dynamic> currentUser =
+          await AuthService.getCurrentUser(idToken);
+      userId = currentUser['uid'];
+
+      var url = Uri.parse('http://10.0.2.2/AddDailyMealToDB/WeISmJvapocWnXvx35s4yQVF1hu1/weee');
+      var response = await http.post(
+        url,
+        headers: {"Content-Type": "application/json"},
+        // body: jsonEncode({"PlannerName": plannerName}),
+      );
+
+      if (response.statusCode == 200) {
+        var data = jsonDecode(response.body);
+        print("Response data: $data"); // แสดงข้อมูลที่ได้รับจาก API
+
+        // ตรวจสอบว่ามี key 'isValid' หรือไม่
+        // if (data == "Add to existing planner success") {
+        print("test");
+        return true;
+        // } else {
+        //   return false;
+        // }
+      } else {
+        throw Exception(
+            'Failed to check data with status: ${response.statusCode}');
+      }
+    } catch (e) {
+      print("Error in checkDataWithBackend: $e");
+      return false;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -268,7 +324,6 @@ class _DailycaloriesState extends State<Dailycalories> {
                           GestureDetector(
                             onTap: () {
                               onTapMeal('Breakfast');
-                              print('Breakfast');
                             },
                             child: Container(
                               decoration: BoxDecoration(
@@ -541,21 +596,23 @@ class _DailycaloriesState extends State<Dailycalories> {
                                 ),
                                 ElevatedButton(
                                   child: const Text("Create!"),
-                                  onPressed: () {
-                                    // if (plannerName.isNotEmpty) {
-                                    //   // ตรวจสอบว่าผู้ใช้ได้กรอกชื่อ Planner หรือไม่
-                                    //   Navigator.of(context).pop(); // ปิด popup
-
-                                    //   // ทำการนำทางไปยังหน้าถัดไป (เช่นหน้า PlannerPage)
-                                    //   Navigator.push(
-                                    //       context,
-                                    //       MaterialPageRoute(
-                                    //           builder: (context) => Bottomnav(
-                                    //               initialPage: MealPlan(
-                                    //                   plannerID: '',
-                                    //                   planName: '',
-                                    //                   formattedDate: ''))));
-                                    // }
+                                  onPressed: () async {
+                                    if (plannerName.isNotEmpty) {
+                                      bool dataIsValid =
+                                          await checkDataWithBackend();
+                                      print(plannerName);
+                                      print(dataIsValid);
+                                      if (dataIsValid) {
+                                        Navigator.of(context).pop();
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => Bottomnav(
+                                                    initialPage: PlannerMain(
+                                                        userID: userId))));
+                                      }
+                                      ;
+                                    }
                                   },
                                 ),
                               ],
