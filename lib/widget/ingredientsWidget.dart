@@ -15,9 +15,10 @@ class Ingredientswidget extends StatefulWidget {
 
 class _IngredientswidgetState extends State<Ingredientswidget> {
   List<Map<String, String>>? ingredients;
-  int quantity = 0;
+  int quantity = 1;
   bool isLoading = true;
   String errorMessage = '';
+  List<TextEditingController> controllers = []; // เพิ่ม List สำหรับเก็บ TextEditingControllers
 
   void addQuantity() {
     setState(() {
@@ -27,7 +28,7 @@ class _IngredientswidgetState extends State<Ingredientswidget> {
 
   void subtractQuantity() {
     setState(() {
-      quantity = quantity <= 0 ? 0 : quantity - 1;
+      quantity = quantity <= 1 ? 1 : quantity - 1;
     });
   }
 
@@ -37,11 +38,20 @@ class _IngredientswidgetState extends State<Ingredientswidget> {
     fetchIngredients();
   }
 
+  @override
+  void dispose() {
+    // เคลียร์ controllers เมื่อไม่ใช้แล้ว
+    for (var controller in controllers) {
+      controller.dispose();
+    }
+    super.dispose();
+  }
+
   Future<void> fetchIngredients() async {
     try {
       final response = await http.get(Uri.parse('http://10.0.2.2/Selectingredient/${widget.foodId}'));
-      // final response = await http.get(Uri.parse('http://10.0.2.2/Selectingredient/01ef78c9620b660eabdb0a0027000011'));
       if (response.statusCode == 200) {
+        print(response.body);
         List jsonResponse = json.decode(response.body);
         setState(() {
           ingredients = jsonResponse.map((data) => {
@@ -49,7 +59,10 @@ class _IngredientswidgetState extends State<Ingredientswidget> {
           'imageUrl': data['imageUrl'].toString(),
           'gram': data['gram']?.toString() ?? '0',
         }).toList();
-          isLoading = false;
+          // สร้าง TextEditingControllers สำหรับแต่ละ ingredient
+        controllers = List.generate(ingredients!.length, 
+          (index) => TextEditingController(text: ingredients![index]['gram']));
+        isLoading = false;
         });
       } else {
         throw Exception('Failed to load ingredients');
@@ -61,6 +74,35 @@ class _IngredientswidgetState extends State<Ingredientswidget> {
       });
     }
   }
+
+  Future<void> sendIngredients() async {
+    try {
+      final ingredientData = ingredients!.asMap().entries.map((entry) {
+        final index = entry.key;
+        final ingredient = entry.value;
+        return {
+          "name": ingredient['name'],
+          "gram": int.parse(controllers[index].text),
+        };
+      }).toList();
+
+      final response = await http.post(
+        Uri.parse('http://10.0.2.2/Calculation/${widget.foodId}/${quantity}'),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode(ingredientData),
+      );
+
+      if (response.statusCode == 200) {
+        print('Successfully sent data!');
+        print(ingredientData);
+      } else {
+        print('Failed to send data: ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      print('Error occurred: $e');
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -146,7 +188,7 @@ class _IngredientswidgetState extends State<Ingredientswidget> {
                           : const Center(child: Text('No ingredients found')),
             ),
             GestureDetector(
-              onTap: () {},
+              onTap: sendIngredients, // เรียกฟังก์ชันส่งข้อมูล
               child: Container(
                 padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 55),
                 margin: const EdgeInsets.only(top: 15),
@@ -210,6 +252,7 @@ class _IngredientswidgetState extends State<Ingredientswidget> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: TextField(
+                    controller: controllers[index], // ใช้ controller ที่สร้างไว้
                     textAlign: TextAlign.center,
                     decoration: InputDecoration(
                       hintText: '${ingredient['gram']}',
@@ -217,6 +260,7 @@ class _IngredientswidgetState extends State<Ingredientswidget> {
                       border: InputBorder.none,
                       contentPadding: const EdgeInsets.symmetric(horizontal: 17, vertical: 6),
                     ),
+                    keyboardType: TextInputType.number,
                   ),
                 ),
                 Text("g.", style: AppWidget.boldTextFeildStyle()),

@@ -17,6 +17,7 @@ class FoodList extends StatefulWidget {
 }
 
 class _FoodListState extends State<FoodList> {
+  
   Future<List<FoodModel>> fetchFoodList() async {
     final response = await http.get(Uri.parse('http://10.0.2.2/'));
 

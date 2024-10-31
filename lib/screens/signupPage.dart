@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projectapp/screens/loginPage.dart';
 import 'package:projectapp/widget/widget_support.dart';
+import 'package:projectapp/api/authentication.dart';
 
 class Signuppage extends StatefulWidget {
   const Signuppage({super.key});
@@ -10,6 +11,53 @@ class Signuppage extends StatefulWidget {
 }
 
 class _SignuppageState extends State<Signuppage> {
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
+
+  String? _nameError;
+  String? _emailError;
+  String? _passwordError;
+  String? _confirmPasswordError;
+  bool _loading = false;
+  String _message = '';
+
+  Future<void> _handleSignUp() async {
+    setState(() {
+      _loading = true;
+      _message = '';
+    });
+
+    String email = _emailController.text;
+    String password = _passwordController.text;
+    String confirmPassword = _confirmPasswordController.text;
+    setState(() {
+      _nameError = _nameController.text.isEmpty ? "Please enter your name" : null;
+      _emailError = email.isEmpty ? "Please enter your email" : null;
+      _passwordError = password.isEmpty ? "Please enter your password" : null;
+      _confirmPasswordError = confirmPassword != password ? "Passwords do not match" : null;
+    });
+    if (_nameError == null &&
+        _emailError == null &&
+        _passwordError == null &&
+        _confirmPasswordError == null) {
+      String result = await AuthService.SignUp(email, password);
+      setState(() {
+        _message = result;
+      });
+      if (result.startsWith('Sign-up successful')) {
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const Login()));
+      }
+    }
+
+    setState(() {
+      _loading = false;
+    });
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,56 +106,67 @@ class _SignuppageState extends State<Signuppage> {
                       Text("Sign up", style: AppWidget.headlineTextFeildStyle(),),
                       const SizedBox(height: 20,),
                       TextField(
+                        controller: _nameController,
                         decoration: InputDecoration(
                           hintText: "Name",
                           hintStyle: AppWidget.semiBoldTextFeildStyle(),
-                          prefixIcon: const Icon(Icons.person_outline) 
+                          prefixIcon: const Icon(Icons.person_outline),
+                          errorText: _nameError,
                         ),
                       ),
                       const SizedBox(height: 20,),
                       TextField(
+                        controller: _emailController,
                         decoration: InputDecoration(
                           hintText: "Email",
                           hintStyle: AppWidget.semiBoldTextFeildStyle(),
-                          prefixIcon: const Icon(Icons.email_outlined) 
+                          prefixIcon: const Icon(Icons.email_outlined),
+                          errorText: _emailError,
                         ),
                       ),
                       const SizedBox(height: 20,),
                       TextField(
+                        controller: _passwordController,
                         obscureText: true,
                         decoration: InputDecoration(
                           hintText: "Password",
                           hintStyle: AppWidget.semiBoldTextFeildStyle(),
-                          prefixIcon: const Icon(Icons.password_outlined) 
+                          prefixIcon: const Icon(Icons.password_outlined),
+                          errorText: _passwordError,
                         ),
                       ),
                       const SizedBox(height: 20,),
                       TextField(
+                        controller: _confirmPasswordController,
                         obscureText: true,
                         decoration: InputDecoration(
                           hintText: "Confirm Password",
                           hintStyle: AppWidget.semiBoldTextFeildStyle(),
-                          prefixIcon: const Icon(Icons.password_outlined) 
+                          prefixIcon: const Icon(Icons.password_outlined),
+                          errorText: _confirmPasswordError,
                         ),
                       ),
                       const SizedBox(height: 50,),
-                      Material(
-                        elevation: 5,
-                        borderRadius: BorderRadius.circular(20),
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(vertical: 8),
-                          width: 200,
-                          decoration: BoxDecoration(color: const Color.fromARGB(255, 245, 185, 92),borderRadius: BorderRadius.circular(20)),
-                          child: const Center(
-                            child: Text(
-                              "SIGN UP",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'Poppins'),
+                      GestureDetector(
+                        onTap: _handleSignUp,
+                        child: Material(
+                          elevation: 5,
+                          borderRadius: BorderRadius.circular(20),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(vertical: 8),
+                            width: 200,
+                            decoration: BoxDecoration(color: const Color.fromARGB(255, 245, 185, 92),borderRadius: BorderRadius.circular(20)),
+                            child: const Center(
+                              child: Text(
+                                "SIGN UP",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'Poppins'),
+                                )
                               )
-                            )
+                          ),
                         ),
                       ),
                     ],),

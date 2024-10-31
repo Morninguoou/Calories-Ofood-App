@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:projectapp/screens/signupPage.dart';
+import 'package:projectapp/screens/mainPage.dart'; // Import your MainPage
 import 'package:projectapp/widget/widget_support.dart';
+import 'package:projectapp/api/authentication.dart'; // Import your AuthService
+import 'package:projectapp/widget/bottomnav.dart';
+import 'package:provider/provider.dart';
+import 'package:projectapp/providers/session_provider.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -16,15 +21,95 @@ class _LoginState extends State<Login> {
   String? _emailError;
   String? _passwordError;
 
+  Future<void> _handleSignIn() async {
+    String email = _emailController.text;
+    String password = _passwordController.text;
+
+    // Call the AuthService.signIn function with email and password
+    Map<String, dynamic> result = await AuthService.signIn(email, password);
+    print(result['status']);
+    if (result['status'] == 'success') {
+      final sessionProvider = Provider.of<SessionProvider>(context, listen: false);
+
+      // Set the idToken in the session provider
+      sessionProvider.setIdToken(result['idToken']);
+      print(result['message']);
+
+      showDialog(
+  context: context,
+  builder: (BuildContext context) {
+    return AlertDialog(
+      titlePadding: const EdgeInsets.all(0),
+      title: Container(
+        padding: const EdgeInsets.only(left: 15, top: 15, bottom: 15),
+        decoration: const BoxDecoration(
+          color: Color.fromARGB(255, 240, 214, 181),
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20.0),
+            topRight: Radius.circular(20.0),
+          ),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const SizedBox(width: 60),
+            Text(
+              'Login Successful',
+              style: AppWidget.semiBoldTextFeildStyle(),
+            ),
+            const Spacer(),
+          ],
+        ),
+      ),
+      content: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 20),
+        child: Text(
+          'Welcome back to your partner!',
+          style: AppWidget.lightTextFeildStyle().copyWith(color: Colors.black),
+          textAlign: TextAlign.center,
+        ),
+      ),
+      actions: [
+        Center(
+          child: GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Bottomnav(initialPage: Mainpage())),
+              );
+            },
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 73, vertical: 10),
+              decoration: BoxDecoration(
+                color: const Color.fromARGB(255, 79, 108, 78),
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Text(
+                "Confirm",
+                style: AppWidget.semiBoldTextFeildStyle()
+                    .copyWith(color: Colors.white, fontSize: 15),
+              ),
+            ),
+          ),
+        ),],
+      );},);
+    } else {
+      // Handle sign-in failure (display an error message)
+      // TODO : เพิ่ม UI แจ้ง user
+      print(result['message']);
+    }
+}
+
   void _validateInputs() {
     setState(() {
       _emailError = _emailController.text.isEmpty ? "Please Enter Your Email" : null;
       _passwordError = _passwordController.text.isEmpty ? "Please Enter Your Password" : null;
-
-      if (_emailError == null && _passwordError == null) {
-        // Perform login logic here
-      }
     });
+
+    // If there are no errors, proceed to sign-in
+    if (_emailError == null && _passwordError == null) {
+      _handleSignIn();
+    }
   }
 
   @override

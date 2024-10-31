@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:projectapp/providers/session_provider.dart';
 import 'package:projectapp/screens/loginPage.dart';
 // import 'package:projectapp/screens/detailfoodPage.dart';
 // import 'package:projectapp/screens/loginPage.dart';
@@ -7,11 +8,17 @@ import 'package:projectapp/screens/loginPage.dart';
 // import 'package:projectapp/screens/mainpage.dart';
 import 'package:projectapp/widget/bottomnav.dart';
 import 'package:projectapp/screens/mainPage.dart';
+import 'package:provider/provider.dart';
 // import 'package:projectapp/screens/login.dart';
 // import 'package:projectapp/screens/signup.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => SessionProvider(),
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -41,7 +48,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const Bottomnav(initialPage: Mainpage(),),
+      home: Login(),
     );
   }
 }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:projectapp/screens/foodlistPage.dart';
+import 'package:projectapp/widget/bottomnav.dart';
 import 'package:projectapp/widget/detailfoodWidget.dart';
 import 'package:projectapp/widget/icon_back.dart';
 import 'package:projectapp/widget/icon_fav.dart';
@@ -31,11 +33,26 @@ class _DetailfoodpageState extends State<Detailfoodpage> {
   void initState() {
     super.initState();
     fetchFoodList(); // Call the fetch function when the state is initialized
-    
-    _pages = [
-    const Detail(),
-    IngredientsPage(foodId: widget.foodId), // ส่ง foodId ไปยัง IngredientsPage
-  ];
+    _updatePages(); // Initialize _pages
+  }
+
+  @override
+  void didUpdateWidget(Detailfoodpage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.foodId != widget.foodId || oldWidget.foodName != widget.foodName) {
+      fetchFoodList().then((_) {
+        _updatePages(); // Update _pages หลัง fetch สำเร็จ
+      });
+    }
+  }
+
+  void _updatePages() {
+    setState(() {
+      _pages = [
+        Detail(foodId: widget.foodId),
+        IngredientsPage(foodId: widget.foodId),
+      ];
+    });
   }
 
 
@@ -88,13 +105,26 @@ class _DetailfoodpageState extends State<Detailfoodpage> {
               margin: const EdgeInsets.only(top: 70, left: 30, right: 30),
               child: Column(
                 children: [
-                  const Row(
+                  Row(
                     children: [
-                      IconBack(),
-                      Spacer(),
-                      IconFav(),
-                      SizedBox(width: 10),
-                      IconShare(),
+                      GestureDetector(
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => const Bottomnav(initialPage:FoodList())));
+                        },
+                        child: Container(
+                          margin: const EdgeInsets.only(top: 5),
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 79, 108, 78),
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          child: const Icon(Icons.arrow_back, color: Colors.white,),
+                        ),
+                      ),
+                      const Spacer(),
+                      const IconFav(),
+                      const SizedBox(width: 10),
+                      const IconShare(),
                     ],
                   ),
                   Column(
@@ -198,11 +228,13 @@ class _CustomNavBarState extends State<CustomNavBar> {
 
 // Each topic detail
 class Detail extends StatelessWidget {
-  const Detail({super.key});
+  final String foodId;
+
+  const Detail({super.key,required this.foodId});
 
   @override
   Widget build(BuildContext context) {
-    return const Detailfoodwidget();
+    return Detailfoodwidget(foodId: foodId);
   }
 }
 

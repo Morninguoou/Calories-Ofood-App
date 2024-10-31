@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:projectapp/api/authentication.dart';
+import 'package:projectapp/providers/session_provider.dart';
 import 'package:projectapp/screens/dailycaloriesPage.dart';
 import 'package:projectapp/widget/bottomnav.dart';
 import 'package:projectapp/widget/icon_close.dart';
 import 'package:projectapp/widget/widget_support.dart';
 
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:projectapp/models/PlannerModel.dart';
+import 'package:provider/provider.dart';
+
 class Detailfoodwidget extends StatefulWidget {
-  const Detailfoodwidget({super.key});
+  final String foodId;
+
+  const Detailfoodwidget({super.key, required this.foodId});
 
   @override
   State<Detailfoodwidget> createState() => _DetailfoodwidgetState();
@@ -13,11 +22,84 @@ class Detailfoodwidget extends StatefulWidget {
 
 class _DetailfoodwidgetState extends State<Detailfoodwidget> {
   bool _showAdditionalButtons = false;
+  List<PlannerNameModel> _plannerNames = [];
+  bool isLoading = true;
+  Map<String, String>? info;
+  String userId = '';
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await _getUserIdAndInfo();
+      fetchPlannerList();
+    });
+    fetchCalories();
+  }
+
+  @override
+  void didUpdateWidget(Detailfoodwidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.foodId != widget.foodId) {
+      fetchCalories(); // เรียก fetchCalories ใหม่เมื่อ foodId เปลี่ยน
+    }
+  }
 
   void _toggleAdditionalButtons() {
     setState(() {
       _showAdditionalButtons = !_showAdditionalButtons;
     });
+  }
+
+  Future<void> _getUserIdAndInfo() async {
+    final sessionProvider = Provider.of<SessionProvider>(context, listen: false);
+    String idToken = sessionProvider.idToken;
+
+    // Get current user ID
+    Map<String, dynamic> currentUser = await AuthService.getCurrentUser(idToken);
+    
+    if (currentUser.containsKey('uid')) {
+      userId = currentUser['uid'];
+      print('User ID: $userId'); // Print the user ID
+    } else {
+      print('Failed to retrieve user ID');
+    }
+  }
+
+  
+  //TODO: UserID
+  Future<void> fetchPlannerList() async {
+    final response = await http.get(Uri.parse('http://10.0.2.2/GetPlanner/${userId}'));
+
+    if (response.statusCode == 200) {
+      List jsonResponse = json.decode(response.body);
+      setState(() {
+        _plannerNames = jsonResponse.map((planner) => PlannerNameModel.fromJson(planner)).toList();
+      });
+    } else {
+      throw Exception('Failed to load planner');
+    }
+  }
+
+  Future<void> fetchCalories() async {
+    final response = await http.get(Uri.parse('http://10.0.2.2/Getcurrentcalculation/${widget.foodId}'));
+  
+    if (response.statusCode == 200) {
+      print(response.body);
+      print(widget.foodId);
+      Map<String, dynamic> jsonResponse = json.decode(response.body);
+      setState(() {
+        info = {
+          'calories': jsonResponse['calories'].toString(),
+          'fats': jsonResponse['fats'].toString(),
+          'protein': jsonResponse['protein']?.toString() ?? '0',
+          'carbs': jsonResponse['carbs']?.toString() ?? '0',
+        };
+        isLoading = false;
+      });
+    } else {
+      throw Exception('Failed to load planner');
+    }
   }
 
   @override
@@ -34,7 +116,7 @@ class _DetailfoodwidgetState extends State<Detailfoodwidget> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text("Colories", style: AppWidget.headlineTextFeildStyle(),),
-                    Text("850", style: AppWidget.headlineTextFeildStyle(),)
+                    Text(info != null ? info!['calories'] ?? '-' : '-', style: AppWidget.headlineTextFeildStyle(),)
                   ],
                 ),
                 const Divider(color: Color.fromARGB(255, 160, 160, 160), thickness: 3,),
@@ -43,7 +125,7 @@ class _DetailfoodwidgetState extends State<Detailfoodwidget> {
                   children: [
                     Text("Fat", style: AppWidget.boldTextFeildStyle(),),
                     const Spacer(),
-                    Text("54", style: AppWidget.boldTextFeildStyle(),),
+                    Text(info != null ? info!['fats'] ?? '-' : '-', style: AppWidget.boldTextFeildStyle(),),
                     const SizedBox(width: 5,),
                     Text("g.", style: AppWidget.boldTextFeildStyle(),),
                   ],
@@ -53,7 +135,7 @@ class _DetailfoodwidgetState extends State<Detailfoodwidget> {
                   children: [
                     Text("Carbohydrate", style: AppWidget.boldTextFeildStyle(),),
                     const Spacer(),
-                    Text("18", style: AppWidget.boldTextFeildStyle(),),
+                    Text(info != null ? info!['carbs'] ?? '-' : '-', style: AppWidget.boldTextFeildStyle(),),
                     const SizedBox(width: 5,),
                     Text("g.", style: AppWidget.boldTextFeildStyle(),),
                   ],
@@ -63,7 +145,7 @@ class _DetailfoodwidgetState extends State<Detailfoodwidget> {
                   children: [
                     Text("Protein", style: AppWidget.boldTextFeildStyle(),),
                     const Spacer(),
-                    Text("56", style: AppWidget.boldTextFeildStyle(),),
+                    Text(info != null ? info!['protein'] ?? '-' : '-', style: AppWidget.boldTextFeildStyle(),),
                     const SizedBox(width: 5,),
                     Text("g.", style: AppWidget.boldTextFeildStyle(),),
                   ],
@@ -115,7 +197,7 @@ class _DetailfoodwidgetState extends State<Detailfoodwidget> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          _showPlannerOptions(context,["dsfadf","dgaagsa","dogafjdg","dsfadf","dgaagsa","dogafjdg"]);
+                          _showPlannerOptions(context, _plannerNames.map((planner) => planner.planname).toList());
                         },
                         child: Container(
                           padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 6),
@@ -170,9 +252,10 @@ class PlannerOptionsDialog extends StatefulWidget {
   _PlannerOptionsDialogState createState() => _PlannerOptionsDialogState();
 }
 
-class _PlannerOptionsDialogState extends State<PlannerOptionsDialog> {
+class _PlannerOptionsDialogState extends State<PlannerOptionsDialog>{
   final Map<String, bool> _expanded = {};
-  final Set<String> _selectedMeals = {};
+  final List<String> _selectedMeals = [];
+  String? _selectedPlanner; // Store selected planner ID or name here
 
   @override
   void initState() {
@@ -196,6 +279,23 @@ class _PlannerOptionsDialogState extends State<PlannerOptionsDialog> {
         _selectedMeals.add(meal);
       }
     });
+  }
+
+  Future<void> _submitSelection() async {
+    print(_selectedPlanner);
+    print(_selectedMeals[0]);
+    if (_selectedPlanner != null && _selectedMeals.isNotEmpty) {
+      final response = await http.post(
+        Uri.parse('http://10.0.2.2/Addtoexistingplanner/${_selectedPlanner}/${_selectedMeals[0]}'),
+        headers: {'Content-Type': 'application/json'},
+      );
+
+      if (response.statusCode == 200) {
+        print('Add to planner successful');
+      } else {
+        print('Failed to send data: ${response.reasonPhrase}');
+      }
+    }
   }
 
   @override
@@ -236,6 +336,9 @@ class _PlannerOptionsDialogState extends State<PlannerOptionsDialog> {
                         GestureDetector(
                           onTap: () {
                             _toggleExpand(item);
+                            setState(() {
+                              _selectedPlanner = item;
+                            });
                           },
                           child: Container(
                             margin: const EdgeInsets.symmetric(horizontal: 1,vertical: 6),
@@ -394,7 +497,7 @@ class _PlannerOptionsDialogState extends State<PlannerOptionsDialog> {
                   ),
                 child: GestureDetector(
                   onTap: (){
-
+                    _submitSelection();
                   },
                   child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 73,vertical: 10), // Add some padding for the button
