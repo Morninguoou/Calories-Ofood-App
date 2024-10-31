@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:projectapp/api/authentication.dart';
 
 import 'package:projectapp/screens/mainPage.dart';
 import 'package:projectapp/screens/plannermainPage.dart';
@@ -7,6 +8,8 @@ import 'package:projectapp/screens/dailycaloriesPage.dart';
 import 'package:projectapp/screens/notificationPage.dart';
 import 'package:projectapp/screens/myprofilePage.dart';
 
+import 'package:provider/provider.dart';
+import 'package:projectapp/providers/session_provider.dart';
 
 
 class Bottomnav extends StatefulWidget {
@@ -20,21 +23,45 @@ class Bottomnav extends StatefulWidget {
 
 class _BottomnavState extends State<Bottomnav> {
   int currentTabIndex = 0;
+  String userId = '';
+  List<Widget>? pages; // Nullable to allow checking if pages is initialized
 
-  late List<Widget> pages;
+  Future<void> _getUserIdAndInfo() async {
+    final sessionProvider = Provider.of<SessionProvider>(context, listen: false);
+    String idToken = sessionProvider.idToken;
 
-  @override
-  void initState() {
-    super.initState();
+    // Get current user ID
+    Map<String, dynamic> currentUser = await AuthService.getCurrentUser(idToken);
+
+    if (currentUser.containsKey('uid')) {
+      setState(() {
+        userId = currentUser['uid'];
+        _initializePages(); // Initialize pages after fetching userId
+      });
+      print('User ID: $userId');
+    } else {
+      print('Failed to retrieve user ID');
+    }
+  }
+
+  void _initializePages() {
     pages = [
       const Mainpage(),
-      const PlannerMain(userID: 'Eiei'),
+      PlannerMain(userID: userId), // Use fetched userId here
       const Dailycalories(),
       const Noti(),
       const Myprofile(),
       widget.initialPage,
     ];
-    currentTabIndex = pages.indexOf(widget.initialPage);
+    setState(() {
+      currentTabIndex = pages!.indexOf(widget.initialPage);
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getUserIdAndInfo(); // Fetch user ID on init
   }
 
   void _onItemTapped(int index) {
@@ -45,10 +72,15 @@ class _BottomnavState extends State<Bottomnav> {
 
   @override
   Widget build(BuildContext context) {
+    // Show loading indicator if pages is not yet initialized
+    if (pages == null) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
     return Scaffold(
       body: IndexedStack(
         index: currentTabIndex,
-        children: pages,
+        children: pages!,
       ),
       bottomNavigationBar: CurvedNavigationBar(
         height: 65,
@@ -67,3 +99,4 @@ class _BottomnavState extends State<Bottomnav> {
     );
   }
 }
+

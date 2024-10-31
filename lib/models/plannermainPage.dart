@@ -5,7 +5,7 @@ class PlannermainPageModel {
 
   PlannermainPageModel({
     required this.planName,
-     required DateTime firstDate,
+    required DateTime firstDate,
     required DateTime lastDate,
   })
   : firstDate = DateTime(firstDate.year, firstDate.month, firstDate.day), // Keep only the date part
