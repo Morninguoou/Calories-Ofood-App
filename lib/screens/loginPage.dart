@@ -45,7 +45,6 @@ Future<void> _handleSignIn() async {
   }
 }
 
-
   // Validate the email and password inputs
   void _validateInputs() {
     setState(() {
