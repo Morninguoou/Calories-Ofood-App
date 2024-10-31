@@ -32,7 +32,7 @@ class _BottomnavState extends State<Bottomnav> {
       const Dailycalories(checkPopup: false),
       const Noti(),
       const Myprofile(),
-      widget.initialPage, 
+      widget.initialPage,
     ];
     currentTabIndex = pages.indexOf(widget.initialPage);
   }

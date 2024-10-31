@@ -5,7 +5,7 @@ import 'package:projectapp/widget/icon_back.dart';
 import 'package:projectapp/widget/widget_support.dart';
 
 class Dailycalories extends StatefulWidget {
-  final bool checkPopup; 
+  final bool checkPopup;
 
   const Dailycalories({Key? key, required this.checkPopup}) : super(key: key);
 

@@ -211,7 +211,7 @@ class _DetailfoodwidgetState extends State<Detailfoodwidget> {
                       ),
                       const SizedBox(height: 10),
                       GestureDetector(
-                        onTap: () { 
+                        onTap: () {
                           bool passValue = true;
                           Navigator.push(context, MaterialPageRoute(builder: (context) => Bottomnav(initialPage:Dailycalories(checkPopup: passValue))));
                         },
