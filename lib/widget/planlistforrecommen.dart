@@ -86,8 +86,9 @@ class _PlanlistState extends State<Planlist> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>
-                                    Bottomnav(initialPage: FoodRecommendationPlanDetail())));
+                                builder: (context) => Bottomnav(
+                                    initialPage:
+                                        FoodRecommendationPlanDetail())));
                       },
                     ),
                   ],

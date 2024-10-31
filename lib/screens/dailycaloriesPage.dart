@@ -1,8 +1,11 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
 import 'package:flutter/material.dart';
+import 'package:projectapp/models/dailyinfobar.dart';
 import 'package:projectapp/screens/dailycaloriesedit.dart';
 import 'package:projectapp/screens/mealplanPage.dart';
 import 'package:projectapp/widget/bottomnav.dart';
-import 'package:projectapp/widget/icon_back.dart';
 import 'package:projectapp/widget/widget_support.dart';
 
 class Dailycalories extends StatefulWidget {
@@ -13,6 +16,18 @@ class Dailycalories extends StatefulWidget {
 }
 
 class _DailycaloriesState extends State<Dailycalories> {
+  Future<FoodCalculated> fetchFoodCalculated() async {
+    final response =
+        await http.get(Uri.parse('http://10.0.2.2/Calculationplanner'));
+
+    if (response.statusCode == 200) {
+      final jsonData = json.decode(response.body);
+      return FoodCalculated.fromJson(jsonData); // ใช้ FoodCalculated
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,85 +70,109 @@ class _DailycaloriesState extends State<Dailycalories> {
                 padding: const EdgeInsets.all(25),
                 child: Column(
                   children: [
-                    const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Column(
-                          children: [
-                            Text(
-                              'Fats',
-                              style: TextStyle(
-                                  fontSize: 13,
-                                  color: Color.fromRGBO(137, 132, 132, 1),
-                                  fontWeight: FontWeight.w500),
-                            ),
-                            Text(
-                              '31g',
-                              style: TextStyle(
-                                  fontSize: 13,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w500),
-                            )
-                          ],
-                        ),
-                        SizedBox(width: 10),
-                        Column(
-                          children: [
-                            Text(
-                              'Carb.',
-                              style: TextStyle(
-                                  fontSize: 13,
-                                  color: Color.fromRGBO(137, 132, 132, 1),
-                                  fontWeight: FontWeight.w500),
-                            ),
-                            Text(
-                              '31g',
-                              style: TextStyle(
-                                  fontSize: 13,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                          ],
-                        ),
-                        SizedBox(width: 10),
-                        Column(
-                          children: [
-                            Text(
-                              'Proteins',
-                              style: TextStyle(
-                                  fontSize: 13,
-                                  color: Color.fromRGBO(137, 132, 132, 1),
-                                  fontWeight: FontWeight.w500),
-                            ),
-                            Text(
-                              '31g',
-                              style: TextStyle(
-                                  fontSize: 13,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                          ],
-                        ),
-                        SizedBox(width: 10),
-                        Column(
-                          children: [
-                            Text(
-                              'Calories',
-                              style: TextStyle(
-                                  fontSize: 13,
-                                  color: Color.fromRGBO(137, 132, 132, 1),
-                                  fontWeight: FontWeight.w500),
-                            ),
-                            Text(
-                              '500kcal',
-                              style: TextStyle(
-                                  fontSize: 13,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                          ],
-                        ),
-                      ],
+                    FutureBuilder<FoodCalculated>(
+                      future: fetchFoodCalculated(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return CircularProgressIndicator();
+                        } else if (snapshot.hasError) {
+                          return Text("Error: ${snapshot.error}");
+                        } else if (snapshot.hasData) {
+                          final foodData = snapshot.data!;
+
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Column(
+                                children: [
+                                  Text(
+                                    'Fats',
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                      color: Color.fromRGBO(137, 132, 132, 1),
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  Text(
+                                    '${foodData.fats}g', // ใช้ 'fats'
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(width: 10),
+                              Column(
+                                children: [
+                                  Text(
+                                    'Carb.',
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                      color: Color.fromRGBO(137, 132, 132, 1),
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  Text(
+                                    '${foodData.carbs}g',
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(width: 10),
+                              Column(
+                                children: [
+                                  Text(
+                                    'Proteins',
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                      color: Color.fromRGBO(137, 132, 132, 1),
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  Text(
+                                    '${foodData.protein}g',
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(width: 10),
+                              Column(
+                                children: [
+                                  Text(
+                                    'Calories',
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                      color: Color.fromRGBO(137, 132, 132, 1),
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  Text(
+                                    '${foodData.calories} kcal',
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          );
+                        } else {
+                          return Text("No data available");
+                        }
+                      },
                     ),
                     const SizedBox(height: 20),
                     Container(
@@ -415,7 +454,13 @@ class _DailycaloriesState extends State<Dailycalories> {
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                              builder: (context) => const Bottomnav(initialPage: MealPlan())));
+                                              builder: (context) =>
+                                                  const Bottomnav(
+                                                      initialPage: MealPlan(
+                                                    plannerID: '',
+                                                    planName: '',
+                                                    formattedDate: '',
+                                                  ))));
                                     }
                                   },
                                 ),
@@ -468,11 +513,6 @@ class _DailycaloriesState extends State<Dailycalories> {
                 ),
               ),
             ),
-          ),
-          const Positioned(
-            top: 50,
-            left: 30,
-            child: IconBack(),
           ),
         ],
       ),
