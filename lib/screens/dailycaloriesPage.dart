@@ -1,10 +1,8 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-
 import 'package:flutter/material.dart';
 import 'package:projectapp/models/dailyinfobar.dart';
 import 'package:projectapp/screens/dailycaloriesedit.dart';
-import 'package:projectapp/screens/mealplanPage.dart';
 import 'package:projectapp/widget/bottomnav.dart';
 import 'package:projectapp/widget/widget_support.dart';
 
@@ -22,13 +20,13 @@ class _DailycaloriesState extends State<Dailycalories> {
 
     if (response.statusCode == 200) {
       final jsonData = json.decode(response.body);
-      return FoodCalculated.fromJson(jsonData); // ใช้ FoodCalculated
+      return FoodCalculated.fromJson(jsonData);
     } else {
       throw Exception('Failed to load data');
     }
   }
 
-  Future<FoodCalculated> selectMeal(String mealType) async {
+  Future<FoodCalculated> fetchFoodForMeal(String mealType) async {
     final response =
         await http.get(Uri.parse('http://10.0.2.2/Addtomeal/$mealType'));
 
@@ -40,47 +38,80 @@ class _DailycaloriesState extends State<Dailycalories> {
     }
   }
 
-  // Future<bool> checkDataWithBackend() async {
-  //   try {
-  //     final sessionProvider =
-  //         Provider.of<SessionProvider>(context, listen: false);
-  //     String idToken = sessionProvider.idToken;
+  void onTapMeal(String mealType) async {
+    try {
+      final foodData = await fetchFoodForMeal(mealType);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => Dailycaloriesedit(foodData: foodData),
+        ),
+      );
+    } catch (e) {
+      // Handle any error if needed
+      print("Error: $e");
+    }
+  }
+//   void onTapMeal(String mealType) async {
+//   try {
+//     final foodData = await fetchFoodForMeal(mealType);
+    
+//     // ตรวจสอบค่าของ getcurrentfood
+//     if (foodData.getcurrentfood == null) {
+//       // แสดง Alert ถ้า getcurrentfood เป็น null
+//       showDialog(
+//         context: context,
+//         builder: (BuildContext context) {
+//           return AlertDialog(
+//             title: Text("Error"),
+//             content: Text("Can't add"),
+//             actions: <Widget>[
+//               TextButton(
+//                 child: Text("OK"),
+//                 onPressed: () {
+//                   Navigator.of(context).pop();
+//                 },
+//               ),
+//             ],
+//           );
+//         },
+//       );
+//     } else if (foodData.getcurrentfood == true) {
+//       // แสดง Alert ถ้า getcurrentfood เป็น true
+//       showDialog(
+//         context: context,
+//         builder: (BuildContext context) {
+//           return AlertDialog(
+//             title: Text("Success"),
+//             content: Text("Add OK"),
+//             actions: <Widget>[
+//               TextButton(
+//                 child: Text("OK"),
+//                 onPressed: () {
+//                   Navigator.of(context).pop();
+//                 },
+//               ),
+//             ],
+//           );
+//         },
+//       );
+//     }
 
-  //     // Get current user ID
-  //     Map<String, dynamic> currentUser =
-  //         await AuthService.getCurrentUser(idToken);
-  //     userId = currentUser['uid'];
-  //     var url = Uri.parse('http://10.0.2.2/AddtoPlanner/$userId');
-  //     var response = await http.post(
-  //       url,
-  //       headers: {"Content-Type": "application/json"},
-  //       body: jsonEncode({"PlannerName": plannerName}),
-  //     );
+//     // หาก foodData.getcurrentfood ไม่เป็น null หรือ true ก็ให้ไปยังหน้า Dailycaloriesedit
+//     if (foodData.getcurrentfood != null && foodData.getcurrentfood == false) {
+//       Navigator.push(
+//         context,
+//         MaterialPageRoute(
+//           builder: (context) => Dailycaloriesedit(foodData: foodData),
+//         ),
+//       );
+//     }
+//   } catch (e) {
+//     // Handle any error if needed
+//     print("Error: $e");
+//   }
+// }
 
-  //     if (response.statusCode == 200) {
-  //       var data = jsonDecode(response.body);
-  //       print("Response data: $data"); // แสดงข้อมูลที่ได้รับจาก API
-
-  //       // ตรวจสอบว่ามี key 'isValid' หรือไม่
-  //       if (data.containsKey('status')) {
-  //         if (data['status'] == 'OK') {
-  //           print("test");
-  //           return true;
-  //         } else {
-  //           return false;
-  //         }
-  //       } else {
-  //         return false;
-  //       }
-  //     } else {
-  //       throw Exception(
-  //           'Failed to check data with status: ${response.statusCode}');
-  //     }
-  //   } catch (e) {
-  //     print("Error in checkDataWithBackend: $e");
-  //     return false;
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -149,7 +180,7 @@ class _DailycaloriesState extends State<Dailycalories> {
                                     ),
                                   ),
                                   Text(
-                                    '${foodData.fats}g', // ใช้ 'fats'
+                                    '${foodData.fats}g',
                                     style: TextStyle(
                                       fontSize: 13,
                                       color: Colors.black,
@@ -229,74 +260,74 @@ class _DailycaloriesState extends State<Dailycalories> {
                       },
                     ),
                     const SizedBox(height: 20),
-                    Container(
-                      child: SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => const Bottomnav(
-                                            initialPage: Dailycaloriesedit())));
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(45),
-                                  color: const Color.fromRGBO(187, 207, 63, 1),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black.withOpacity(0.3),
-                                      spreadRadius: 2,
-                                      blurRadius: 3,
-                                      offset: const Offset(0, 3),
-                                    ),
-                                  ],
-                                ),
-                                margin: const EdgeInsets.symmetric(
-                                    horizontal: 3, vertical: 5),
-                                padding: const EdgeInsets.all(20),
-                                child: Stack(
-                                  children: [
-                                    Align(
-                                      alignment: Alignment.topLeft,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            'Breakfast',
-                                            style: AppWidget
-                                                .headlineTextFeildStyle(),
-                                          ),
-                                          const Text(
-                                            'Oatmeal with fruits and nuts',
-                                            style: TextStyle(
-                                              fontSize: 13,
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    // Align เพื่อจัดวาง 450cal ไปทางขวาบน
-                                    const Align(
-                                      alignment: Alignment.topRight,
-                                      child: Text(
-                                        '450cal',
-                                        style: TextStyle(
-                                          fontSize: 13,
-                                          color: Colors.white,
+                    SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              onTapMeal('Breakfast');
+                              print('Breakfast');
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(45),
+                                color: const Color.fromRGBO(187, 207, 63, 1),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.3),
+                                    spreadRadius: 2,
+                                    blurRadius: 3,
+                                    offset: const Offset(0, 3),
+                                  ),
+                                ],
+                              ),
+                              margin: const EdgeInsets.symmetric(
+                                  horizontal: 3, vertical: 5),
+                              padding: const EdgeInsets.all(20),
+                              child: Stack(
+                                children: [
+                                  Align(
+                                    alignment: Alignment.topLeft,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'Breakfast',
+                                          style: AppWidget
+                                              .headlineTextFeildStyle(),
                                         ),
+                                        const Text(
+                                          'Oatmeal with fruits and nuts',
+                                          style: TextStyle(
+                                            fontSize: 13,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  const Align(
+                                    alignment: Alignment.topRight,
+                                    child: Text(
+                                      '450cal',
+                                      style: TextStyle(
+                                        fontSize: 13,
+                                        color: Colors.white,
                                       ),
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
                             ),
-                            const SizedBox(height: 10),
-                            Container(
+                          ),
+                          const SizedBox(height: 10),
+                          GestureDetector(
+                            onTap: () {
+                              onTapMeal('Lunch');
+                              print('Lunch');
+                            },
+                            child: Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(45),
                                 color: const Color.fromRGBO(232, 235, 80, 1),
@@ -335,7 +366,6 @@ class _DailycaloriesState extends State<Dailycalories> {
                                       ],
                                     ),
                                   ),
-                                  // Align เพื่อจัดวาง 450cal ไปทางขวาบน
                                   const Align(
                                     alignment: Alignment.topRight,
                                     child: Text(
@@ -349,8 +379,14 @@ class _DailycaloriesState extends State<Dailycalories> {
                                 ],
                               ),
                             ),
-                            const SizedBox(height: 10),
-                            Container(
+                          ),
+                          const SizedBox(height: 10),
+                          GestureDetector(
+                            onTap: () {
+                              onTapMeal('Dinner');
+                              print('Dinner');
+                            },
+                            child: Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(45),
                                 color: const Color.fromRGBO(243, 164, 12, 1),
@@ -389,7 +425,6 @@ class _DailycaloriesState extends State<Dailycalories> {
                                       ],
                                     ),
                                   ),
-                                  // Align เพื่อจัดวาง 450cal ไปทางขวาบน
                                   const Align(
                                     alignment: Alignment.topRight,
                                     child: Text(
@@ -403,8 +438,14 @@ class _DailycaloriesState extends State<Dailycalories> {
                                 ],
                               ),
                             ),
-                            const SizedBox(height: 10),
-                            Container(
+                          ),
+                          const SizedBox(height: 10),
+                          GestureDetector(
+                            onTap: () {
+                              onTapMeal('Other');
+                              print('Other');
+                            },
+                            child: Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(45),
                                 color: const Color.fromRGBO(206, 134, 239, 1),
@@ -443,7 +484,6 @@ class _DailycaloriesState extends State<Dailycalories> {
                                       ],
                                     ),
                                   ),
-                                  // Align เพื่อจัดวาง 450cal ไปทางขวาบน
                                   const Align(
                                     alignment: Alignment.topRight,
                                     child: Text(
@@ -457,8 +497,8 @@ class _DailycaloriesState extends State<Dailycalories> {
                                 ],
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
                     const Spacer(),
@@ -500,20 +540,20 @@ class _DailycaloriesState extends State<Dailycalories> {
                                 ElevatedButton(
                                   child: const Text("Create!"),
                                   onPressed: () {
-                                    if (plannerName.isNotEmpty) {
-                                      // ตรวจสอบว่าผู้ใช้ได้กรอกชื่อ Planner หรือไม่
-                                      Navigator.of(context).pop(); // ปิด popup
+                                    // if (plannerName.isNotEmpty) {
+                                    //   // ตรวจสอบว่าผู้ใช้ได้กรอกชื่อ Planner หรือไม่
+                                    //   Navigator.of(context).pop(); // ปิด popup
 
-                                      // ทำการนำทางไปยังหน้าถัดไป (เช่นหน้า PlannerPage)
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => Bottomnav(
-                                                  initialPage: MealPlan(
-                                                      plannerID: '',
-                                                      planName: '',
-                                                      formattedDate: ''))));
-                                    }
+                                    //   // ทำการนำทางไปยังหน้าถัดไป (เช่นหน้า PlannerPage)
+                                    //   Navigator.push(
+                                    //       context,
+                                    //       MaterialPageRoute(
+                                    //           builder: (context) => Bottomnav(
+                                    //               initialPage: MealPlan(
+                                    //                   plannerID: '',
+                                    //                   planName: '',
+                                    //                   formattedDate: ''))));
+                                    // }
                                   },
                                 ),
                               ],

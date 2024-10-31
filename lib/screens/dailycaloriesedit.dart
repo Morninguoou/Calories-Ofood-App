@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:projectapp/models/dailyinfobar.dart';
 import 'package:projectapp/widget/exerciseWidget.dart';
 import 'package:projectapp/widget/icon_back.dart';
 import 'package:projectapp/widget/planWidget.dart';
@@ -6,7 +7,7 @@ import 'package:projectapp/widget/selfplanWidget.dart';
 import 'package:projectapp/widget/widget_support.dart';
 
 class Dailycaloriesedit extends StatefulWidget {
-  const Dailycaloriesedit({super.key});
+  const Dailycaloriesedit({super.key, required FoodCalculated foodData});
 
   @override
   State<Dailycaloriesedit> createState() => _DailycalorieseditState();

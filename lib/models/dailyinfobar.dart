@@ -19,4 +19,6 @@ class FoodCalculated {
       carbs: json['carbs'],
     );
   }
+
+
 }
