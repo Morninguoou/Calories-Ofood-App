@@ -27,6 +27,7 @@ class _DetailfoodwidgetState extends State<Detailfoodwidget> {
   Map<String, String>? info;
   String userId = '';
 
+
   @override
   void initState() {
     super.initState();
@@ -211,7 +212,8 @@ class _DetailfoodwidgetState extends State<Detailfoodwidget> {
                       const SizedBox(height: 10),
                       GestureDetector(
                         onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => const Bottomnav(initialPage:Dailycalories())));
+                          bool passValue = true;
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => Bottomnav(initialPage:Dailycalories(checkPopup: passValue))));
                         },
                         child: Container(
                           padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 6),

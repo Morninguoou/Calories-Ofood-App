@@ -47,8 +47,11 @@ class _BottomnavState extends State<Bottomnav> {
   void _initializePages() {
     pages = [
       const Mainpage(),
+
+      const Dailycalories(checkPopup: false),
+
       PlannerMain(userID: userId), // Use fetched userId here
-      const Dailycalories(),
+
       const Noti(),
       const Myprofile(),
       widget.initialPage,
