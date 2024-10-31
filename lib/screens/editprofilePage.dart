@@ -3,7 +3,10 @@ import 'package:projectapp/screens/myprofilePage.dart';
 import 'package:projectapp/widget/bottomnav.dart';
 import 'package:projectapp/widget/widget_support.dart';
 import 'package:projectapp/widget/icon_back.dart';
-
+import 'package:projectapp/api/authentication.dart'; // Import AuthService
+import 'package:projectapp/api/users.dart'; // Import UserService
+import 'package:provider/provider.dart';
+import 'package:projectapp/providers/session_provider.dart';
 class EditProfile extends StatefulWidget {
   const EditProfile({super.key});
 
@@ -12,6 +15,73 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _bioController = TextEditingController();
+  final TextEditingController _ageController = TextEditingController();
+  final TextEditingController _heightController = TextEditingController();
+  final TextEditingController _weightController = TextEditingController();
+  String userId = '';
+  String _originalPassword = '';
+  @override
+  void initState() {
+    super.initState();
+    _getUserIdAndInfo();
+  }
+
+  Future<void> _getUserIdAndInfo() async {
+    final sessionProvider = Provider.of<SessionProvider>(context, listen: false);
+    String idToken = sessionProvider.idToken;
+
+    // Get current user ID
+    Map<String, dynamic> currentUser = await AuthService.getCurrentUser(idToken);
+    
+    if (currentUser.containsKey('uid')) {
+      userId = currentUser['uid'];
+      print('User ID: $userId'); // Print the user ID
+
+      // Fetch user information and populate the fields
+      Map<String, dynamic>? userInfo = await UserService.getUserInfo(userId);
+      if (userInfo != null) {
+        setState(() {
+          _nameController.text = userInfo['Username'] ?? '';
+          _emailController.text = userInfo['Email'] ?? '';
+          _passwordController.text = userInfo['Password'] ?? '';
+          _bioController.text = userInfo['Description'] ?? '';
+          _ageController.text = userInfo['Age'].toString();
+          _heightController.text = userInfo['Height'].toString();
+          _weightController.text = userInfo['Weight'].toString();
+          _originalPassword = userInfo['Password'];
+        });
+      } else {
+        print('Failed to get user info.');
+      }
+    } else {
+      print('Failed to retrieve user ID');
+    }
+  }
+  Future<void> _saveUserChanges() async {
+    // Create a map of updated user information
+    Map<String, dynamic> updatedUserInfo = {
+      'Username': _nameController.text,
+      'Password': _passwordController.text,
+      'Description': _bioController.text,
+      'Age': int.parse(_ageController.text),
+      'Height': int.parse(_heightController.text),
+      'Weight': int.parse(_weightController.text),
+    };
+    String result = await UserService.editUserInfo(userId, updatedUserInfo);
+    print(result);
+  }
+  Future<void> _changePassword() async{
+    final sessionProvider = Provider.of<SessionProvider>(context, listen: false);
+    String idToken = sessionProvider.idToken;
+    String newPassword = _passwordController.text;
+    String result = await AuthService.changePassword(idToken, newPassword);
+    print(result);
+
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -97,18 +167,17 @@ class _EditProfileState extends State<EditProfile> {
                   Text('Name',
                       style: AppWidget.editprofiletitleTextFeildStyle()),
                   Container(
-                    height: 33.0,
+                    height: 40.0,
                     decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(10.0)),
                     child: Container(
-                      margin: const EdgeInsets.only(left: 5, right: 5),
-                      child: const TextField(
-                        maxLength: 30,
-                        decoration: InputDecoration(
+                      margin: const EdgeInsets.only(left: 10, right: 10),
+                      child: TextField(
+                        controller: _nameController,
+                        decoration: const InputDecoration(
                           border: InputBorder.none,
                           hintText: 'Enter your name',
-                          counterText: '',
                         ),
                       ),
                     ),
@@ -125,19 +194,19 @@ class _EditProfileState extends State<EditProfile> {
                   Text('Email',
                       style: AppWidget.editprofiletitleTextFeildStyle()),
                   Container(
-                    height: 33.0,
+                    height: 40.0,
                     decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(10.0)),
                     child: Container(
-                      margin: const EdgeInsets.only(left: 5, right: 5),
-                      child: const TextField(
-                        maxLength: 30,
-                        decoration: InputDecoration(
+                      margin: const EdgeInsets.only(left: 10, right: 10),
+                      child: TextField(
+                        controller: _emailController,
+                        decoration: const InputDecoration(
                           border: InputBorder.none,
-                          hintText: 'Enter your email(แก้ไม่ได้)',
-                          counterText: '',
+                          hintText: 'Enter your email (แก้ไม่ได้)',
                         ),
+                        readOnly: true,
                       ),
                     ),
                   ),
@@ -153,19 +222,19 @@ class _EditProfileState extends State<EditProfile> {
                   Text('Password',
                       style: AppWidget.editprofiletitleTextFeildStyle()),
                   Container(
-                    height: 33.0,
+                    height: 40.0,
                     decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(10.0)),
                     child: Container(
-                      margin: const EdgeInsets.only(left: 5, right: 5),
-                      child: const TextField(
-                        maxLength: 50,
-                        decoration: InputDecoration(
+                      margin: const EdgeInsets.only(left: 10, right: 10),
+                      child: TextField(
+                        controller: _passwordController,
+                        decoration: const InputDecoration(
                           border: InputBorder.none,
                           hintText: 'Enter your password',
-                          counterText: '',
                         ),
+                        obscureText: true,
                       ),
                     ),
                   ),
@@ -181,16 +250,18 @@ class _EditProfileState extends State<EditProfile> {
                   Text('Bio',
                       style: AppWidget.editprofiletitleTextFeildStyle()),
                   Container(
+                    height: 80.0,
                     decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(10.0)),
                     child: Container(
-                      margin: const EdgeInsets.only(left: 5, right: 5),
-                      child: const TextField(
+                      margin: const EdgeInsets.only(left: 10, right: 10),
+                      child: TextField(
+                        controller: _bioController,
                         maxLines: 3,
-                        maxLength: 100,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           border: InputBorder.none,
+                          hintText: 'Enter your bio',
                         ),
                       ),
                     ),
@@ -199,7 +270,7 @@ class _EditProfileState extends State<EditProfile> {
               ),
             ),
             Container(
-              //////////////////////////EMAIL////////////////////////////
+              //////////////////////////AGE////////////////////////////
               margin: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 4.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -207,18 +278,18 @@ class _EditProfileState extends State<EditProfile> {
                   Text('Age',
                       style: AppWidget.editprofiletitleTextFeildStyle()),
                   Container(
-                    height: 33.0,
+                    height: 40.0,
                     decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(10.0)),
                     child: Container(
-                      margin: const EdgeInsets.only(left: 5, right: 5),
-                      child: const TextField(
-                        maxLength: 3,
-                        decoration: InputDecoration(
+                      margin: const EdgeInsets.only(left: 10, right: 10),
+                      child: TextField(
+                        controller: _ageController,
+                        keyboardType: TextInputType.number,
+                        decoration: const InputDecoration(
                           border: InputBorder.none,
-                          hintText: '',
-                          counterText: '',
+                          hintText: 'Enter your age',
                         ),
                       ),
                     ),
@@ -235,18 +306,18 @@ class _EditProfileState extends State<EditProfile> {
                   Text('Height',
                       style: AppWidget.editprofiletitleTextFeildStyle()),
                   Container(
-                    height: 33.0,
+                    height: 40.0,
                     decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(10.0)),
                     child: Container(
-                      margin: const EdgeInsets.only(left: 5, right: 5),
-                      child: const TextField(
-                        maxLength: 3,
-                        decoration: InputDecoration(
+                      margin: const EdgeInsets.only(left: 10, right: 10),
+                      child: TextField(
+                        controller: _heightController,
+                        keyboardType: TextInputType.number,
+                        decoration: const InputDecoration(
                           border: InputBorder.none,
-                          hintText: '',
-                          counterText: '',
+                          hintText: 'Enter your height',
                         ),
                       ),
                     ),
@@ -263,18 +334,18 @@ class _EditProfileState extends State<EditProfile> {
                   Text('Weight',
                       style: AppWidget.editprofiletitleTextFeildStyle()),
                   Container(
-                    height: 33.0, 
+                    height: 40.0,
                     decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(10.0)),
                     child: Container(
-                      margin: const EdgeInsets.only(left: 5, right: 5),
-                      child: const TextField(
-                        maxLength: 3,
-                        decoration: InputDecoration(
+                      margin: const EdgeInsets.only(left: 10, right: 10),
+                      child: TextField(
+                        controller: _weightController,
+                        keyboardType: TextInputType.number,
+                        decoration: const InputDecoration(
                           border: InputBorder.none,
-                          hintText: '',
-                          counterText: "",
+                          hintText: 'Enter your weight',
                         ),
                       ),
                     ),
@@ -282,31 +353,34 @@ class _EditProfileState extends State<EditProfile> {
                 ],
               ),
             ),
-            const SizedBox(
-              height: 5.0,
-            ),
+            const SizedBox(height: 5.0),
             GestureDetector(
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const Bottomnav(initialPage:Myprofile())));
+                _saveUserChanges();
+                if (_originalPassword != _passwordController.text){
+                  _changePassword();
+                }
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const Bottomnav(initialPage: Myprofile())));
               },
               child: Container(
                 width: 140.0,
-                height: 30,
+                height: 40.0,
                 decoration: BoxDecoration(
                   color: const Color(0xFF4F6C4E),
                   borderRadius: BorderRadius.circular(30),
                 ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Save Change',
-                      style: AppWidget.profilebuttonTextFeildStyle(),
+                child: const Center(
+                  child: Text(
+                    'Save Change',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Poppins',
                     ),
-                  ],
+                  ),
                 ),
               ),
-              //onTap: {},
             ),
           ],
         ),

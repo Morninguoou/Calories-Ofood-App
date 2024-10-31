@@ -11,6 +11,14 @@ class Optionblock extends StatefulWidget {
 }
 
 class _OptionblockState extends State<Optionblock> {
+  List<String> selectedOptions = [];
+
+  void updateSelectedOptions(List<String> options) {
+    setState(() {
+      selectedOptions = options;
+    });
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -43,7 +51,7 @@ class _OptionblockState extends State<Optionblock> {
             children: [
               GestureDetector(
               //TODO:link to add option
-                onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context) => MoreOpt()));},
+                onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context) => MoreOpt(onOptionsSelected: updateSelectedOptions,currentSelections: selectedOptions,)));},
                 child: Container(
                   margin: const EdgeInsets.symmetric(vertical: 4),
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),

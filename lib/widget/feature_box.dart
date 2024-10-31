@@ -58,12 +58,12 @@ class _FeatureBoxState extends State<FeatureBox> {
                   Text("this features!",
                       style: AppWidget.topicTextFeildStyle()),
                   GestureDetector(
-                    onTap: (){
+                    onTap: () {
                       Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                Bottomnav(initialPage: FoodList())));
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  Bottomnav(initialPage: FoodList())));
                     },
                     child: Container(
                       padding: const EdgeInsets.all(10),
@@ -119,8 +119,8 @@ class _FeatureBoxState extends State<FeatureBox> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) =>
-                                Bottomnav(initialPage: FoodRecommendationSelect())));
+                            builder: (context) => Bottomnav(
+                                initialPage: FoodRecommendationSelect())));
                   },
                   child: Container(
                     padding: const EdgeInsets.symmetric(
