@@ -89,7 +89,8 @@ class _DetailfoodpageState extends State<Detailfoodpage> {
               ),
             ),
             Container(
-              margin: EdgeInsets.only(top: MediaQuery.of(context).size.height / 2.4),
+              margin: EdgeInsets.only(
+                  top: MediaQuery.of(context).size.height / 2.4),
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
               decoration: const BoxDecoration(
@@ -211,14 +212,19 @@ class _CustomNavBarState extends State<CustomNavBar> {
         margin: const EdgeInsets.symmetric(horizontal: 5),
         padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 45),
         decoration: BoxDecoration(
-          color: _selectedIndex == index ? const Color.fromARGB(255, 240, 214, 181) : Colors.transparent,
+          color: _selectedIndex == index
+              ? const Color.fromARGB(255, 240, 214, 181)
+              : Colors.transparent,
           borderRadius: BorderRadius.circular(20),
         ),
         child: Text(
           label,
           style: TextStyle(
-            color: _selectedIndex == index ? Colors.black : const Color.fromARGB(255, 117, 117, 117),
-            fontWeight: _selectedIndex == index ? FontWeight.bold : FontWeight.bold,
+            color: _selectedIndex == index
+                ? Colors.black
+                : const Color.fromARGB(255, 117, 117, 117),
+            fontWeight:
+                _selectedIndex == index ? FontWeight.bold : FontWeight.bold,
           ),
         ),
       ),
@@ -245,6 +251,8 @@ class IngredientsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Ingredientswidget(foodId: foodId);
+
   }
 }

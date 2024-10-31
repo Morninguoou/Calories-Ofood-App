@@ -1,32 +1,47 @@
 import 'package:flutter/material.dart';
+import 'package:projectapp/models/mealplanPage.dart';
 import 'package:projectapp/widget/bonchonEdit_Box.dart';
 import 'package:projectapp/widget/widget_support.dart';
 
 class SelfPlanWidget extends StatelessWidget {
-  const SelfPlanWidget({super.key});
+  final List<Meal> meals;
+  final Function(bool) onEditModeChange;
+  //final VoidCallback confirmDishCountCallback;
+
+  const SelfPlanWidget({Key? key, required this.meals, required this.onEditModeChange,
+  //required this.confirmDishCountCallback
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [
-        // Breakfast Box
-        buildMealBox('Breakfast', 'Total Calories: 850 cal', [
-          BonchonBox(),
-          BonchonBox(),
-        ]),
-        SizedBox(height: 10.0),
-        
-        // Lunch Box
-        buildMealBox('Lunch', 'Total Calories: 850 cal', [
-          BonchonBox(),
-        ]),
-        SizedBox(height: 10.0),
-        
-        // Dinner Box
-        buildMealBox('Dinner', 'Total Calories: 850 cal', [
-          BonchonBox(),
-        ]),
-      ],
+      children: meals.map((meal) {
+        // Only show meals with foods
+        if (meal.foods.isNotEmpty) {
+          return Column(
+            children: [
+              buildMealBox(meal.meal, 'Total Calories: ${meal.totalCalories} cal', 
+              meal.foods.map((food) {
+                List<String> filteredTags = Food.fromJson(food.toJson()).toJson()['tags'];
+                  return BonchonBox(
+                    //key: bonchonBoxKey,
+                    foodName: food.name, // Assuming Food class has a 'name' property
+                    calories: food.calories, // Assuming Food class has a 'calories' property
+                    dish: food.dish,
+                    imageURL: food.imageURL,
+                    foodType: filteredTags,
+                    onEditModeChange: onEditModeChange,
+                    //confirmDishCountCallback: confirmDishCountCallback,
+                    foodID: food.foodID,
+                  );
+                }).toList()
+              ),
+              const SizedBox(height: 10.0),
+            ],
+          );
+        }
+        return SizedBox.shrink(); // Skip empty meals
+      }).toList(),
     );
   }
 

@@ -5,7 +5,8 @@ import 'package:projectapp/widget/bottomnav.dart';
 import 'package:projectapp/widget/feature_box.dart';
 import 'package:projectapp/widget/icon_chat.dart';
 import 'package:projectapp/widget/optionblock.dart';
-
+import 'package:provider/provider.dart';
+import 'package:projectapp/providers/session_provider.dart';
 import 'package:projectapp/widget/searchbar.dart';
 import 'package:projectapp/widget/widget_support.dart';
 
@@ -152,17 +153,21 @@ class _MainpageState extends State<Mainpage> {
                       style: AppWidget.topicTextFeildStyle(),  
                     ),
                     GestureDetector(
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => const Bottomnav(initialPage:FoodList())));
+                      onTap: () {
+                        // Navigate to FoodList page
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const Bottomnav(initialPage: FoodList())));
                       },
-                      child: const Text("See All",
+                      child: const Text(
+                      "See All",
                       style: TextStyle(
                         color: Color.fromARGB(255, 79, 108, 78),
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
                         fontFamily: 'Poppins',
-                      ),),
-                    )
+                      ),
+                    ),
+                  ),
+
                   ],
                 ),
                 FutureBuilder<List<FoodModel>>(
