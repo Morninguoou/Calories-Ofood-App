@@ -51,7 +51,7 @@ class _MoreDetailPlannerState extends State<MoreDetailPlanner> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Padding(
-          padding: EdgeInsets.only(top: 9, left: 5),
+          padding: EdgeInsets.only(top: 9, left: 5, bottom: 10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -89,21 +89,28 @@ class _MoreDetailPlannerState extends State<MoreDetailPlanner> {
                         topRight: Radius.circular(50.0),
                       ),
                     ),
-                    margin: EdgeInsets.only(top: 25),
+                    margin: EdgeInsets.only(top: 0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        const SizedBox(height: 10),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Icon(Icons.access_time),
                             Text(
-                                '  ${plannerData.firstDate.day} ${DateFormat('MMMM').format(plannerData.firstDate)} ${plannerData.firstDate.year} - ${plannerData.lastDate.day} ${DateFormat('MMMM').format(plannerData.lastDate)} ${plannerData.firstDate.year}'),
+                              '  ${plannerData.firstDate.day} ${DateFormat('MMMM').format(plannerData.firstDate)} - ${plannerData.lastDate.day} ${DateFormat('MMMM').format(plannerData.lastDate)}',
+                              style: AppWidget.editprofiletitleTextFeildStyle()
+                                  .copyWith(fontWeight: FontWeight.w800),
+                            ), //${plannerData.firstDate.year}
                           ],
                         ),
                         SizedBox(height: 10),
-                        Text('Date List:',
-                            style: AppWidget.dateboldTextFeildStyle()),
+                        Container(
+                          margin: EdgeInsets.only(left: 20),
+                          child: Text('Date List:',
+                              style: AppWidget.dateboldTextFeildStyle()),
+                        ),
                         SizedBox(height: 20.0),
                         for (var planner in plannerData.planners)
                           Container(
@@ -124,10 +131,10 @@ class _MoreDetailPlannerState extends State<MoreDetailPlanner> {
                             child: Column(
                               children: [
                                 Container(
-                                  margin: EdgeInsets.only(top: 10),
+                                  margin: EdgeInsets.only(top: 10, left: 30, right: 30),
                                   child: Row(
                                     mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
                                           'Date : ${DateFormat('EEEE').format(planner.plannerDate)}, ${planner.plannerDate.day} ${DateFormat('MMMM').format(planner.plannerDate)}',
@@ -202,7 +209,8 @@ class _MoreDetailPlannerState extends State<MoreDetailPlanner> {
                                 ),
                                 SizedBox(height: 25.0),
                                 Container(
-                                  padding: EdgeInsets.only(bottom: 15),
+                                  padding: EdgeInsets.only(
+                                      bottom: 15, left: 20, right: 20),
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
@@ -219,11 +227,16 @@ class _MoreDetailPlannerState extends State<MoreDetailPlanner> {
                                           Navigator.push(
                                               context,
                                               MaterialPageRoute(
-                                                  builder: (context) => Bottomnav(
+                                                  builder: (context) =>
+                                                      Bottomnav(
                                                           initialPage: MealPlan(
-                                                              plannerID: planner.plannerID,
-                                                              planName: widget.planName,
-                                                              formattedDate: '${DateFormat('EEEE').format(planner.plannerDate)}, ${planner.plannerDate.day} ${DateFormat('MMMM').format(planner.plannerDate)}',))));
+                                                        plannerID:
+                                                            planner.plannerID,
+                                                        planName:
+                                                            widget.planName,
+                                                        formattedDate:
+                                                            '${DateFormat('EEEE').format(planner.plannerDate)}, ${planner.plannerDate.day} ${DateFormat('MMMM').format(planner.plannerDate)}',
+                                                      ))));
                                         },
                                       ),
                                     ],

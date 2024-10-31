@@ -5,7 +5,12 @@ import 'package:projectapp/widget/widget_support.dart';
 
 class SelfPlanWidget extends StatelessWidget {
   final List<Meal> meals;
-  const SelfPlanWidget({Key? key, required this.meals}) : super(key: key);
+  final Function(bool) onEditModeChange;
+  //final VoidCallback confirmDishCountCallback;
+
+  const SelfPlanWidget({Key? key, required this.meals, required this.onEditModeChange,
+  //required this.confirmDishCountCallback
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,11 +24,15 @@ class SelfPlanWidget extends StatelessWidget {
               meal.foods.map((food) {
                 List<String> filteredTags = Food.fromJson(food.toJson()).toJson()['tags'];
                   return BonchonBox(
+                    //key: bonchonBoxKey,
                     foodName: food.name, // Assuming Food class has a 'name' property
                     calories: food.calories, // Assuming Food class has a 'calories' property
                     dish: food.dish,
                     imageURL: food.imageURL,
                     foodType: filteredTags,
+                    onEditModeChange: onEditModeChange,
+                    //confirmDishCountCallback: confirmDishCountCallback,
+                    foodID: food.foodID,
                   );
                 }).toList()
               ),
