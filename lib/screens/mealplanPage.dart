@@ -169,7 +169,7 @@ class _MealPlanState extends State<MealPlan> {
                   bottom: 0,
                   child: SingleChildScrollView(
                     child: Container(
-                      height: 660,
+                      //height: 660,
                       decoration: const BoxDecoration(
                         color: Color(0xFFF9F9F9),
                         borderRadius: BorderRadius.only(
@@ -304,65 +304,65 @@ class _MealPlanState extends State<MealPlan> {
                     ),
                   ),
                 ),
-                if (isEditModeActive)
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Positioned(
-                        bottom: 20,
-                        left: 0,
-                        right: 0,
-                        child: Align(
-                          alignment: Alignment.bottomCenter,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              setState(() {});
-                            },
-                            style: ButtonStyle(
-                              backgroundColor: WidgetStateProperty.all<Color>(
-                                  Color(0xFFFFFFFF)),
-                              foregroundColor: WidgetStateProperty.all<Color>(
-                                  Color(0xFFEF3B4F)),
-                              shape: WidgetStateProperty.all<OutlinedBorder>(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(
-                                      10.0), // Change button border radius
-                                ),
-                              ),
-                            ),
-                            child: const Text('Cancel'),
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        bottom: 20,
-                        left: 0,
-                        right: 0,
-                        child: Align(
-                          alignment: Alignment.bottomCenter,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              print('Confirm button clicked');
-                              widget.bonchonBoxKey.currentState?.confirmDishCount();
-                              widget.bonchonBoxKey.currentState?.toggleEditMode();
-                              setState(() {
-                                isEditModeActive = !isEditModeActive;
-                              });
-                            },
-                            style: ButtonStyle(
-                              backgroundColor: WidgetStateProperty.all<Color>(Color(0xFF4F6C4E)),
-                              foregroundColor:WidgetStateProperty.all<Color>(Colors.white),
-                              shape: WidgetStateProperty.all<OutlinedBorder>(RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10.0), // Change button border radius
-                                ),
-                              ),
-                            ),
-                            child: const Text('Confirm Changed'),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                // if (isEditModeActive)
+                //   Row(
+                //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                //     children: [
+                //       Positioned(
+                //         bottom: 20,
+                //         left: 0,
+                //         right: 0,
+                //         child: Align(
+                //           alignment: Alignment.bottomCenter,
+                //           child: ElevatedButton(
+                //             onPressed: () {
+                //               setState(() {});
+                //             },
+                //             style: ButtonStyle(
+                //               backgroundColor: WidgetStateProperty.all<Color>(
+                //                   Color(0xFFFFFFFF)),
+                //               foregroundColor: WidgetStateProperty.all<Color>(
+                //                   Color(0xFFEF3B4F)),
+                //               shape: WidgetStateProperty.all<OutlinedBorder>(
+                //                 RoundedRectangleBorder(
+                //                   borderRadius: BorderRadius.circular(
+                //                       10.0), // Change button border radius
+                //                 ),
+                //               ),
+                //             ),
+                //             child: const Text('Cancel'),
+                //           ),
+                //         ),
+                //       ),
+                //       Positioned(
+                //         bottom: 20,
+                //         left: 0,
+                //         right: 0,
+                //         child: Align(
+                //           alignment: Alignment.bottomCenter,
+                //           child: ElevatedButton(
+                //             onPressed: () {
+                //               print('Confirm button clicked');
+                //               widget.bonchonBoxKey.currentState?.confirmDishCount();
+                //               widget.bonchonBoxKey.currentState?.toggleEditMode();
+                //               setState(() {
+                //                 isEditModeActive = !isEditModeActive;
+                //               });
+                //             },
+                //             style: ButtonStyle(
+                //               backgroundColor: WidgetStateProperty.all<Color>(Color(0xFF4F6C4E)),
+                //               foregroundColor:WidgetStateProperty.all<Color>(Colors.white),
+                //               shape: WidgetStateProperty.all<OutlinedBorder>(RoundedRectangleBorder(
+                //                   borderRadius: BorderRadius.circular(10.0), // Change button border radius
+                //                 ),
+                //               ),
+                //             ),
+                //             child: const Text('Confirm Changed'),
+                //           ),
+                //         ),
+                //       ),
+                //     ],
+                //   ),
               ],
             ),
     );

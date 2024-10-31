@@ -38,11 +38,13 @@ class BonchonBoxState extends State<BonchonBox> {
   final int maxFoodNameLength = 20;
   bool isEditMode = false;
   late int currentDishCount;
+  late int originalDishCount;
 
   @override
   void initState() {
     super.initState();
     currentDishCount = widget.dish; // Initialize with the initial value
+    originalDishCount = widget.dish;
   }
 
   void toggleEditMode() {
@@ -286,6 +288,7 @@ class BonchonBoxState extends State<BonchonBox> {
                                     ElevatedButton(
                                       onPressed: () {
                                         setState(() {
+                                          currentDishCount = originalDishCount;
                                           toggleEditMode();
                                         });
                                       },
@@ -313,7 +316,8 @@ class BonchonBoxState extends State<BonchonBox> {
                                     ElevatedButton(
                                       onPressed: () {
                                         setState(() {
-                                          confirmDishCount();
+                                          if(currentDishCount != originalDishCount)
+                                            {confirmDishCount();}
                                           toggleEditMode();
                                         });
                                       },
