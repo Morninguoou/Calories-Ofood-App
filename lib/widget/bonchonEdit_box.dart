@@ -207,12 +207,14 @@ class BonchonBoxState extends State<BonchonBox> {
     return Stack(
       children: [
         Container(
-          height: 100,
+          //height: 100,
           child: Stack(
             alignment: Alignment.topRight,
             children: [
               Container(
-                margin: EdgeInsets.only(top: 10),
+                margin: EdgeInsets.only(
+                  top: 10,
+                ),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(10),
@@ -231,7 +233,8 @@ class BonchonBoxState extends State<BonchonBox> {
                       margin: const EdgeInsets.symmetric(
                           horizontal: 10, vertical: 8),
                       child: Row(
-                        children: [
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [ 
                           ClipRRect(
                             borderRadius: BorderRadius.circular(10),
                             child: widget.imageURL.startsWith('http')
@@ -276,8 +279,70 @@ class BonchonBoxState extends State<BonchonBox> {
                                 style: AppWidget.verylightTextFeildStyle()
                                     .copyWith(height: 1.3, fontSize: 13),
                               ),
+
+                              if (isEditMode)
+                                Row(
+                                  children: [
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          toggleEditMode();
+                                        });
+                                      },
+                                      style: ButtonStyle(
+                                        backgroundColor:
+                                            WidgetStateProperty.all<Color>(
+                                                Color(0xFFFFFFFF)),
+                                        foregroundColor:
+                                            WidgetStateProperty.all<Color>(
+                                                Color(0xFFEF3B4F)),
+                                        shape: WidgetStateProperty.all<
+                                            OutlinedBorder>(
+                                          RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                                10.0), // Change button border radius
+                                          ),
+                                        ),
+                                        minimumSize:
+                                            WidgetStateProperty.all<Size>(
+                                                const Size(70, 25)),
+                                      ),
+                                      child: const Text('Cancel'),
+                                    ),
+                                    SizedBox(width: 10,),
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          confirmDishCount();
+                                          toggleEditMode();
+                                        });
+                                      },
+                                      style: ButtonStyle(
+                                        backgroundColor:
+                                            WidgetStateProperty.all<Color>(
+                                                Color(0xFF4F6C4E)),
+                                        foregroundColor:
+                                            WidgetStateProperty.all<Color>(
+                                                Colors.white),
+                                        shape: WidgetStateProperty.all<
+                                            OutlinedBorder>(
+                                          RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                                10.0), // Change button border radius
+                                          ),
+                                        ),
+                                        minimumSize:
+                                            WidgetStateProperty.all<Size>(
+                                                const Size(70, 25)),
+                                      ),
+                                      child: const Text('Apply'),
+                                    ),
+                                  ],
+                                ),
+
                             ],
                           ),
+                          
                         ],
                       ),
                     ),
@@ -299,9 +364,10 @@ class BonchonBoxState extends State<BonchonBox> {
                     ),
                     if (isEditMode)
                       Positioned(
-                        top: -2,
-                        right: 30,
+                        top: -10,
+                        right: 45,
                         child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Stack(
                               children: [
@@ -322,21 +388,28 @@ class BonchonBoxState extends State<BonchonBox> {
                                 ),
                               ],
                             ),
-                            IconButton(
-                              icon: Icon(Icons.add_box_outlined,color: Colors.black),
-                              onPressed: () {
-                                incrementDishCount();
-                                print('Add icon clicked');
-                              },
-                            ),
-                            IconButton(
-                              icon: Icon(Icons.check, color: Colors.green),
-                              onPressed: () {
-                                //confirmDishCount(); // Confirm and send update
-                                toggleEditMode(); // Exit edit mode
-                              },
-                            ),
+                            
+                            // IconButton(
+                            //   icon: Icon(Icons.check, color: Colors.green),
+                            //   onPressed: () {
+                            //     //confirmDishCount(); // Confirm and send update
+                            //     toggleEditMode(); // Exit edit mode
+                            //   },
+                            // ),
                           ],
+                        ),
+                      ),
+                    if (isEditMode)
+                      Positioned(
+                        top: -10,
+                        right: 20,
+                        child: IconButton(
+                          icon:
+                              Icon(Icons.add_box_outlined, color: Colors.black),
+                          onPressed: () {
+                            incrementDishCount();
+                            print('Add icon clicked');
+                          },
                         ),
                       ),
                   ],
