@@ -29,7 +29,7 @@ class _BottomnavState extends State<Bottomnav> {
     pages = [
       const Mainpage(),
       const PlannerMain(),
-      const Dailycalories(),
+      const Dailycalories(checkPopup: false),
       const Noti(),
       const Myprofile(),
       widget.initialPage,
