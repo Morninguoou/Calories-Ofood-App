@@ -137,8 +137,7 @@ class _EditProfileState extends State<EditProfile> {
                       children: [
                         const CircleAvatar(
                           radius: 45.0,
-                          backgroundImage:
-                              AssetImage("asset/images/bonchon_wing.png"),
+                          backgroundImage: NetworkImage('https://t4.ftcdn.net/jpg/02/29/75/83/360_F_229758328_7x8jwCwjtBMmC6rgFzLFhZoEpLobB6L8.jpg'),
                         ),
                         Positioned(
                           bottom: -1,

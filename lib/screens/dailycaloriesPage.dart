@@ -143,7 +143,8 @@ class _DailycaloriesState extends State<Dailycalories> {
           await AuthService.getCurrentUser(idToken);
       userId = currentUser['uid'];
 
-      var url = Uri.parse('http://10.0.2.2/AddDailyMealToDB/WeISmJvapocWnXvx35s4yQVF1hu1/weee');
+      print(userId);
+      var url = Uri.parse('http://10.0.2.2/AddDailyMealToDB/${userId}/${plannerName}');
       var response = await http.post(
         url,
         headers: {"Content-Type": "application/json"},
@@ -354,13 +355,14 @@ class _DailycaloriesState extends State<Dailycalories> {
                                           style: AppWidget
                                               .headlineTextFeildStyle(),
                                         ),
-                                        const Text(
-                                          'Oatmeal with fruits and nuts',
-                                          style: TextStyle(
-                                            fontSize: 13,
-                                            color: Colors.white,
-                                          ),
-                                        ),
+                                        SizedBox(height: 20,)
+                                        // const Text(
+                                        //   'Oatmeal with fruits and nuts',
+                                        //   style: TextStyle(
+                                        //     fontSize: 13,
+                                        //     color: Colors.white,
+                                        //   ),
+                                        // ),
                                       ],
                                     ),
                                   ),
@@ -413,13 +415,14 @@ class _DailycaloriesState extends State<Dailycalories> {
                                           style: AppWidget
                                               .headlineTextFeildStyle(),
                                         ),
-                                        const Text(
-                                          'Oatmeal with fruits and nuts',
-                                          style: TextStyle(
-                                            fontSize: 13,
-                                            color: Colors.white,
-                                          ),
-                                        ),
+                                        SizedBox(height: 20,)
+                                        // const Text(
+                                        //   'Oatmeal with fruits and nuts',
+                                        //   style: TextStyle(
+                                        //     fontSize: 13,
+                                        //     color: Colors.white,
+                                        //   ),
+                                        // ),
                                       ],
                                     ),
                                   ),
@@ -472,13 +475,14 @@ class _DailycaloriesState extends State<Dailycalories> {
                                           style: AppWidget
                                               .headlineTextFeildStyle(),
                                         ),
-                                        const Text(
-                                          'Oatmeal with fruits and nuts',
-                                          style: TextStyle(
-                                            fontSize: 13,
-                                            color: Colors.white,
-                                          ),
-                                        ),
+                                        SizedBox(height: 20,)
+                                        // const Text(
+                                        //   'Oatmeal with fruits and nuts',
+                                        //   style: TextStyle(
+                                        //     fontSize: 13,
+                                        //     color: Colors.white,
+                                        //   ),
+                                        // ),
                                       ],
                                     ),
                                   ),
@@ -531,13 +535,14 @@ class _DailycaloriesState extends State<Dailycalories> {
                                           style: AppWidget
                                               .headlineTextFeildStyle(),
                                         ),
-                                        const Text(
-                                          'Oatmeal with fruits and nuts',
-                                          style: TextStyle(
-                                            fontSize: 13,
-                                            color: Colors.white,
-                                          ),
-                                        ),
+                                        SizedBox(height: 20,)
+                                        // const Text(
+                                        //   'Oatmeal with fruits and nuts',
+                                        //   style: TextStyle(
+                                        //     fontSize: 13,
+                                        //     color: Colors.white,
+                                        //   ),
+                                        // ),
                                       ],
                                     ),
                                   ),
@@ -566,8 +571,8 @@ class _DailycaloriesState extends State<Dailycalories> {
                           context: context,
                           barrierDismissible: false,
                           builder: (BuildContext context) {
-                            String plannerName =
-                                ""; // ตัวแปรเก็บชื่อ Planner ที่กรอก
+                            plannerName =
+                                ''; // ตัวแปรเก็บชื่อ Planner ที่กรอก
 
                             return AlertDialog(
                               title: const Text("Create Planner"),

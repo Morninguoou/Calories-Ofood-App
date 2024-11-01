@@ -36,67 +36,132 @@ class _LoginState extends State<Login> {
       print(result['message']);
 
       showDialog(
-  context: context,
-  builder: (BuildContext context) {
-    return AlertDialog(
-      titlePadding: const EdgeInsets.all(0),
-      title: Container(
-        padding: const EdgeInsets.only(left: 15, top: 15, bottom: 15),
-        decoration: const BoxDecoration(
-          color: Color.fromARGB(255, 240, 214, 181),
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20.0),
-            topRight: Radius.circular(20.0),
-          ),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const SizedBox(width: 60),
-            Text(
-              'Login Successful',
-              style: AppWidget.semiBoldTextFeildStyle(),
-            ),
-            const Spacer(),
-          ],
-        ),
-      ),
-      content: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 20),
-        child: Text(
-          'Welcome back to your partner!',
-          style: AppWidget.lightTextFeildStyle().copyWith(color: Colors.black),
-          textAlign: TextAlign.center,
-        ),
-      ),
-      actions: [
-        Center(
-          child: GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const Bottomnav(initialPage: Mainpage())),
-              );
-            },
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 73, vertical: 10),
-              decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 79, 108, 78),
-                borderRadius: BorderRadius.circular(15),
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            titlePadding: const EdgeInsets.all(0),
+            title: Container(
+              padding: const EdgeInsets.only(left: 15, top: 15, bottom: 15),
+              decoration: const BoxDecoration(
+                color: Color.fromARGB(255, 240, 214, 181),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20.0),
+                  topRight: Radius.circular(20.0),
+                ),
               ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const SizedBox(width: 60),
+                  Text(
+                    'Login Successful',
+                    style: AppWidget.semiBoldTextFeildStyle(),
+                  ),
+                  const Spacer(),
+                ],
+              ),
+            ),
+            content: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20),
               child: Text(
-                "Confirm",
-                style: AppWidget.semiBoldTextFeildStyle()
-                    .copyWith(color: Colors.white, fontSize: 15),
+                'Welcome back to your partner!',
+                style: AppWidget.lightTextFeildStyle().copyWith(color: Colors.black),
+                textAlign: TextAlign.center,
               ),
             ),
-          ),
-        ),],
-      );},);
+            actions: [
+              Center(
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const Bottomnav(initialPage: Mainpage())),
+                    );
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 73, vertical: 10),
+                    decoration: BoxDecoration(
+                      color: const Color.fromARGB(255, 79, 108, 78),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Text(
+                      "Confirm",
+                      style: AppWidget.semiBoldTextFeildStyle()
+                          .copyWith(color: Colors.white, fontSize: 15),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
+      );
     } else {
       // Handle sign-in failure (display an error message)
       // TODO : เพิ่ม UI แจ้ง user
       print(result['message']);
+
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            titlePadding: const EdgeInsets.all(0),
+            title: Container(
+              padding: const EdgeInsets.only(left: 45, top: 15, bottom: 15),
+              decoration: const BoxDecoration(
+                color: Color.fromARGB(255, 240, 214, 181),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20.0),
+                  topRight: Radius.circular(20.0),
+                ),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const SizedBox(width: 60),
+                  Text(
+                    'Login Fail !!!',
+                    style: AppWidget.semiBoldTextFeildStyle(),
+                  ),
+                  const Spacer(),
+                ],
+              ),
+            ),
+            content: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              child: Text(
+                'Please check your email or your password',
+                style: AppWidget.lightTextFeildStyle().copyWith(color: Colors.black),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            actions: [
+              Center(
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const Bottomnav(initialPage: Mainpage())),
+                    );
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 73, vertical: 10),
+                    decoration: BoxDecoration(
+                      color: const Color.fromARGB(255, 79, 108, 78),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Text(
+                      "Confirm",
+                      style: AppWidget.semiBoldTextFeildStyle()
+                          .copyWith(color: Colors.white, fontSize: 15),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
+      );
     }
 }
 
